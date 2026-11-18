@@ -248,6 +248,8 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-betw
   main,footer{transition:opacity .18s ease}
   #site.cambiando main,#site.cambiando footer{opacity:0}
 }
+.copiar{font:500 12px var(--f-mono);border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:999px;padding:3px 10px;margin-left:8px;cursor:pointer}
+.copiar:hover{border-color:var(--guinda);color:var(--guinda)}
 </style>
 </head>
 <body>
@@ -610,7 +612,7 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-betw
       <p class="muted"><span class="es">Si eres jurado, empresa o estudiante y quieres saber más del diseño, escríbenos.</span><span class="en">If you are a judge, a company or a student and want to know more about the design, write to us.</span></p>
     </div>
     <dl>
-      <dt><span class="es">Correo</span><span class="en">Email</span></dt><dd><span class="placeholder">[correo-del-equipo]</span></dd>
+      <dt><span class="es">Correo</span><span class="en">Email</span></dt><dd><span class="mono" id="correo">yolotl.ith@gmail.com</span> <button type="button" class="copiar" id="btn-copiar" data-ok-es="Copiado" data-ok-en="Copied"><span class="es">Copiar</span><span class="en">Copy</span></button></dd>
       <dt><span class="es">Escuela</span><span class="en">School</span></dt><dd>Instituto Tecnológico de Hermosillo, TecNM · Hermosillo, Sonora</dd>
       <dt><span class="es">Concurso</span><span class="en">Competition</span></dt><dd>InnovaTecNM 2026 · <span class="es">reto Olinia</span><span class="en">Olinia challenge</span></dd>
     </dl>
@@ -688,6 +690,12 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-betw
     requestAnimationFrame(paso);
   });
 })();
+
+(function(){var b=document.getElementById('btn-copiar');if(!b)return;b.addEventListener('click',function(){
+ var txt=document.getElementById('correo').textContent, l=document.getElementById('site').dataset.lang;
+ function ok(){var o=b.innerHTML;b.textContent=b.getAttribute('data-ok-'+l);setTimeout(function(){b.innerHTML=o;},1500);}
+ function sel(){var r=document.createRange();r.selectNodeContents(document.getElementById('correo'));var s=getSelection();s.removeAllRanges();s.addRange(r);}
+ try{navigator.clipboard.writeText(txt).then(ok,sel);}catch(e){sel();}});})();
 </script>
 
 </body>
