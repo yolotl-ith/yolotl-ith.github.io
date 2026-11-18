@@ -300,10 +300,10 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-betw
         </p>
       </div>
       <figure class="ld ld4">
-        <img src="img/vista_iso_abierto.jpg" width="840" height="690" alt="Modelo 3D del gabinete abierto con la placa de control, el banco de capacitores y la placa de potencia">
+        <img src="img/gab_05_abierto.jpg" width="1600" height="1000" alt="Modelo 3D del gabinete sin tapa con el banco de capacitores, la placa de control y los conectores de alto voltaje">
         <figcaption>
-          <span class="es">Modelo 3D del gabinete rev. C, abierto: tres pisos en 220 × 209 × 142 mm. Diseño, aún no fabricado.</span>
-          <span class="en">3D model of enclosure rev. C, lid off: three floors in 220 × 209 × 142 mm. Design only, not yet built.</span>
+          <span class="es">Modelo 3D del gabinete sin tapa: 220 × 209.5 × 142.6 mm con conectores. Diseño, aún no fabricado.</span>
+          <span class="en">3D model of the enclosure, lid off: 220 × 209.5 × 142.6 mm with connectors. Design only, not yet built.</span>
         </figcaption>
       </figure>
     </div>
@@ -311,7 +311,7 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-betw
       <div><b>13.5 kW</b><span class="es">continuos</span><span class="en">continuous</span></div>
       <div><b>30 kW</b><span class="es">pico por 30 s</span><span class="en">peak for 30 s</span></div>
       <div><b>60–140 V</b><span class="es">bus de batería (CD)</span><span class="en">battery bus (DC)</span></div>
-      <div><b>6.5 L</b><span class="es">volumen del gabinete</span><span class="en">enclosure volume</span></div>
+      <div><b>6.6 L</b><span class="es">volumen del gabinete</span><span class="en">enclosure volume</span></div>
     </div>
   </div>
 </div>
@@ -357,7 +357,7 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-betw
           <tr><td><span class="es">Comunicación</span><span class="en">Communication</span></td><td><span class="es">CAN con la VCU</span><span class="en">CAN to the VCU</span></td><td><span class="tag req">Olinia</span></td></tr>
           <tr><td><span class="es">Protección</span><span class="en">Ingress protection</span></td><td class="v">IP67</td><td><span class="tag req">Olinia</span></td></tr>
           <tr><td><span class="es">Envolvente máxima</span><span class="en">Maximum envelope</span></td><td class="v">220 × 210 × 144 mm</td><td><span class="tag req">Olinia</span></td></tr>
-          <tr><td><span class="es">Nuestro gabinete</span><span class="en">Our enclosure</span></td><td class="v">220 × 209 × 142.4 mm</td><td><span class="tag dec"><span class="es">diseño</span><span class="en">design</span></span></td></tr>
+          <tr><td><span class="es">Nuestro gabinete</span><span class="en">Our enclosure</span></td><td class="v">220 × 209.5 × 142.6 mm</td><td><span class="tag dec"><span class="es">diseño</span><span class="en">design</span></span></td></tr>
           <tr><td><span class="es">Control</span><span class="en">Control</span></td><td><span class="es">FOC (control orientado a campo)</span><span class="en">FOC (field-oriented control)</span></td><td><span class="tag dec"><span class="es">diseño</span><span class="en">design</span></span></td></tr>
           <tr><td><span class="es">Conmutación</span><span class="en">Switching</span></td><td class="v">16 kHz · <span class="es">tiempo muerto</span><span class="en">dead time</span> 1 µs</td><td><span class="tag dec"><span class="es">diseño</span><span class="en">design</span></span></td></tr>
           <tr><td><span class="es">Enfriamiento</span><span class="en">Cooling</span></td><td><span class="es">Líquido, placa fría de aluminio A356</span><span class="en">Liquid, A356 aluminum cold plate</span></td><td><span class="tag dec"><span class="es">diseño</span><span class="en">design</span></span></td></tr>
@@ -436,25 +436,29 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-betw
   <div class="wrap">
     <div class="head">
       <span class="eyebrow">Hardware</span>
-      <h2><span class="es">Tres pisos en 6.5 litros</span><span class="en">Three floors in 6.5 liters</span></h2>
+      <h2><span class="es">Tres pisos en 6.6 litros</span><span class="en">Three floors in 6.6 liters</span></h2>
       <p class="read muted"><span class="es">Para caber en la envolvente de Olinia apilamos la electrónica: la placa de potencia va sobre la placa fría, el banco de capacitores encima y la placa de control arriba. Las dos placas ya están ruteadas en KiCad sin conexiones faltantes ni violaciones de separación; falta la revisión del fabricante.</span><span class="en">To fit Olinia's envelope we stacked the electronics: the power board sits on the cold plate, the capacitor bank above it and the control board on top. Both boards are fully routed in KiCad with no unrouted nets and no clearance violations; manufacturer review is still pending.</span></p>
     </div>
     <div class="gallery">
       <figure class="wide">
-        <div class="pcb"><img src="img/pcb_potencia.jpg" width="1600" height="1437" alt="Cobre de la cara superior de la placa de potencia"></div>
-        <figcaption><b><span class="es">Placa de potencia, cara superior.</span><span class="en">Power board, top side.</span></b> <span class="es">206 × 185 mm, 4 capas. Las tres piernas U, V y W con 16 MOSFET cada una; abajo, los postes de CD en pares y las salidas de fase.</span><span class="en">206 × 185 mm, 4 layers. The three legs U, V and W with 16 MOSFETs each; below, the paired DC terminals and the phase outputs.</span></figcaption>
+        <div class="ph"><img src="img/gab_01_producto.jpg" width="1600" height="1000" alt="Gabinete cerrado con los conectores de batería y de fases, mangueras de refrigerante y cable de tierra"></div>
+        <figcaption><b><span class="es">Producto terminado.</span><span class="en">Finished product.</span></b> <span class="es">220 × 209.5 × 142.6 mm con conectores, dentro de la ficha de 220 × 210 × 144 mm. Receptáculos sellados de alto voltaje para batería y fases, mangueras del refrigerante y tierra. Los conectores son genéricos, por definir con Olinia.</span><span class="en">220 × 209.5 × 142.6 mm with connectors, inside the 220 × 210 × 144 mm spec. Sealed high-voltage receptacles for battery and phases, coolant hoses and ground. Connectors are generic, to be defined with Olinia.</span></figcaption>
       </figure>
       <figure>
-        <div class="ph"><img src="img/vista_frente_fases.jpg" width="780" height="490" alt="Vista de frente del gabinete con las tres salidas de fase"></div>
-        <figcaption><b><span class="es">Frente.</span><span class="en">Front view.</span></b> <span class="es">Las tres salidas de fase U, V y W hacia el motor.</span><span class="en">The three phase outputs U, V and W to the motor.</span></figcaption>
+        <div class="ph"><img src="img/gab_06_corte.jpg" width="1600" height="1000" alt="Corte lateral del gabinete mostrando los tres pisos"></div>
+        <figcaption><b><span class="es">Corte lateral.</span><span class="en">Side section.</span></b> <span class="es">Abajo la placa de potencia sobre la placa fría con el canal de refrigerante, en medio los capacitores y arriba la placa de control.</span><span class="en">Power board on the cold plate with its coolant channel at the bottom, capacitors in the middle and the control board on top.</span></figcaption>
       </figure>
       <figure>
-        <div class="ph"><img src="img/vista_iso_cerrado.jpg" width="980" height="820" alt="Gabinete cerrado"></div>
-        <figcaption><b><span class="es">Gabinete cerrado.</span><span class="en">Closed enclosure.</span></b> <span class="es">Aluminio A356 con canal de refrigerante integrado.</span><span class="en">A356 aluminum with an integrated coolant channel.</span></figcaption>
+        <div class="ph"><img src="img/gab_09_control.jpg" width="1600" height="1000" alt="Placa de control con el microcontrolador F28P65"></div>
+        <figcaption><b><span class="es">Placa de control.</span><span class="en">Control board.</span></b> <span class="es">206 × 54 mm, con el microcontrolador F28P65, la lectura del resolver, el supervisor y el CAN.</span><span class="en">206 × 54 mm, carrying the F28P65 microcontroller, resolver interface, supervisor and CAN.</span></figcaption>
       </figure>
       <figure class="wide">
-        <div class="pcb"><img src="img/pcb_control.jpg" width="1600" height="419" alt="Cobre de la cara superior de la placa de control"></div>
-        <figcaption><b><span class="es">Placa de control, cara superior.</span><span class="en">Control board, top side.</span></b> <span class="es">206 × 54 mm, con el microcontrolador, la lectura del resolver, el supervisor y el CAN.</span><span class="en">206 × 54 mm, carrying the microcontroller, resolver interface, supervisor and CAN.</span></figcaption>
+        <div class="ph"><img src="img/gab_08_potencia.jpg" width="1600" height="1000" alt="Placa de potencia con los 48 MOSFET y las barras de cobre"></div>
+        <figcaption><b><span class="es">Placa de potencia.</span><span class="en">Power board.</span></b> <span class="es">Los 48 MOSFET en tres piernas y las barras de cobre que llevan la corriente a las fases.</span><span class="en">The 48 MOSFETs in three legs and the copper bars that carry current to the phases.</span></figcaption>
+      </figure>
+      <figure class="wide">
+        <div class="pcb"><img src="img/pcb_potencia.jpg" width="1600" height="1437" alt="Cobre de la cara superior de la placa de potencia"></div>
+        <figcaption><b><span class="es">Ruteo de la placa de potencia.</span><span class="en">Power board routing.</span></b> <span class="es">206 × 185 mm, 4 capas, cara superior. Las tres piernas U, V y W con 16 MOSFET cada una; abajo, los postes de CD en pares y las salidas de fase.</span><span class="en">206 × 185 mm, 4 layers, top side. The three legs U, V and W with 16 MOSFETs each; below, the paired DC terminals and the phase outputs.</span></figcaption>
       </figure>
     </div>
     <div class="parts">
