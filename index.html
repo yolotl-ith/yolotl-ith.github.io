@@ -9,99 +9,144 @@
 <meta name="theme-color" content="#7A1F3D">
 <title>Yolotl MCU Olinia</title>
 <meta name="claude:viewport-fit-sides" content="cover">
-<meta name="description" content="Unidad de control de motor (MCU) para Olinia, diseñada por el equipo Yolotl del Instituto Tecnológico de Hermosillo para InnovaTecNM 2026.">
+<meta name="description" content="Unidad de control de motor (MCU) para Olinia, diseñada y simulada por el equipo Yolotl del Instituto Tecnológico de Hermosillo para InnovaTecNM 2026.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@112,600;112,800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <style>
-/* Layout: una sola columna de lectura, bandas a todo lo ancho; tablas y figuras en rejilla que se apila en celular */
+/* Layout: portada oscura a todo lo ancho; secciones numeradas de una columna con rejillas que se apilan en celular */
 :root{
-  --bg:#f5f6f8; --surface:#ffffff; --ink:#151a21; --muted:#5b6472; --line:#dfe3ea;
-  --guinda:#7a1f3d; --guinda-soft:#f3e6ea; --cobre:#a8642a; --ok:#1d7a52; --pend:#9a6a00; --no:#8a8f98;
-  --band:#151a21; --band-ink:#eef0f3; --band-muted:#a7afbb;
+  --bg:#f4f5f7; --surface:#ffffff; --ink:#131820; --muted:#5a6371; --line:#dde2e9; --line2:#c9d0da;
+  --guinda:#7a1f3d; --guinda-soft:#f4e7eb; --cobre:#a8642a; --ok:#1d7a52; --pend:#9a6a00; --no:#8a8f98; --sim:#2b6cb0;
+  --s1:#b03a5b; --s2:#2b6cb0;
+  --band:#10141a; --band2:#171c24; --band-ink:#eef0f3; --band-muted:#a3acb9; --band-line:#2a313c; --band-acc:#e58aa7;
+  --shadow:0 1px 2px rgba(19,24,32,.05),0 8px 24px -12px rgba(19,24,32,.18);
+  --r:10px;
   --f-display:"Archivo","Helvetica Neue",Arial,sans-serif;
   --f-body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
   --f-mono:"IBM Plex Mono",ui-monospace,"SFMono-Regular",Menlo,monospace;
 }
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
-  --bg:#0f1217; --surface:#171b22; --ink:#e9ecf1; --muted:#9aa3b1; --line:#2a303a;
-  --guinda:#d9668b; --guinda-soft:#2a1820; --cobre:#e0a15a; --ok:#4cc38a; --pend:#e0b44c; --no:#6c7380;
-  --band:#090b0f; --band-ink:#eef0f3; --band-muted:#a7afbb; color-scheme:dark}}
+  --bg:#0e1116; --surface:#161a21; --ink:#e9ecf1; --muted:#9aa3b1; --line:#262c36; --line2:#343b47;
+  --guinda:#d9668b; --guinda-soft:#2a1820; --cobre:#e0a15a; --ok:#4cc38a; --pend:#e0b44c; --no:#6c7380; --sim:#6aa8e8;
+  --s1:#d9668b; --s2:#4f8fd6;
+  --band:#080a0e; --band2:#11151b; --band-line:#232a34;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 30px -14px rgba(0,0,0,.6); color-scheme:dark}}
 :root[data-theme="dark"]{
-  --bg:#0f1217; --surface:#171b22; --ink:#e9ecf1; --muted:#9aa3b1; --line:#2a303a;
-  --guinda:#d9668b; --guinda-soft:#2a1820; --cobre:#e0a15a; --ok:#4cc38a; --pend:#e0b44c; --no:#6c7380;
-  --band:#090b0f; --band-ink:#eef0f3; --band-muted:#a7afbb; color-scheme:dark}
+  --bg:#0e1116; --surface:#161a21; --ink:#e9ecf1; --muted:#9aa3b1; --line:#262c36; --line2:#343b47;
+  --guinda:#d9668b; --guinda-soft:#2a1820; --cobre:#e0a15a; --ok:#4cc38a; --pend:#e0b44c; --no:#6c7380; --sim:#6aa8e8;
+  --s1:#d9668b; --s2:#4f8fd6;
+  --band:#080a0e; --band2:#11151b; --band-line:#232a34;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 30px -14px rgba(0,0,0,.6); color-scheme:dark}
 *{box-sizing:border-box}
-html{scroll-behavior:smooth}
+html{scroll-behavior:smooth;scroll-padding-top:72px}
 @media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
-body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:17px;line-height:1.6}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased}
 img{max-width:100%;height:auto;display:block}
 a{color:var(--guinda)}
-a:focus-visible,button:focus-visible{outline:2px solid var(--guinda);outline-offset:3px;border-radius:4px}
+a:focus-visible,button:focus-visible,summary:focus-visible{outline:2px solid var(--guinda);outline-offset:3px;border-radius:4px}
 #site[data-lang="es"] .en{display:none!important}
 #site[data-lang="en"] .es{display:none!important}
-.wrap{max-width:1120px;margin:0 auto;padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px))}
-.read{max-width:68ch}
-h1,h2,h3{font-family:var(--f-display);font-stretch:112%;line-height:1.1;text-wrap:balance;margin:0}
-h2{font-size:clamp(28px,4vw,40px);font-weight:800;letter-spacing:-.01em}
-h3{font-size:19px;font-weight:600}
+.wrap{max-width:1180px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+@media (min-width:640px){.wrap{padding-left:max(28px,env(safe-area-inset-left,0px));padding-right:max(28px,env(safe-area-inset-right,0px))}}
+.read{max-width:66ch}
+h1,h2,h3{font-family:var(--f-display);font-stretch:112%;line-height:1.08;text-wrap:balance;margin:0}
+h2{font-size:clamp(30px,4.4vw,46px);font-weight:800;letter-spacing:-.015em}
+h3{font-size:20px;font-weight:600;letter-spacing:-.005em}
 p{margin:0}
-.eyebrow{font-family:var(--f-mono);font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--guinda)}
+.eyebrow{font-family:var(--f-mono);font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:var(--guinda);display:flex;align-items:center;gap:12px}
+.eyebrow i{font-style:normal;color:var(--muted)}
+.eyebrow i::after{content:"";display:inline-block;width:28px;height:1px;background:currentColor;vertical-align:middle;margin-left:12px;opacity:.6}
 .mono{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
 .muted{color:var(--muted)}
-section{padding-block:72px;border-top:1px solid var(--line)}
-section .head{display:grid;gap:12px;margin-bottom:32px}
+section{padding-block:96px}
+section + section{border-top:1px solid var(--line)}
+section .head{display:grid;gap:16px;margin-bottom:44px;max-width:860px}
+section .head .lede{font-size:18px;color:var(--muted);max-width:66ch}
+.sub{margin-top:72px}
+.sub > .subhead{display:grid;gap:8px;margin-bottom:24px;max-width:760px}
+.sub > .subhead h3{font-size:clamp(22px,2.6vw,28px);font-weight:800}
+.sub > .subhead p{color:var(--muted)}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow)}
+@media (max-width:640px){section{padding-block:64px}.sub{margin-top:52px}}
 
 /* barra superior */
-body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--surface)}
-.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;background:color-mix(in srgb,var(--surface) 92%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
-.top .wrap{display:flex;align-items:center;gap:20px;height:56px}
-.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink);font-family:var(--f-display);font-stretch:112%;font-weight:800;font-size:17px;letter-spacing:.04em}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--band)}
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;background:color-mix(in srgb,var(--band) 86%,transparent);backdrop-filter:saturate(1.4) blur(12px);-webkit-backdrop-filter:saturate(1.4) blur(12px);border-bottom:1px solid var(--band-line);color:var(--band-ink);--ink:var(--band-ink);--guinda:var(--band-acc)}
+.top .wrap{display:flex;align-items:center;gap:22px;height:60px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--band-ink);font-family:var(--f-display);font-stretch:112%;font-weight:800;font-size:17px;letter-spacing:.06em;flex:none}
 .brand svg{width:34px;height:auto}
-.nav{display:flex;gap:18px;margin-left:auto;font-size:14px;overflow-x:auto;scrollbar-width:none}
-.nav a{color:var(--muted);text-decoration:none;white-space:nowrap}
-.nav a:hover{color:var(--ink)}
-.lang{display:flex;border:1px solid var(--line);border-radius:999px;padding:2px;flex:none}
-.lang button{font:500 13px var(--f-mono);border:0;background:none;color:var(--muted);padding:4px 10px;border-radius:999px;cursor:pointer}
-.lang button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
-@media (max-width:860px){.nav{display:none}.lang{margin-left:auto}}
+.nav{display:flex;gap:20px;margin-left:auto;font-size:14px}
+.nav a{color:var(--band-muted);text-decoration:none;white-space:nowrap}
+.nav a:hover,.nav a.on{color:var(--band-ink)}
+.lang{display:flex;border:1px solid var(--band-line);border-radius:999px;padding:2px;flex:none}
+.lang button{font:500 12px var(--f-mono);border:0;background:none;color:var(--band-muted);padding:5px 10px;border-radius:999px;cursor:pointer}
+.lang button[aria-pressed="true"]{background:var(--band-ink);color:var(--band)}
+.cta-top{font:500 13px var(--f-body);color:var(--band);background:var(--band-ink);text-decoration:none;padding:7px 14px;border-radius:999px;flex:none}
+.cta-top:hover{background:#fff}
+@media (max-width:1080px){.nav{display:none}.lang{margin-left:auto}}
+@media (max-width:420px){.cta-top{display:none}}
 
 /* portada */
-.hero{padding-block:56px 64px}
-.hero .grid{display:grid;grid-template-columns:1.05fr 1fr;gap:48px;align-items:center}
-.hero-logo{width:min(300px,70%);color:var(--ink)}
-.hero h1{font-size:clamp(34px,5.4vw,60px);font-weight:800;letter-spacing:-.015em;margin-top:24px}
-.hero h1 em{font-style:normal;color:var(--guinda)}
-.hero .lead{font-size:19px;color:var(--muted);margin-top:18px;max-width:52ch}
-.hero figure{margin:0;background:#e8ebf0;border-radius:6px;overflow:hidden}
-.hero figcaption{font-size:13px;color:#4c5562;padding:10px 14px;background:#e8ebf0;border-top:1px solid #d4d9e1}
-.strip{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);margin-top:48px;border-radius:6px;overflow:hidden}
-.strip div{background:var(--surface);padding:16px 18px;min-width:0}
-.strip b{display:block;font:500 clamp(20px,2.4vw,26px) var(--f-mono);font-variant-numeric:tabular-nums}
-.strip span{font-size:13px;color:var(--muted)}
-@media (max-width:860px){.hero .grid{grid-template-columns:1fr;gap:32px}.strip{grid-template-columns:repeat(2,1fr)}}
+.hero{background:var(--band);color:var(--band-ink);position:relative;overflow:hidden;padding-block:64px 0;
+  --ink:var(--band-ink);--guinda:var(--band-acc);--muted:var(--band-muted);--line:var(--band-line)}
+.hero::before{content:"";position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(60% 70% at 85% 30%,rgba(229,138,167,.16),transparent 70%),
+  linear-gradient(var(--band-line) 1px,transparent 1px) 0 0/48px 48px,linear-gradient(90deg,var(--band-line) 1px,transparent 1px) 0 0/48px 48px;
+  -webkit-mask-image:linear-gradient(180deg,rgba(0,0,0,.55),rgba(0,0,0,.1));mask-image:linear-gradient(180deg,rgba(0,0,0,.55),rgba(0,0,0,.1))}
+.hero .wrap{position:relative}
+.hero .grid{display:grid;grid-template-columns:1fr 1.05fr;gap:56px;align-items:center}
+.hero .grid > *{min-width:0}
+.hero-logo{width:150px}
+.pill{display:inline-flex;align-items:center;gap:10px;font:500 12.5px var(--f-mono);letter-spacing:.04em;color:var(--band-ink);border:1px solid var(--band-line);background:rgba(255,255,255,.03);padding:6px 12px;border-radius:999px;margin-top:28px}
+.pill::before{content:"";width:8px;height:8px;border-radius:50%;background:#e0b44c;box-shadow:0 0 0 4px rgba(224,180,76,.18)}
+.hero h1{font-size:clamp(36px,5.2vw,64px);font-weight:800;letter-spacing:-.02em;margin-top:18px}
+.hero h1 em{font-style:normal;color:var(--band-acc)}
+.hero .lead{font-size:19px;color:var(--band-muted);margin-top:20px;max-width:54ch}
+.btns{display:flex;flex-wrap:wrap;gap:12px;margin-top:32px}
+.btn{display:inline-flex;align-items:center;gap:8px;font:600 15px var(--f-body);text-decoration:none;padding:12px 20px;border-radius:999px;border:1px solid var(--band-line);color:var(--band-ink)}
+.btn.pri{background:var(--band-acc);border-color:var(--band-acc);color:#1a0b11}
+.btn:hover{border-color:var(--band-ink)}
+.btn.pri:hover{background:#f0a3bb;border-color:#f0a3bb}
+.btn svg{width:16px;height:16px}
+.shot{margin:0;border-radius:14px;overflow:hidden;background:#dadcdb;box-shadow:0 30px 80px -30px rgba(0,0,0,.8),0 0 0 1px rgba(255,255,255,.06)}
+.shot figcaption{font-size:13px;color:#495260;padding:10px 16px;background:#e6e8ea;border-top:1px solid #d2d6dc}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);margin-top:64px;border-top:1px solid var(--band-line)}
+.kpis div{padding:24px 20px 28px;min-width:0}
+.kpis div + div{border-left:1px solid var(--band-line)}
+.kpis b{display:block;font:500 clamp(24px,3vw,34px) var(--f-mono);font-variant-numeric:tabular-nums;letter-spacing:-.02em;color:var(--band-ink)}
+.kpis span{font-size:13.5px;color:var(--band-muted)}
+@media (max-width:900px){.hero .grid{grid-template-columns:1fr;gap:40px}.kpis{grid-template-columns:1fr 1fr}.kpis div:nth-child(3){border-left:0}.kpis div:nth-child(n+3){border-top:1px solid var(--band-line)}}
+@media (max-width:420px){.kpis div{padding:18px 12px 20px}}
+
+/* etiquetas de evidencia */
+.tag{display:inline-block;font:500 11px var(--f-mono);letter-spacing:.05em;text-transform:uppercase;padding:2px 8px;border-radius:999px;border:1px solid currentColor;white-space:nowrap;line-height:1.5}
+.tag.req{color:var(--guinda)} .tag.dec{color:var(--cobre)} .tag.sup{color:var(--pend)} .tag.cal{color:var(--ok)} .tag.sim{color:var(--sim)}
+.legend{display:flex;flex-wrap:wrap;gap:10px 22px;font-size:14px;color:var(--muted);margin-bottom:18px}
+.legend span.it{display:inline-flex;align-items:center;gap:8px}
 
 /* reto */
-.two{display:grid;grid-template-columns:1fr 1fr;gap:40px}
+.two{display:grid;grid-template-columns:1.1fr 1fr;gap:48px}
 .two > *{min-width:0}
 .two p + p{margin-top:14px}
-.analogy{background:var(--guinda-soft);border-left:3px solid var(--guinda);padding:18px 22px;border-radius:0 6px 6px 0}
+.analogy{background:var(--guinda-soft);border-left:3px solid var(--guinda);padding:24px 26px;border-radius:0 var(--r) var(--r) 0}
 .analogy p + p{margin-top:10px}
 @media (max-width:860px){.two{grid-template-columns:1fr;gap:28px}}
 
 /* tablas */
-.tablebox{overflow-x:auto;border:1px solid var(--line);border-radius:6px;background:var(--surface)}
+.tablebox{overflow-x:auto;border:1px solid var(--line);border-radius:var(--r);background:var(--surface);box-shadow:var(--shadow)}
 table{border-collapse:collapse;width:100%;font-size:15px}
-th,td{text-align:left;padding:12px 16px;border-bottom:1px solid var(--line);vertical-align:top}
+th,td{text-align:left;padding:13px 18px;border-bottom:1px solid var(--line);vertical-align:top}
 tr:last-child td{border-bottom:0}
-th{font:500 12px var(--f-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);background:var(--bg)}
+th{font:500 11.5px var(--f-mono);letter-spacing:.07em;text-transform:uppercase;color:var(--muted);background:var(--bg)}
 td.v{font-family:var(--f-mono);font-variant-numeric:tabular-nums;white-space:nowrap}
-.tag{display:inline-block;font:500 11px var(--f-mono);letter-spacing:.05em;text-transform:uppercase;padding:2px 8px;border-radius:999px;border:1px solid currentColor;white-space:nowrap}
-.tag.req{color:var(--guinda)} .tag.dec{color:var(--cobre)} .tag.sup{color:var(--pend)} .tag.cal{color:var(--ok)}
-.note{font-size:14px;color:var(--muted);margin-top:14px}
+tbody tr:hover td{background:color-mix(in srgb,var(--guinda-soft) 55%,transparent)}
+.note{font-size:14px;color:var(--muted);margin-top:16px;max-width:90ch}
+@media (max-width:560px){th,td{padding:11px 12px}}
+@media (max-width:640px){table.faults thead{display:none}table.faults tr{display:grid;grid-template-columns:1fr auto;gap:6px 12px;padding:14px 16px;border-bottom:1px solid var(--line)}table.faults tr:last-child{border-bottom:0}table.faults td{padding:0;border:0;font-size:14.5px}table.faults td:first-child{font-weight:600}table.faults td:nth-child(2){grid-column:1 / -1;order:3;color:var(--muted)}}
 
 /* diagrama */
-.diagram{border:1px solid var(--line);border-radius:6px;background:var(--surface);padding:20px;overflow-x:auto}
+.diagram{padding:24px;overflow-x:auto}
 .diagram svg{width:100%;min-width:720px;height:auto;display:block}
 .d-box{fill:var(--bg);stroke:var(--ink);stroke-width:1.5}
 .d-hv{fill:var(--guinda-soft);stroke:var(--guinda);stroke-width:1.5}
@@ -111,149 +156,235 @@ td.v{font-family:var(--f-mono);font-variant-numeric:tabular-nums;white-space:now
 .d-sig{stroke:var(--muted);stroke-width:1.5;fill:none;stroke-dasharray:5 4}
 .d-iso{stroke:var(--cobre);stroke-width:2;stroke-dasharray:2 4;fill:none}
 .d-iso-t{fill:var(--cobre);font:500 11px var(--f-mono);letter-spacing:.06em}
-.foc{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:6px;overflow:hidden;margin-top:28px;counter-reset:paso}
-.foc div{background:var(--surface);padding:18px;min-width:0}
-.foc div::before{counter-increment:paso;content:counter(paso);font:500 12px var(--f-mono);color:var(--guinda);display:block;margin-bottom:6px}
-.foc h3{font-size:16px;margin-bottom:6px}
-.foc p{font-size:15px;color:var(--muted)}
-@media (max-width:860px){.foc{grid-template-columns:1fr 1fr}}
-@media (max-width:520px){.foc{grid-template-columns:1fr}}
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:20px;counter-reset:paso}
+.steps > div{padding:22px;min-width:0}
+.steps > div::before{counter-increment:paso;content:"0" counter(paso);font:500 12px var(--f-mono);color:var(--guinda);display:block;margin-bottom:10px}
+.steps h3{font-size:17px;margin-bottom:6px}
+.steps p{font-size:15px;color:var(--muted)}
+@media (max-width:900px){.steps{grid-template-columns:1fr 1fr}}
+@media (max-width:520px){.steps{grid-template-columns:1fr}}
 
-/* hardware */
-.gallery{display:grid;grid-template-columns:1fr 1fr;gap:20px}
-.gallery figure{margin:0;min-width:0}
-.gallery .wide{grid-column:1 / -1}
-.ph{background:#e8ebf0;border-radius:6px;overflow:hidden}
-.pcb{background:#0f3d2a;border-radius:6px;overflow:hidden}
-.gallery figcaption{font-size:14px;color:var(--muted);margin-top:10px}
-.gallery figcaption b{color:var(--ink);font-weight:600}
-.parts{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:6px;overflow:hidden;margin-top:36px}
-.parts div{background:var(--surface);padding:16px 18px;min-width:0}
-.parts .pn{font:500 14px var(--f-mono);color:var(--guinda);overflow-wrap:anywhere}
-.parts h3{font-size:16px;margin:4px 0 4px}
-.parts p{font-size:14px;color:var(--muted)}
-@media (max-width:860px){.parts{grid-template-columns:1fr 1fr}.gallery{grid-template-columns:1fr}}
-@media (max-width:520px){.parts{grid-template-columns:1fr}}
+/* producto: visor de galería */
+.viewer{display:grid;gap:14px}
+.stage{margin:0;overflow:hidden}
+.stage .ph{background:#dadcdb;position:relative;aspect-ratio:16/10}
+.stage .ph img{width:100%;height:100%;object-fit:cover}
+.stage .ph.pcbbg{background:#0f3d2a}
+.stage .ph.pcbbg img{object-fit:contain}
+.stage figcaption{display:flex;gap:16px;align-items:flex-start;justify-content:space-between;padding:16px 20px;font-size:15px;color:var(--muted);border-top:1px solid var(--line)}
+.stage figcaption b{color:var(--ink);font-weight:600}
+.stage .nums{font:500 13px var(--f-mono);color:var(--muted);flex:none;padding-top:2px}
+.arrows{position:absolute;right:12px;bottom:12px;display:flex;gap:8px}
+.arrows button{width:40px;height:40px;border-radius:50%;border:0;background:rgba(19,24,32,.72);color:#fff;font-size:18px;cursor:pointer;display:grid;place-items:center}
+.arrows button:hover{background:rgba(19,24,32,.92)}
+.thumbs{display:grid;grid-template-columns:repeat(11,1fr);gap:8px}
+.thumbs button{padding:0;border:2px solid transparent;border-radius:8px;overflow:hidden;background:#dadcdb;cursor:pointer;aspect-ratio:16/10;opacity:.62;transition:opacity .2s,border-color .2s}
+.thumbs button img{width:100%;height:100%;object-fit:cover}
+.thumbs button:hover{opacity:1}
+.thumbs button[aria-pressed="true"]{border-color:var(--guinda);opacity:1}
+.thumbs .cap{display:none}
+@media (max-width:760px){.thumbs{grid-template-columns:repeat(6,1fr)}}
+@media (max-width:420px){.thumbs{grid-template-columns:repeat(4,1fr)}}
+.parts{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:20px}
+.parts > div{padding:20px 22px;min-width:0}
+.parts .pn{font:500 13px var(--f-mono);color:var(--guinda);overflow-wrap:anywhere}
+.parts h3{font-size:16.5px;margin:6px 0 4px}
+.parts p{font-size:14.5px;color:var(--muted)}
+@media (max-width:900px){.parts{grid-template-columns:1fr 1fr}}
+@media (max-width:540px){.parts{grid-template-columns:1fr}}
 
-/* simulaciones */
-.sims{display:grid;gap:40px}
-.sim{display:grid;grid-template-columns:1.5fr 1fr;gap:28px;align-items:start}
-.sim > *{min-width:0}
-.sim figure{margin:0;background:#fff;border:1px solid var(--line);border-radius:6px;padding:8px}
-.sim h3{margin-bottom:10px}
-.sim ul{margin:10px 0 0;padding-left:18px;font-size:15px}
-.sim li + li{margin-top:6px}
-.valid{font-size:14px;margin-top:14px;display:grid;gap:6px}
-.valid span{display:block}
-.valid .y::before{content:"✓ ";color:var(--ok);font-weight:600}
-.valid .n::before{content:"✗ ";color:var(--no);font-weight:600}
-@media (max-width:860px){.sim{grid-template-columns:1fr}}
+/* verificación de la placa */
+.verif{display:grid;grid-template-columns:1.25fr 1fr;gap:28px;align-items:start}
+.verif > *{min-width:0}
+.thermal{padding:16px}
+.thermal .lbls{display:grid;grid-template-columns:1fr 1fr;gap:8px;font:500 12.5px var(--f-mono);color:var(--muted);margin-bottom:8px}
+.thermal img{border-radius:6px}
+.scale{display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:center;font:500 12px var(--f-mono);color:var(--muted);margin-top:10px}
+.scale i{height:8px;border-radius:4px;background:linear-gradient(90deg,#1c2b8f,#1f86dd,#2cbf86,#efd630,#f0841e,#cc1426)}
+.thermal p{font-size:13.5px;color:var(--muted);margin-top:10px}
+.checks{list-style:none;margin:0;padding:0;display:grid;gap:0}
+.checks li{display:grid;grid-template-columns:1fr auto;gap:4px 16px;padding:14px 0;border-bottom:1px solid var(--line)}
+.checks li:first-child{padding-top:0}
+.checks li > *{min-width:0}
+.checks .k{font-weight:600;font-size:15.5px}
+.checks .val{font:500 15px var(--f-mono);font-variant-numeric:tabular-nums;text-align:right;white-space:nowrap}
+.checks .d{grid-column:1 / -1;font-size:14px;color:var(--muted)}
+@media (max-width:900px){.verif{grid-template-columns:1fr}}
+
+/* resultados */
+.tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.tile{padding:22px;min-width:0;display:flex;flex-direction:column;gap:6px}
+.tile b{font:500 clamp(28px,3.2vw,38px) var(--f-mono);font-variant-numeric:tabular-nums;letter-spacing:-.02em;line-height:1.1}
+.tile b small{font-size:.5em;color:var(--muted);margin-left:4px;letter-spacing:0}
+.tile span{font-size:14.5px;color:var(--muted)}
+.tile .tag{align-self:flex-start;margin-top:auto}
+@media (max-width:900px){.tiles{grid-template-columns:1fr 1fr}}
+@media (max-width:420px){.tiles{gap:10px}.tile{padding:16px}}
+.split{display:grid;grid-template-columns:1.55fr 1fr;gap:32px;align-items:start}
+.split > *{min-width:0}
+@media (max-width:960px){.split{grid-template-columns:1fr}}
+.chart{padding:20px 20px 12px}
+.chart .key{display:flex;flex-wrap:wrap;gap:8px 20px;font-size:13.5px;color:var(--muted);margin-bottom:6px}
+.chart .key span.it{display:inline-flex;align-items:center;gap:8px}
+.sw{width:18px;height:3px;border-radius:2px;display:inline-block}
+.sw.s1{background:var(--s1)}.sw.s2{background:var(--s2)}
+.chart .scroll{overflow-x:auto}
+.chart svg{width:100%;min-width:520px;height:auto;display:block}
+.g-grid{stroke:var(--line);stroke-width:1}
+.g-ax{fill:var(--muted);font:400 12px var(--f-mono)}
+.g-lab{fill:var(--ink);font:600 13px var(--f-body)}
+.g-ref{stroke:var(--muted);stroke-width:1;stroke-dasharray:4 4}
+.g-zone{fill:var(--guinda);opacity:.07}
+.g-line{fill:none;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round}
+.g-line.g-s1{stroke:var(--s1)}.g-line.g-s2{stroke:var(--s2)}
+.g-dot{stroke:var(--surface);stroke-width:2}
+.g-dot.g-s1{fill:var(--s1)}.g-dot.g-s2{fill:var(--s2)}
+.g-hit{fill:transparent}
+.g-pt:hover .g-dot{r:6}
+.chart .mnote{display:none;font-size:13px;color:var(--muted);margin-top:6px}
+@media (max-width:560px){.chart{padding:16px 12px 10px}.chart svg{min-width:0}.g-ax{font-size:19px}.g-lab,.g-note{display:none}.g-dot{r:6}.chart .mnote{display:block}}
+details.data{margin-top:8px;font-size:14px}
+details.data summary{cursor:pointer;color:var(--muted);font:500 12.5px var(--f-mono);letter-spacing:.04em;padding:6px 0}
+details.data table{font-size:13.5px;margin-top:6px}
+details.data th,details.data td{padding:7px 10px}
+.facts{display:grid;gap:14px}
+.facts p{font-size:15.5px}
+.facts .big{font:500 15px var(--f-mono)}
+.ok-list{list-style:none;margin:0;padding:0;display:grid;gap:8px;font-size:15px}
+.ok-list li{padding-left:26px;position:relative}
+.ok-list li::before{position:absolute;left:0;top:0;font-weight:700}
+.ok-list .y::before{content:"✓";color:var(--ok)}
+.ok-list .n::before{content:"!";color:var(--pend);left:5px}
+.callout{border-left:3px solid var(--pend);background:color-mix(in srgb,var(--pend) 9%,transparent);padding:14px 18px;border-radius:0 8px 8px 0;font-size:14.5px}
+
+/* barras horizontales (HTML) */
+.bars{padding:10px 22px}
+.bar{display:grid;grid-template-columns:minmax(150px,230px) 1fr;gap:6px 18px;align-items:center;padding:14px 0;border-bottom:1px solid var(--line)}
+.bar:last-child{border-bottom:0}
+.bar > *{min-width:0}
+.bar .lab{font-size:15px;font-weight:500}
+.bar .lab small{display:block;font-weight:400;color:var(--muted);font-size:13px}
+.bar .track{display:flex;align-items:center;gap:12px}
+.bar .fill{height:14px;border-radius:0 4px 4px 0;background:var(--guinda);flex:none;width:calc((100% - 132px) * var(--w) / 100);min-width:4px}
+.bar .fill.alt{background:var(--cobre)}
+.bar .num{font:500 14.5px var(--f-mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+.bar .num small{color:var(--muted);font-size:12.5px;margin-left:6px}
+@media (max-width:560px){.bar{grid-template-columns:1fr}}
+.mini{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:20px;align-items:start}
+.mini figure{margin:0;padding:14px;min-width:0}
+.mini figure img{background:#fff;border-radius:6px}
+.mini figcaption{font-size:14px;color:var(--muted);margin-top:12px}
+.mini figcaption b{color:var(--ink);font-weight:600}
+@media (max-width:860px){.mini{grid-template-columns:1fr}}
 
 /* seguridad */
-.layers{display:grid;gap:1px;background:var(--line);border:1px solid var(--line);border-radius:6px;overflow:hidden}
-.layer{background:var(--surface);display:grid;grid-template-columns:200px 1fr;gap:20px;padding:18px 20px}
-.layer > *{min-width:0}
-.layer .k{font:500 13px var(--f-mono);letter-spacing:.04em;text-transform:uppercase;color:var(--guinda)}
-.layer p{font-size:15px}
+.layers{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.layer{padding:22px;min-width:0}
+.layer .k{font:500 12.5px var(--f-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--guinda);display:block;margin-bottom:8px}
+.layer p{font-size:14.5px;color:var(--muted)}
 .layer p + p{margin-top:6px}
-@media (max-width:640px){.layer{grid-template-columns:1fr;gap:6px}}
+@media (max-width:900px){.layers{grid-template-columns:1fr 1fr}}
+@media (max-width:560px){.layers{grid-template-columns:1fr}}
+.st{font:600 11px var(--f-mono);letter-spacing:.05em;text-transform:uppercase;padding:3px 9px;border-radius:999px;white-space:nowrap;display:inline-block}
+.st.pass{background:color-mix(in srgb,var(--ok) 14%,transparent);color:var(--ok)}
+.st.reqd{background:color-mix(in srgb,var(--pend) 16%,transparent);color:var(--pend)}
+.st.fix{background:color-mix(in srgb,var(--sim) 14%,transparent);color:var(--sim)}
+.policy{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;counter-reset:pol}
+.policy > div{padding:22px;min-width:0;border-top:3px solid var(--guinda)}
+.policy > div::before{counter-increment:pol;content:counter(pol);font:600 28px var(--f-mono);color:var(--guinda);display:block;line-height:1;margin-bottom:12px}
+.policy h4{margin:0 0 6px;font:600 16.5px var(--f-body)}
+.policy p{font-size:14.5px;color:var(--muted)}
+@media (max-width:860px){.policy{grid-template-columns:1fr}}
 
 /* avance: banda oscura */
-.band{background:var(--band);color:var(--band-ink);border-top:0}
-.band .eyebrow{color:#e58aa7}
-.band .muted{color:var(--band-muted)}
-.trl{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:44px}
-.trl div{border:1px solid #2e3440;border-radius:6px;padding:16px;min-width:0}
+.band{background:var(--band);color:var(--band-ink);--muted:var(--band-muted);--line:var(--band-line)}
+section.band{border-top:0}
+.band .eyebrow{color:var(--band-acc)}
+.trl{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:52px}
+.trl div{border:1px solid var(--band-line);border-radius:var(--r);padding:20px;min-width:0;background:var(--band2)}
 .trl b{display:block;font:500 13px var(--f-mono);letter-spacing:.06em;text-transform:uppercase;margin-bottom:6px}
-.trl .done{border-color:#4cc38a}.trl .done b{color:#4cc38a}
+.trl .done{border-color:#2f7f5c}.trl .done b{color:#4cc38a}
 .trl .next{border-color:#e0b44c;border-style:dashed}.trl .next b{color:#e0b44c}
 .trl .later b{color:#8c94a1}
-.trl p{font-size:14px;color:var(--band-muted)}
+.trl p{font-size:14.5px;color:var(--band-muted)}
 @media (max-width:760px){.trl{grid-template-columns:1fr 1fr}}
-.tl{list-style:none;margin:0;padding:0;display:grid;gap:0}
-.tl li{display:grid;grid-template-columns:120px 1fr;gap:20px;padding:14px 0;border-top:1px solid #262c36}
+.tl{list-style:none;margin:0;padding:0}
+.tl li{display:grid;grid-template-columns:130px 1fr;gap:20px;padding:16px 0;border-top:1px solid var(--band-line)}
 .tl li > *{min-width:0}
-.tl time{font:500 14px var(--f-mono);color:#e58aa7}
+.tl time{font:500 14px var(--f-mono);color:var(--band-acc)}
 .tl .fut time{color:#e0b44c}
-.tl p{font-size:15px}
+.tl p{font-size:15.5px}
 @media (max-width:520px){.tl li{grid-template-columns:1fr;gap:2px}}
 
 /* equipo */
-.team{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
-.person{border-top:3px solid var(--guinda);padding-top:14px;min-width:0}
+.team{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.person{padding:22px;min-width:0}
+.person .ini{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;background:var(--guinda-soft);color:var(--guinda);font:700 15px var(--f-display);font-stretch:112%;margin-bottom:14px}
 .person h3{font-size:17px}
 .person p{font-size:14px;color:var(--muted);margin-top:6px}
-.advisors{margin-top:32px;font-size:15px;color:var(--muted)}
-@media (max-width:860px){.team{grid-template-columns:1fr 1fr}}
+.advisors{margin-top:28px;font-size:15px;color:var(--muted)}
+@media (max-width:900px){.team{grid-template-columns:1fr 1fr}}
 @media (max-width:460px){.team{grid-template-columns:1fr}}
 
 /* contacto */
-.contact{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start}
+.contact{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start}
 .contact > *{min-width:0}
-.placeholder{font-family:var(--f-mono);background:var(--guinda-soft);color:var(--guinda);padding:2px 8px;border-radius:4px}
-.contact dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:10px 20px;font-size:15px}
+.contact .card{padding:26px}
+.contact dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:14px 22px;font-size:15.5px}
 .contact dt{color:var(--muted)}
 .contact dd{margin:0;min-width:0;overflow-wrap:anywhere}
 @media (max-width:760px){.contact{grid-template-columns:1fr}}
-footer{border-top:1px solid var(--line);padding-block:28px 40px;font-size:13px;color:var(--muted)}
-footer .wrap{display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-between}
+.copiar{font:500 12px var(--f-mono);border:1px solid var(--line2);background:var(--surface);color:var(--ink);border-radius:999px;padding:3px 10px;margin-left:8px;cursor:pointer}
+.copiar:hover{border-color:var(--guinda);color:var(--guinda)}
+footer{background:var(--band);color:var(--band-muted);padding-block:40px 48px;font-size:13.5px}
+footer .wrap{display:flex;flex-wrap:wrap;gap:10px 28px;justify-content:space-between}
+footer b{color:var(--band-ink);font-weight:600}
 
 /* ===== Movimiento: todo es visible sin JS y con "reducir movimiento" ===== */
-.progress{position:fixed;left:0;right:0;top:env(safe-area-inset-top,0px);height:3px;z-index:11;pointer-events:none}
-.progress i{display:block;height:100%;width:100%;background:linear-gradient(90deg,var(--guinda),var(--cobre));transform-origin:0 50%;transform:scaleX(0)}
+.progress{position:fixed;left:0;right:0;top:env(safe-area-inset-top,0px);height:2px;z-index:11;pointer-events:none}
+.progress i{display:block;height:100%;width:100%;background:linear-gradient(90deg,var(--band-acc),var(--cobre));transform-origin:0 50%;transform:scaleX(0)}
 .nav a{position:relative;transition:color .2s}
-.nav a::after{content:"";position:absolute;left:0;right:0;bottom:-6px;height:2px;background:var(--guinda);transform:scaleX(0);transform-origin:0 50%;transition:transform .3s ease}
-.nav a.on{color:var(--ink)}
-.nav a.on::after,.nav a:hover::after{transform:scaleX(1)}
-.lang button{transition:background .25s,color .25s}
+.nav a::after{content:"";position:absolute;left:0;right:0;bottom:-8px;height:2px;background:var(--band-acc);transform:scaleX(0);transform-origin:0 50%;transition:transform .3s ease}
+.nav a.on::after{transform:scaleX(1)}
+.lang button,.btn,.cta-top{transition:background .25s,color .25s,border-color .25s}
 @media (prefers-reduced-motion: no-preference){
-  /* portada: entrada en secuencia */
   .ld{animation:subir .8s cubic-bezier(.2,.7,.2,1) both}
-  .ld1{animation-delay:.05s}.ld2{animation-delay:.9s}.ld3{animation-delay:1.05s}.ld4{animation-delay:1.2s}.ld5{animation-delay:1.4s}
+  .ld1{animation-delay:.05s}.ld2{animation-delay:.75s}.ld3{animation-delay:.9s}.ld4{animation-delay:1.05s}.ld5{animation-delay:1.2s}.ld6{animation-delay:1.4s}
   @keyframes subir{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
-  .hero figure img{animation:acercar 1.6s cubic-bezier(.2,.7,.2,1) 1.1s both}
+  .shot img{animation:acercar 1.8s cubic-bezier(.2,.7,.2,1) 1s both}
   @keyframes acercar{from{transform:scale(1.08)}to{transform:none}}
-  /* el logo se dibuja como una pista de cobre */
-  .hero-logo .trazo{stroke-dasharray:1;stroke-dashoffset:1;animation:trazar 1.4s cubic-bezier(.5,0,.2,1) .15s forwards}
-  .hero-logo .trazo.c{animation-delay:.7s;animation-duration:.6s}
-  .hero-logo .relleno{opacity:0;animation:aparecer .5s ease 1s forwards}
-  .hero-logo .letras{opacity:0;animation:aparecer .7s ease .9s forwards}
+  .hero-logo .trazo{stroke-dasharray:1;stroke-dashoffset:1;animation:trazar 1.3s cubic-bezier(.5,0,.2,1) .15s forwards}
+  .hero-logo .trazo.c{animation-delay:.6s;animation-duration:.6s}
+  .hero-logo .relleno{opacity:0;animation:aparecer .5s ease .9s forwards}
+  .hero-logo .letras{opacity:0;animation:aparecer .7s ease .8s forwards}
   @keyframes trazar{to{stroke-dashoffset:0}}
   @keyframes aparecer{to{opacity:1}}
+  .pill::before{animation:latido 2.4s ease-in-out infinite}
+  @keyframes latido{50%{box-shadow:0 0 0 7px rgba(224,180,76,.06)}}
   .brand svg{transition:transform .4s cubic-bezier(.3,1.6,.5,1)}
   .brand:hover svg{transform:scale(1.15) rotate(-6deg)}
-  /* aparición al bajar (la clase rv solo la pone el script a lo que está fuera de pantalla) */
-  .rv{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .8s cubic-bezier(.2,.7,.2,1)}
+  .rv{opacity:0;transform:translateY(26px);transition:opacity .7s ease,transform .8s cubic-bezier(.2,.7,.2,1)}
   .rv.in{opacity:1;transform:none}
-  .rv.izq{transform:translateX(-28px)}.rv.izq.in{transform:none}
-  /* diagrama: la corriente fluye */
+  .rv.izq{transform:translateX(-26px)}.rv.izq.in{transform:none}
   .d-flow{stroke:var(--surface);stroke-width:3;fill:none;stroke-dasharray:6 34;animation:fluir 1.1s linear infinite;opacity:.85}
   .d-sig{animation:fluir-s 1.6s linear infinite}
   @keyframes fluir{to{stroke-dashoffset:-40}}
   @keyframes fluir-s{to{stroke-dashoffset:-18}}
-  .d-hv,.d-box{transition:transform .3s ease,filter .3s ease;transform-box:fill-box;transform-origin:center}
-  .diagram rect:hover{transform:scale(1.04);filter:drop-shadow(0 4px 10px rgba(122,31,61,.25))}
-  /* tarjetas e imágenes */
-  .parts > div,.foc > div,.layer{transition:background .25s ease}
-  .parts > div:hover,.foc > div:hover,.layer:hover{background:var(--guinda-soft)}
-  .gallery .ph img,.gallery .pcb img{transition:transform .8s cubic-bezier(.2,.7,.2,1)}
-  .gallery figure:hover img{transform:scale(1.035)}
-  .sim figure{transition:transform .35s ease,box-shadow .35s ease}
-  .sim figure:hover{transform:translateY(-4px);box-shadow:0 14px 30px -14px rgba(21,26,33,.35)}
-  .person{transition:transform .3s ease}
-  .person:hover{transform:translateY(-4px)}
-  .person::before{content:"";display:block;height:3px;margin-top:-17px;margin-bottom:14px;background:var(--cobre);transform:scaleX(0);transform-origin:0 50%;transition:transform .45s ease}
-  .person:hover::before{transform:scaleX(1)}
-  /* línea de tiempo: el punto se enciende al aparecer */
-  .tl time{position:relative;transition:color .4s}
-  .trl .next{animation:latido 2.4s ease-in-out infinite}
-  @keyframes latido{50%{box-shadow:0 0 0 6px rgba(224,180,76,.12)}}
-  /* cambio de idioma */
+  .card{transition:transform .35s ease,box-shadow .35s ease,border-color .35s ease}
+  .steps > .card:hover,.parts > .card:hover,.layer.card:hover,.person.card:hover,.tile.card:hover,.policy > .card:hover{transform:translateY(-3px);border-color:var(--line2);box-shadow:0 2px 4px rgba(19,24,32,.05),0 18px 36px -16px rgba(19,24,32,.3)}
+  .stage .ph img{transition:opacity .35s ease}
+  .stage .ph img.fade{opacity:0}
+  .g-line{stroke-dasharray:1;stroke-dashoffset:0}
+  .chart.rv .g-line{stroke-dashoffset:1}
+  .chart.rv.in .g-line{stroke-dashoffset:0;transition:stroke-dashoffset 1.8s cubic-bezier(.4,0,.2,1) .3s}
+  .g-dot{transition:r .15s}
+  .bars.rv .fill{transform:scaleX(0);transform-origin:0 50%}
+  .bars.rv.in .fill{transform:none;transition:transform 1.1s cubic-bezier(.2,.7,.2,1) .2s}
+  .trl .next{animation:latido2 2.4s ease-in-out infinite}
+  @keyframes latido2{50%{box-shadow:0 0 0 6px rgba(224,180,76,.12)}}
   main,footer{transition:opacity .18s ease}
   #site.cambiando main,#site.cambiando footer{opacity:0}
 }
-.copiar{font:500 12px var(--f-mono);border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:999px;padding:3px 10px;margin-left:8px;cursor:pointer}
-.copiar:hover{border-color:var(--guinda);color:var(--guinda)}
 </style>
 </head>
 <body>
@@ -269,8 +400,8 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-betw
       <a href="#reto"><span class="es">El reto</span><span class="en">Challenge</span></a>
       <a href="#especificaciones"><span class="es">Especificaciones</span><span class="en">Specs</span></a>
       <a href="#funcionamiento"><span class="es">Cómo funciona</span><span class="en">How it works</span></a>
-      <a href="#hardware">Hardware</a>
-      <a href="#simulaciones"><span class="es">Simulaciones</span><span class="en">Simulations</span></a>
+      <a href="#producto"><span class="es">Producto</span><span class="en">Product</span></a>
+      <a href="#resultados"><span class="es">Resultados</span><span class="en">Results</span></a>
       <a href="#seguridad"><span class="es">Seguridad</span><span class="en">Safety</span></a>
       <a href="#avance"><span class="es">Avance</span><span class="en">Progress</span></a>
       <a href="#equipo"><span class="es">Equipo</span><span class="en">Team</span></a>
@@ -279,35 +410,41 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-betw
       <button type="button" id="btn-es" data-set="es" aria-pressed="true">ES</button>
       <button type="button" id="btn-en" data-set="en" aria-pressed="false">EN</button>
     </div>
+    <a class="cta-top" href="#contacto"><span class="es">Contacto</span><span class="en">Contact</span></a>
   </div>
 </header>
 
 <main>
 
-<!-- 1. PORTADA -->
+<!-- PORTADA -->
 <div class="hero" id="inicio">
   <div class="wrap">
     <div class="grid">
       <div>
         <div class="hero-logo ld ld1" role="img" aria-label="Logo de Yolotl"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 700" width="100%"><path d="M511 353 L446 420 L273 247 C 238 212 228 170 240 130 C 256 72 300 48 340 48 C 390 48 425 75 445 100 C 468 70 505 48 550 48 C 600 48 640 75 652 115 C 662 150 656 175 646 192" fill="none" class="trazo" pathLength="1" style="stroke:var(--guinda)" stroke-width="24" stroke-linecap="round" stroke-linejoin="round"/><rect x="441.5" y="178.5" width="121.5" height="120.5" rx="6" fill="none" class="trazo" pathLength="1" style="stroke:var(--guinda)" stroke-width="16"/><path d="M540,278 L540,202 L465,202 L465,239.5 L499.5,239.5 L499.5,278 L540,278Z" class="relleno" style="fill:var(--guinda)"/><path d="M465,278 L488.5,278 L488.5,250.5 L465,250.5 L465,278Z" class="relleno" style="fill:var(--guinda)"/><path d="M469.5 170 V150" fill="none" class="trazo" pathLength="1" style="stroke:var(--guinda)" stroke-width="13" stroke-linecap="round" stroke-linejoin="round"/><path d="M469.5 307 V328" fill="none" class="trazo" pathLength="1" style="stroke:var(--guinda)" stroke-width="13" stroke-linecap="round" stroke-linejoin="round"/><path d="M434 208 H413" fill="none" class="trazo" pathLength="1" style="stroke:var(--guinda)" stroke-width="13" stroke-linecap="round" stroke-linejoin="round"/><path d="M571 208 H592" fill="none" class="trazo" pathLength="1" style="stroke:var(--guinda)" stroke-width="13" stroke-linecap="round" stroke-linejoin="round"/><path d="M502 170 V150" fill="none" class="trazo" pathLength="1" style="stroke:var(--guinda)" stroke-width="13" stroke-linecap="round" stroke-linejoin="round"/><path d="M502 307 V328" fill="none" class="trazo" pathLength="1" style="stroke:var(--guinda)" stroke-width="13" stroke-linecap="round" stroke-linejoin="round"/><path d="M434 240 H413" fill="none" class="trazo" pathLength="1" style="stroke:var(--guinda)" stroke-width="13" stroke-linecap="round" stroke-linejoin="round"/><path d="M571 240 H592" fill="none" class="trazo" pathLength="1" style="stroke:var(--guinda)" stroke-width="13" stroke-linecap="round" stroke-linejoin="round"/><path d="M535.5 170 V150" fill="none" class="trazo" pathLength="1" style="stroke:var(--guinda)" stroke-width="13" stroke-linecap="round" stroke-linejoin="round"/><path d="M535.5 307 V328" fill="none" class="trazo" pathLength="1" style="stroke:var(--guinda)" stroke-width="13" stroke-linecap="round" stroke-linejoin="round"/><path d="M434 272 H413" fill="none" class="trazo" pathLength="1" style="stroke:var(--guinda)" stroke-width="13" stroke-linecap="round" stroke-linejoin="round"/><path d="M571 272 H592" fill="none" class="trazo" pathLength="1" style="stroke:var(--guinda)" stroke-width="13" stroke-linecap="round" stroke-linejoin="round"/><circle cx="143" cy="165" r="16.5" fill="none" class="trazo c" pathLength="1" style="stroke:var(--guinda)" stroke-width="12.5"/><path d="M155 177 L190 214 H215" fill="none" class="trazo" pathLength="1" style="stroke:var(--guinda)" stroke-width="13" stroke-linecap="round" stroke-linejoin="round"/><circle cx="123" cy="249" r="16.5" fill="none" class="trazo c" pathLength="1" style="stroke:var(--guinda)" stroke-width="12.5"/><path d="M140 249 H262" fill="none" class="trazo" pathLength="1" style="stroke:var(--guinda)" stroke-width="13" stroke-linecap="round" stroke-linejoin="round"/><circle cx="184" cy="324" r="16.5" fill="none" class="trazo c" pathLength="1" style="stroke:var(--guinda)" stroke-width="12.5"/><path d="M196 312 L224 283 H315" fill="none" class="trazo" pathLength="1" style="stroke:var(--guinda)" stroke-width="13" stroke-linecap="round" stroke-linejoin="round"/><circle cx="680" cy="34" r="16.5" fill="none" class="trazo c" pathLength="1" style="stroke:var(--guinda)" stroke-width="12.5"/><path d="M668 46 L638 76" fill="none" class="trazo" pathLength="1" style="stroke:var(--guinda)" stroke-width="13" stroke-linecap="round" stroke-linejoin="round"/><circle cx="736" cy="157" r="16.5" fill="none" class="trazo c" pathLength="1" style="stroke:var(--guinda)" stroke-width="12.5"/><path d="M724 169 L690 206 H622" fill="none" class="trazo" pathLength="1" style="stroke:var(--guinda)" stroke-width="13" stroke-linecap="round" stroke-linejoin="round"/><circle cx="762" cy="240" r="16.5" fill="none" class="trazo c" pathLength="1" style="stroke:var(--guinda)" stroke-width="12.5"/><path d="M745 240 H622" fill="none" class="trazo" pathLength="1" style="stroke:var(--guinda)" stroke-width="13" stroke-linecap="round" stroke-linejoin="round"/><circle cx="700" cy="316" r="16.5" fill="none" class="trazo c" pathLength="1" style="stroke:var(--guinda)" stroke-width="12.5"/><path d="M688 304 L660 274 H622" fill="none" class="trazo" pathLength="1" style="stroke:var(--guinda)" stroke-width="13" stroke-linecap="round" stroke-linejoin="round"/><path d="M124.45637583892616 604.0H148.93959731543623V558.8993288590605L192.6711409395973 484.0H164.0L144.34899328859058 521.3691275167786C141.53020134228188 526.765100671141 139.1946308724832 531.7583892617449 136.85906040268455 538.1208053691275C134.4429530201342 531.8389261744967 132.10738255033556 526.8456375838927 129.0469798657718 521.3691275167786L108.75167785234899 484.0H80.0L124.45637583892616 558.8993288590605ZM273.48724832214765 605.6107382550335C305.2993288590604 605.6107382550335 329.46040268456375 583.1409395973154 329.46040268456375 544.0805369127517C329.46040268456375 504.8590604026846 305.2993288590604 482.38926174496646 273.48724832214765 482.38926174496646C241.6751677852349 482.38926174496646 217.51409395973153 504.8590604026846 217.51409395973153 544.0805369127517C217.51409395973153 583.0604026845638 241.6751677852349 605.6107382550335 273.48724832214765 605.6107382550335ZM273.48724832214765 583.7852348993289C254.88322147651004 583.7852348993289 242.48053691275166 569.771812080537 242.48053691275166 544.0805369127517C242.48053691275166 518.3087248322148 254.88322147651004 504.2147651006711 273.48724832214765 504.2147651006711C292.0912751677852 504.2147651006711 304.4939597315436 518.2281879194632 304.4939597315436 544.0805369127517C304.4939597315436 569.771812080537 292.0912751677852 583.7852348993289 273.48724832214765 583.7852348993289ZM361.2295302013423 604.0H437.5785234899329V583.6241610738255H385.79328859060405V484.0H361.2295302013423ZM520.4885906040269 605.6107382550335C552.3006711409396 605.6107382550335 576.461744966443 583.1409395973154 576.461744966443 544.0805369127517C576.461744966443 504.8590604026846 552.3006711409396 482.38926174496646 520.4885906040269 482.38926174496646C488.6765100671141 482.38926174496646 464.51543624161076 504.8590604026846 464.51543624161076 544.0805369127517C464.51543624161076 583.0604026845638 488.6765100671141 605.6107382550335 520.4885906040269 605.6107382550335ZM520.4885906040269 583.7852348993289C501.8845637583893 583.7852348993289 489.4818791946309 569.771812080537 489.4818791946309 544.0805369127517C489.4818791946309 518.3087248322148 501.8845637583893 504.2147651006711 520.4885906040269 504.2147651006711C539.0926174496644 504.2147651006711 551.4953020134228 518.2281879194632 551.4953020134228 544.0805369127517C551.4953020134228 569.771812080537 539.0926174496644 583.7852348993289 520.4885906040269 583.7852348993289ZM603.398657718121 504.37583892617454H640.123489932886V604.0H664.7677852348994V504.37583892617454H701.4120805369129V484.0H603.398657718121ZM731.6510067114095 604.0H808.0000000000001V583.6241610738255H756.2147651006712V484.0H731.6510067114095Z" class="letras" style="fill:var(--ink)"/><path d="M79.2718120805369 676.5214765100671C88.41006711409396 676.5214765100671 94.54362416107382 671.1080536912751 94.54362416107382 663.0127516778523V639.0H86.94496644295302V662.3919463087249C86.94496644295302 666.7127516778523 83.91543624161073 669.8167785234899 79.2718120805369 669.8167785234899C74.62818791946309 669.8167785234899 71.5738255033557 666.7127516778523 71.5738255033557 662.3919463087249V639.0H64.0V663.0127516778523C64.0 671.1080536912751 70.05906040268457 676.5214765100671 79.2718120805369 676.5214765100671ZM105.23999389871872 676.0H112.98764490543013V658.989932885906C112.98764490543013 656.8046979865771 112.76415497254423 652.8315436241611 112.49100061012813 648.361744966443C114.77556436851738 652.9805369127516 116.14133618059792 655.6872483221476 118.20241000610127 659.0147651006712L128.83059792556438 676.0H137.2983831604637V639.0H129.55073215375228V656.755033557047C129.55073215375228 659.1885906040269 129.7493898718731 663.1617449664429 130.0225442342892 666.7872483221477C128.40845027455765 662.9382550335571 126.84402074435631 660.1322147651007 125.37892007321537 657.7234899328859L113.68294691885296 639.0H105.23999389871872ZM155.59341061622942 639.0H148.0195851128737V676.0H155.59341061622942ZM179.32669310555215 676.0C190.57568639414276 676.0 197.35488102501523 669.0469798657718 197.35488102501523 657.4751677852349C197.35488102501523 645.9530201342282 190.57568639414276 639.0 179.45085417937767 639.0H166.3146125686394V676.0ZM173.88843807199513 669.4691275167785V645.5308724832215H179.00387431360585C186.08105552165955 645.5308724832215 189.80588773642464 649.2060402684564 189.80588773642464 657.4751677852349C189.80588773642464 665.7939597315436 186.08105552165955 669.4691275167785 178.95420988407565 669.4691275167785ZM204.92239170225744 676.0H213.2908480780964L216.04722391702256 667.4080536912752H229.1834655277608L232.0391702257474 676.0H240.4572910311165L227.49487492373396 639.0H217.5619890176937ZM217.93447223917022 661.4731543624162 219.00225747406952 658.1456375838926C220.11970713849905 654.4208053691275 221.21232458816348 650.0255033557047 222.45393532641853 644.934899328859C223.74521049420377 649.9758389261744 224.9123245881635 654.3463087248322 226.10427089688832 658.1456375838926L227.22172056131785 661.4731543624162ZM262.0550030506406 676.0C273.3039963392312 676.0 280.0831909701037 669.0469798657718 280.0831909701037 657.4751677852349C280.0831909701037 645.9530201342282 273.3039963392312 639.0 262.1791641244661 639.0H249.04292251372786V676.0ZM256.6167480170836 669.4691275167785V645.5308724832215H261.7321842586943C268.809365466748 645.5308724832215 272.5341976815131 649.2060402684564 272.5341976815131 657.4751677852349C272.5341976815131 665.7939597315436 268.809365466748 669.4691275167785 261.6825198291641 669.4691275167785ZM318.858480780964 676.0C330.1074740695546 676.0 336.8866687004271 669.0469798657718 336.8866687004271 657.4751677852349C336.8866687004271 645.9530201342282 330.1074740695546 639.0 318.9826418547895 639.0H305.84640024405127V676.0ZM313.42022574740696 669.4691275167785V645.5308724832215H318.5356619890177C325.61284319707136 645.5308724832215 329.33767541183647 649.2060402684564 329.33767541183647 657.4751677852349C329.33767541183647 665.7939597315436 325.61284319707136 669.4691275167785 318.4859975594875 669.4691275167785ZM346.589749847468 676.0H371.39713239780355V669.7174496644295H354.1635753508237V660.4053691275168H370.05619280048813V654.2221476510067H354.1635753508237V645.2825503355705H371.34746796827335V639.0H346.589749847468ZM413.7234289200732 676.496644295302C423.0603416717511 676.496644295302 428.82141549725446 670.2140939597316 429.66571079926786 663.3355704697987H421.99255643685177C421.2475899938987 667.358389261745 418.06906650396587 669.7671140939598 413.84758999389874 669.7671140939598C408.1361805979256 669.7671140939598 404.23752287980477 665.5456375838926 404.23752287980477 657.5248322147651C404.23752287980477 649.6778523489933 408.0865161683954 645.2328859060402 413.87242220866386 645.2328859060402C418.09389871873094 645.2328859060402 421.27242220866384 647.61677852349 421.96772422208664 651.6395973154363H429.6408785845028C428.54826113483836 643.3208053691275 422.14154972544236 638.503355704698 413.7234289200732 638.503355704698C403.96436851738866 638.503355704698 396.53953630262356 645.4315436241611 396.53953630262356 657.5248322147651C396.53953630262356 669.5436241610738 403.86503965832827 676.496644295302 413.7234289200732 676.496644295302ZM455.43523489932886 676.496644295302C465.2439597315436 676.496644295302 472.69362416107384 669.5684563758389 472.69362416107384 657.5248322147651C472.69362416107384 645.4315436241611 465.2439597315436 638.503355704698 455.43523489932886 638.503355704698C445.6265100671141 638.503355704698 438.1768456375839 645.4315436241611 438.1768456375839 657.5248322147651C438.1768456375839 669.5436241610738 445.6265100671141 676.496644295302 455.43523489932886 676.496644295302ZM455.43523489932886 669.7671140939598C449.6989932885906 669.7671140939598 445.8748322147651 665.4463087248322 445.8748322147651 657.5248322147651C445.8748322147651 649.5785234899329 449.6989932885906 645.2328859060402 455.43523489932886 645.2328859060402C461.1714765100671 645.2328859060402 464.99563758389263 649.5536912751678 464.99563758389263 657.5248322147651C464.99563758389263 665.4463087248322 461.1714765100671 669.7671140939598 455.43523489932886 669.7671140939598ZM482.39670530811475 676.0H490.14435631482615V658.989932885906C490.14435631482615 656.8046979865771 489.92086638194024 652.8315436241611 489.64771201952414 648.361744966443C491.9322757779134 652.9805369127516 493.2980475899939 655.6872483221476 495.35912141549727 659.0147651006712L505.98730933496034 676.0H514.4550945698597V639.0H506.7074435631483V656.755033557047C506.7074435631483 659.1885906040269 506.9061012812691 663.1617449664429 507.17925564368517 666.7872483221477C505.56516168395365 662.9382550335571 504.0007321537523 660.1322147651007 502.5356314826114 657.7234899328859L490.83965832824896 639.0H482.39670530811475ZM523.6863636363636 645.2825503355705H535.0098535692496V676.0H542.6085112873703V645.2825503355705H553.9071690054911V639.0H523.6863636363636ZM563.1384380719951 676.0H570.7122635753508V662.7892617449664H576.6719951189749L583.7243441122636 676.0H592.1176327028676L584.2458206223306 661.5724832214765C588.4672971323978 659.7597315436242 590.8015253203172 656.1093959731544 590.8015253203172 651.0436241610738C590.8015253203172 643.7677852348993 585.9840756558876 639.0 577.5659548505186 639.0H563.1384380719951ZM570.7122635753508 656.6557046979866V645.2577181208054H576.1505186089079C580.7941427699817 645.2577181208054 582.9793776693105 647.3187919463087 582.9793776693105 651.0436241610738C582.9793776693105 654.7436241610739 580.7941427699817 656.6557046979866 576.1753508236729 656.6557046979866ZM616.7945393532641 676.496644295302C626.6032641854789 676.496644295302 634.052928615009 669.5684563758389 634.052928615009 657.5248322147651C634.052928615009 645.4315436241611 626.6032641854789 638.503355704698 616.7945393532641 638.503355704698C606.9858145210493 638.503355704698 599.5361500915192 645.4315436241611 599.5361500915192 657.5248322147651C599.5361500915192 669.5436241610738 606.9858145210493 676.496644295302 616.7945393532641 676.496644295302ZM616.7945393532641 669.7671140939598C611.0582977425258 669.7671140939598 607.2341366687003 665.4463087248322 607.2341366687003 657.5248322147651C607.2341366687003 649.5785234899329 611.0582977425258 645.2328859060402 616.7945393532641 645.2328859060402C622.5307809640024 645.2328859060402 626.3549420378279 649.5536912751678 626.3549420378279 657.5248322147651C626.3549420378279 665.4463087248322 622.5307809640024 669.7671140939598 616.7945393532641 669.7671140939598ZM643.75600976205 676.0H667.2969493593654V669.7174496644295H651.3298352654057V639.0H643.75600976205ZM709.5487492373397 657.7979865771812H692.7125076266015V663.7577181208054H709.5487492373397ZM744.0280658938376 639.0H736.4542403904819V676.0H744.0280658938376ZM753.2593349603416 645.2825503355705H764.5828248932276V676.0H772.1814826113483V645.2825503355705H783.4801403294691V639.0H753.2593349603416ZM792.7114093959731 676.0H800.2852348993288V660.2315436241611H816.4013422818791V676.0H823.9999999999999V639.0H816.4013422818791V653.9489932885906H800.2852348993288V639.0H792.7114093959731Z" class="letras" style="fill:var(--ink)"/></svg></div>
+        <span class="pill ld ld2"><span class="es">TRL 2 · Diseñado y simulado, aún sin fabricar</span><span class="en">TRL 2 · Designed and simulated, not yet built</span></span>
         <h1 class="ld ld2">
           <span class="es">La unidad de control de motor de <em>Olinia</em>, diseñada en Hermosillo</span>
           <span class="en">The motor control unit for <em>Olinia</em>, designed in Hermosillo</span>
         </h1>
         <p class="lead ld ld3">
-          <span class="es">Equipo Yolotl del Instituto Tecnológico de Hermosillo (TecNM). Diseñamos desde cero el inversor, los drivers, los sensores, el control y las protecciones que mueven el motor del vehículo eléctrico mexicano. Proyecto para InnovaTecNM 2026.</span>
-          <span class="en">Team Yolotl from the Instituto Tecnológico de Hermosillo (TecNM). We are designing, from scratch, the inverter, gate drivers, sensors, control and protections that drive the motor of Mexico's electric car. A project for InnovaTecNM 2026.</span>
+          <span class="es">Equipo Yolotl, Instituto Tecnológico de Hermosillo (TecNM). Diseñamos desde cero el inversor, los drivers, los sensores, el control y las protecciones que mueven el motor del vehículo eléctrico mexicano, y los probamos en simulación. Proyecto para InnovaTecNM 2026.</span>
+          <span class="en">Team Yolotl, Instituto Tecnológico de Hermosillo (TecNM). We designed from scratch the inverter, gate drivers, sensors, control and protections that drive the motor of Mexico's electric car, and tested them in simulation. A project for InnovaTecNM 2026.</span>
         </p>
+        <div class="btns ld ld4">
+          <a class="btn pri" href="#resultados"><span class="es">Ver resultados</span><span class="en">See the results</span> <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>
+          <a class="btn" href="#producto"><span class="es">Galería del producto</span><span class="en">Product gallery</span></a>
+        </div>
       </div>
-      <figure class="ld ld4">
-        <img src="img/gab_05_abierto.jpg" width="1600" height="1000" alt="Modelo 3D del gabinete sin tapa con el banco de capacitores, la placa de control y los conectores de alto voltaje">
+      <figure class="shot ld ld5">
+        <img src="img/gab_01_producto.jpg" width="1600" height="1000" alt="Modelo 3D del gabinete cerrado con conectores de batería y fases, mangueras de refrigerante y tierra">
         <figcaption>
-          <span class="es">Modelo 3D del gabinete sin tapa: 220 × 209.5 × 142.6 mm con conectores. Diseño, aún no fabricado.</span>
-          <span class="en">3D model of the enclosure, lid off: 220 × 209.5 × 142.6 mm with connectors. Design only, not yet built.</span>
+          <span class="es">Modelo 3D: 220 × 209.5 × 142.6 mm con conectores. Diseño, aún no fabricado.</span>
+          <span class="en">3D model: 220 × 209.5 × 142.6 mm with connectors. Design only, not yet built.</span>
         </figcaption>
       </figure>
     </div>
-    <div class="strip ld ld5">
+    <div class="kpis ld ld6">
       <div><b>13.5 kW</b><span class="es">continuos</span><span class="en">continuous</span></div>
       <div><b>30 kW</b><span class="es">pico por 30 s</span><span class="en">peak for 30 s</span></div>
       <div><b>60–140 V</b><span class="es">bus de batería (CD)</span><span class="en">battery bus (DC)</span></div>
@@ -316,11 +453,11 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-betw
   </div>
 </div>
 
-<!-- 2. EL RETO -->
+<!-- 01 EL RETO -->
 <section id="reto">
   <div class="wrap">
     <div class="head">
-      <span class="eyebrow"><span class="es">El reto</span><span class="en">The challenge</span></span>
+      <span class="eyebrow"><i>01</i><span class="es">El reto</span><span class="en">The challenge</span></span>
       <h2><span class="es">Entre la batería y el motor</span><span class="en">Between the battery and the motor</span></h2>
     </div>
     <div class="two">
@@ -330,19 +467,27 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-betw
       </div>
       <div class="analogy">
         <p class="eyebrow"><span class="es">Una analogía</span><span class="en">An analogy</span></p>
-        <p><span class="es">La batería es un tanque de agua a presión y el motor es una rueda hidráulica. La MCU es el conjunto de válvulas que abre y cierra 16 000 veces por segundo para que el agua empuje la rueda justo en el momento correcto, con la fuerza que pide el pie del conductor.</span><span class="en">The battery is a pressurized water tank and the motor is a water wheel. The MCU is the set of valves that opens and closes 16,000 times per second so the water pushes the wheel at exactly the right moment, with the force the driver's foot is asking for.</span></p>
+        <p style="margin-top:10px"><span class="es">La batería es un tanque de agua a presión y el motor es una rueda hidráulica. La MCU es el conjunto de válvulas que abre y cierra 16 000 veces por segundo para que el agua empuje la rueda justo en el momento correcto, con la fuerza que pide el pie del conductor.</span><span class="en">The battery is a pressurized water tank and the motor is a water wheel. The MCU is the set of valves that opens and closes 16,000 times per second so the water pushes the wheel at exactly the right moment, with the force the driver's foot is asking for.</span></p>
         <p><span class="es">Al frenar, la rueda empuja el agua de regreso al tanque: eso es la regeneración.</span><span class="en">When braking, the wheel pushes water back into the tank: that is regeneration.</span></p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- 3. ESPECIFICACIONES -->
+<!-- 02 ESPECIFICACIONES -->
 <section id="especificaciones">
   <div class="wrap">
     <div class="head">
-      <span class="eyebrow"><span class="es">Especificaciones</span><span class="en">Specifications</span></span>
+      <span class="eyebrow"><i>02</i><span class="es">Especificaciones</span><span class="en">Specifications</span></span>
       <h2><span class="es">Lo que pide Olinia y lo que diseñamos</span><span class="en">What Olinia asks for and what we designed</span></h2>
+      <p class="lede"><span class="es">Cada dato dice de dónde sale. Nada de esta página está medido en laboratorio todavía.</span><span class="en">Every figure says where it comes from. Nothing on this page has been measured in the lab yet.</span></p>
+    </div>
+    <div class="legend">
+      <span class="it"><span class="tag req">Olinia</span><span class="es">requisito de Olinia</span><span class="en">Olinia requirement</span></span>
+      <span class="it"><span class="tag dec"><span class="es">diseño</span><span class="en">design</span></span><span class="es">decisión nuestra</span><span class="en">our decision</span></span>
+      <span class="it"><span class="tag cal"><span class="es">cálculo</span><span class="en">calculated</span></span><span class="es">hoja de cálculo o fórmula</span><span class="en">spreadsheet or formula</span></span>
+      <span class="it"><span class="tag sim"><span class="es">simulado</span><span class="en">simulated</span></span><span class="es">resultado de simulación</span><span class="en">simulation result</span></span>
+      <span class="it"><span class="tag sup"><span class="es">supuesto</span><span class="en">assumed</span></span><span class="es">falta el dato real</span><span class="en">real data pending</span></span>
     </div>
     <div class="tablebox">
       <table>
@@ -361,28 +506,27 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-betw
           <tr><td><span class="es">Control</span><span class="en">Control</span></td><td><span class="es">FOC (control orientado a campo)</span><span class="en">FOC (field-oriented control)</span></td><td><span class="tag dec"><span class="es">diseño</span><span class="en">design</span></span></td></tr>
           <tr><td><span class="es">Conmutación</span><span class="en">Switching</span></td><td class="v">16 kHz · <span class="es">tiempo muerto</span><span class="en">dead time</span> 1 µs</td><td><span class="tag dec"><span class="es">diseño</span><span class="en">design</span></span></td></tr>
           <tr><td><span class="es">Enfriamiento</span><span class="en">Cooling</span></td><td><span class="es">Líquido, placa fría de aluminio A356</span><span class="en">Liquid, A356 aluminum cold plate</span></td><td><span class="tag dec"><span class="es">diseño</span><span class="en">design</span></span></td></tr>
-          <tr><td><span class="es">Temperatura de unión</span><span class="en">Junction temperature</span></td><td class="v">115 °C <span class="es">cont.</span><span class="en">cont.</span> · 131 °C <span class="es">pico</span><span class="en">peak</span></td><td><span class="tag cal"><span class="es">cálculo</span><span class="en">calculated</span></span></td></tr>
+          <tr><td><span class="es">Temperatura de unión, MOSFET más caliente</span><span class="en">Junction temperature, hottest MOSFET</span></td><td class="v">130 °C @ 13.5 kW · 148 °C @ 30 kW 30 s</td><td><span class="tag sim"><span class="es">simulado</span><span class="en">simulated</span></span></td></tr>
+          <tr><td><span class="es">Límite de unión del MOSFET</span><span class="en">MOSFET junction limit</span></td><td class="v">175 °C</td><td><span class="tag cal"><span class="es">hoja de datos</span><span class="en">datasheet</span></span></td></tr>
         </tbody>
       </table>
     </div>
-    <p class="note"><span class="es">La temperatura se calculó con refrigerante supuesto a 65 °C y 8 L/min; Olinia aún no da esos datos. También falta confirmar con Olinia si los 130 A son de fase o de batería.</span><span class="en">Temperatures were calculated assuming 65 °C coolant at 8 L/min; Olinia has not yet provided these figures. We also still need Olinia to confirm whether the 130 A is phase or battery current.</span></p>
+    <p class="note"><span class="es">Las temperaturas salen del mapa térmico de la placa de potencia con refrigerante supuesto a 65 °C y 8 L/min; Olinia aún no da esos datos. También falta confirmar con Olinia si los 130 A son de fase o de batería.</span><span class="en">Temperatures come from the power board thermal map, assuming 65 °C coolant at 8 L/min; Olinia has not yet provided these figures. We also still need Olinia to confirm whether the 130 A is phase or battery current.</span></p>
   </div>
 </section>
 
-<!-- 4. CÓMO FUNCIONA -->
+<!-- 03 CÓMO FUNCIONA -->
 <section id="funcionamiento">
   <div class="wrap">
     <div class="head">
-      <span class="eyebrow"><span class="es">Cómo funciona</span><span class="en">How it works</span></span>
+      <span class="eyebrow"><i>03</i><span class="es">Cómo funciona</span><span class="en">How it works</span></span>
       <h2><span class="es">De corriente directa a un campo que gira</span><span class="en">From direct current to a rotating field</span></h2>
     </div>
-    <div class="diagram" role="img" aria-label="Diagrama de bloques de la MCU">
+    <div class="diagram card" role="img" aria-label="Diagrama de bloques de la MCU">
       <svg viewBox="0 0 1000 400" xmlns="http://www.w3.org/2000/svg">
-        <!-- frontera de aislamiento -->
         <line x1="20" y1="215" x2="980" y2="215" class="d-iso"/>
         <text x="20" y="235" class="d-iso-t es">AISLAMIENTO REFORZADO · ALTO VOLTAJE ARRIBA</text>
         <text x="20" y="235" class="d-iso-t en">REINFORCED ISOLATION · HIGH VOLTAGE ABOVE</text>
-        <!-- potencia -->
         <rect x="20" y="60" width="150" height="90" rx="6" class="d-hv"/>
         <text x="95" y="98" text-anchor="middle" class="d-t es">Batería</text><text x="95" y="98" text-anchor="middle" class="d-t en">Battery</text>
         <text x="95" y="120" text-anchor="middle" class="d-s">60–140 V</text>
@@ -395,14 +539,13 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-betw
         <text x="545" y="130" text-anchor="middle" class="d-s">+ 3 × TLE4972</text>
         <rect x="770" y="60" width="200" height="90" rx="6" class="d-hv"/>
         <text x="870" y="98" text-anchor="middle" class="d-t es">Motor PMSM</text><text x="870" y="98" text-anchor="middle" class="d-t en">PMSM motor</text>
-        <text x="870" y="120" text-anchor="middle" class="d-s es">+ resolver</text><text x="870" y="120" text-anchor="middle" class="d-s en">+ resolver</text>
+        <text x="870" y="120" text-anchor="middle" class="d-s">+ resolver</text>
         <path d="M170 105 H225" class="d-pow"/>
         <path d="M385 105 H440" class="d-pow"/>
         <path d="M650 85 H770 M650 105 H770 M650 125 H770" class="d-pow"/>
         <path d="M170 105 H225 M385 105 H440" class="d-flow"/>
         <path d="M650 85 H770" class="d-flow"/><path d="M650 105 H770" class="d-flow" style="animation-delay:-.37s"/><path d="M650 125 H770" class="d-flow" style="animation-delay:-.73s"/>
         <text x="710" y="76" text-anchor="middle" class="d-s">U V W</text>
-        <!-- control -->
         <rect x="440" y="250" width="210" height="100" rx="6" class="d-box"/>
         <text x="545" y="292" text-anchor="middle" class="d-t">TI F28P65 (C2000)</text>
         <text x="545" y="314" text-anchor="middle" class="d-s es">FOC · PWM 16 kHz</text><text x="545" y="314" text-anchor="middle" class="d-s en">FOC · 16 kHz PWM</text>
@@ -422,220 +565,315 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-betw
         <text x="404" y="190" text-anchor="end" class="d-s">AMC1311 (V bus)</text>
       </svg>
     </div>
-    <div class="foc">
-      <div><h3><span class="es">Medir</span><span class="en">Measure</span></h3><p><span class="es">Tres sensores leen la corriente de cada fase y el resolver da la posición exacta del rotor.</span><span class="en">Three sensors read each phase current and the resolver gives the exact rotor position.</span></p></div>
-      <div><h3><span class="es">Girar la vista</span><span class="en">Change frame</span></h3><p><span class="es">Las transformadas de Clarke y Park convierten tres corrientes alternas en dos valores fijos: <i>id</i> (campo) e <i>iq</i> (par).</span><span class="en">Clarke and Park transforms turn three AC currents into two steady values: <i>id</i> (flux) and <i>iq</i> (torque).</span></p></div>
-      <div><h3><span class="es">Corregir</span><span class="en">Correct</span></h3><p><span class="es">Dos controladores PI comparan <i>id</i> e <i>iq</i> contra el par que pide la VCU y calculan el voltaje necesario.</span><span class="en">Two PI controllers compare <i>id</i> and <i>iq</i> with the torque the VCU requests and compute the voltage needed.</span></p></div>
-      <div><h3><span class="es">Conmutar</span><span class="en">Switch</span></h3><p><span class="es">La modulación vectorial (SVPWM) traduce ese voltaje en los pulsos de los seis interruptores, 16 000 veces por segundo.</span><span class="en">Space-vector modulation (SVPWM) turns that voltage into pulses for the six switches, 16,000 times per second.</span></p></div>
+    <div class="steps">
+      <div class="card"><h3><span class="es">Medir</span><span class="en">Measure</span></h3><p><span class="es">Tres sensores leen la corriente de cada fase y el resolver da la posición exacta del rotor.</span><span class="en">Three sensors read each phase current and the resolver gives the exact rotor position.</span></p></div>
+      <div class="card"><h3><span class="es">Girar la vista</span><span class="en">Change frame</span></h3><p><span class="es">Las transformadas de Clarke y Park convierten tres corrientes alternas en dos valores fijos: <i>id</i> (campo) e <i>iq</i> (par).</span><span class="en">Clarke and Park transforms turn three AC currents into two steady values: <i>id</i> (flux) and <i>iq</i> (torque).</span></p></div>
+      <div class="card"><h3><span class="es">Corregir</span><span class="en">Correct</span></h3><p><span class="es">Dos controladores PI comparan <i>id</i> e <i>iq</i> contra el par que pide la VCU y calculan el voltaje necesario.</span><span class="en">Two PI controllers compare <i>id</i> and <i>iq</i> with the torque the VCU requests and compute the voltage needed.</span></p></div>
+      <div class="card"><h3><span class="es">Conmutar</span><span class="en">Switch</span></h3><p><span class="es">La modulación vectorial (SVPWM) traduce ese voltaje en los pulsos de los seis interruptores, 16 000 veces por segundo.</span><span class="en">Space-vector modulation (SVPWM) turns that voltage into pulses for the six switches, 16,000 times per second.</span></p></div>
     </div>
   </div>
 </section>
 
-<!-- 5. HARDWARE -->
-<section id="hardware">
+<!-- 04 PRODUCTO -->
+<section id="producto">
   <div class="wrap">
     <div class="head">
-      <span class="eyebrow">Hardware</span>
+      <span class="eyebrow"><i>04</i><span class="es">Producto</span><span class="en">Product</span></span>
       <h2><span class="es">Tres pisos en 6.6 litros</span><span class="en">Three floors in 6.6 liters</span></h2>
-      <p class="read muted"><span class="es">Para caber en la envolvente de Olinia apilamos la electrónica: la placa de potencia va sobre la placa fría, el banco de capacitores encima y la placa de control arriba. Las dos placas ya están ruteadas en KiCad sin conexiones faltantes ni violaciones de separación; falta la revisión del fabricante.</span><span class="en">To fit Olinia's envelope we stacked the electronics: the power board sits on the cold plate, the capacitor bank above it and the control board on top. Both boards are fully routed in KiCad with no unrouted nets and no clearance violations; manufacturer review is still pending.</span></p>
+      <p class="lede"><span class="es">Para caber en la envolvente de Olinia apilamos la electrónica: la placa de potencia va sobre la placa fría, el banco de capacitores encima y la placa de control arriba. Las dos placas están ruteadas en KiCad sin conexiones faltantes ni violaciones; falta la revisión del fabricante.</span><span class="en">To fit Olinia's envelope we stacked the electronics: the power board sits on the cold plate, the capacitor bank above it and the control board on top. Both boards are fully routed in KiCad with no unrouted nets or violations; manufacturer review is still pending.</span></p>
     </div>
-    <div class="gallery">
-      <figure class="wide">
-        <div class="ph"><img src="img/gab_01_producto.jpg" width="1600" height="1000" alt="Gabinete cerrado con los conectores de batería y de fases, mangueras de refrigerante y cable de tierra"></div>
-        <figcaption><b><span class="es">Producto terminado.</span><span class="en">Finished product.</span></b> <span class="es">220 × 209.5 × 142.6 mm con conectores, dentro de la ficha de 220 × 210 × 144 mm. Receptáculos sellados de alto voltaje para batería y fases, mangueras del refrigerante y tierra. Los conectores son genéricos, por definir con Olinia.</span><span class="en">220 × 209.5 × 142.6 mm with connectors, inside the 220 × 210 × 144 mm spec. Sealed high-voltage receptacles for battery and phases, coolant hoses and ground. Connectors are generic, to be defined with Olinia.</span></figcaption>
+
+    <div class="viewer">
+      <figure class="stage card">
+        <div class="ph" id="v-ph">
+          <img id="v-img" src="img/gab_01_producto.jpg" width="1600" height="1000" alt="Gabinete cerrado con conectores, mangueras y tierra">
+          <div class="arrows"><button type="button" id="v-prev" aria-label="Anterior / Previous">‹</button><button type="button" id="v-next" aria-label="Siguiente / Next">›</button></div>
+        </div>
+        <figcaption><span id="v-cap"><b><span class="es">Producto terminado.</span><span class="en">Finished product.</span></b> <span class="es">220 × 209.5 × 142.6 mm con conectores, dentro de la ficha de 220 × 210 × 144 mm. Receptáculos sellados de alto voltaje, mangueras del refrigerante y tierra. Conectores genéricos, por definir con Olinia.</span><span class="en">220 × 209.5 × 142.6 mm with connectors, inside the 220 × 210 × 144 mm spec. Sealed high-voltage receptacles, coolant hoses and ground. Generic connectors, to be defined with Olinia.</span></span><span class="nums" id="v-num">01 / 11</span></figcaption>
       </figure>
-      <figure>
-        <div class="ph"><img src="img/gab_02_frente.jpg" width="1600" height="1000" alt="Frente del gabinete con el conector de batería arriba y las tres fases abajo"></div>
-        <figcaption><b><span class="es">Frente.</span><span class="en">Front.</span></b> <span class="es">Arriba, el receptáculo de batería; abajo, las tres fases U, V y W hacia el motor, y el cable verde de tierra.</span><span class="en">Battery receptacle on top; below, the three phases U, V and W to the motor, and the green ground lead.</span></figcaption>
-      </figure>
-      <figure>
-        <div class="ph"><img src="img/gab_06_corte.jpg" width="1600" height="1000" alt="Corte lateral del gabinete mostrando los tres pisos"></div>
-        <figcaption><b><span class="es">Corte lateral.</span><span class="en">Side section.</span></b> <span class="es">Abajo la placa de potencia sobre la placa fría con el canal de refrigerante, en medio los capacitores y arriba la placa de control.</span><span class="en">Power board on the cold plate with its coolant channel at the bottom, capacitors in the middle and the control board on top.</span></figcaption>
-      </figure>
-      <figure>
-        <div class="ph"><img src="img/gab_07_terminales.jpg" width="1600" height="1000" alt="Terminales de batería con capuchones rojo y negro dentro del gabinete"></div>
-        <figcaption><b><span class="es">Terminales de CD.</span><span class="en">DC terminals.</span></b> <span class="es">La entrada de batería llega a los postes HV+ (rojo) y HV− (negro) con capuchones aislantes.</span><span class="en">The battery input reaches the HV+ (red) and HV− (black) posts under insulating caps.</span></figcaption>
-      </figure>
-      <figure>
-        <div class="ph"><img src="img/gab_10_refrigeracion.jpg" width="1600" height="1000" alt="Canal de refrigerante en la placa fría"></div>
-        <figcaption><b><span class="es">Placa fría.</span><span class="en">Cold plate.</span></b> <span class="es">Corte en planta: el canal en serpentín por donde pasa el refrigerante del vehículo, debajo de los MOSFET.</span><span class="en">Plan section: the serpentine channel that carries the vehicle's coolant under the MOSFETs.</span></figcaption>
-      </figure>
-      <figure class="wide">
-        <div class="ph"><img src="img/gab_08_potencia.jpg" width="1600" height="1000" alt="Placa de potencia con los 48 MOSFET y las barras de cobre"></div>
-        <figcaption><b><span class="es">Placa de potencia.</span><span class="en">Power board.</span></b> <span class="es">Los 48 MOSFET en tres piernas y las barras de cobre que llevan la corriente a las fases.</span><span class="en">The 48 MOSFETs in three legs and the copper bars that carry current to the phases.</span></figcaption>
-      </figure>
-      <figure class="wide">
-        <div class="ph"><img src="img/gab_09_control.jpg" width="1600" height="1000" alt="Placa de control con el microcontrolador F28P65"></div>
-        <figcaption><b><span class="es">Placa de control.</span><span class="en">Control board.</span></b> <span class="es">206 × 54 mm, con el microcontrolador F28P65, la lectura del resolver, el supervisor y el CAN.</span><span class="en">206 × 54 mm, carrying the F28P65 microcontroller, resolver interface, supervisor and CAN.</span></figcaption>
-      </figure>
-      <figure class="wide">
-        <div class="pcb"><img src="img/pcb_potencia.jpg" width="1600" height="1437" alt="Cobre de la cara superior de la placa de potencia"></div>
-        <figcaption><b><span class="es">Ruteo de la placa de potencia.</span><span class="en">Power board routing.</span></b> <span class="es">206 × 185 mm, 4 capas, cara superior. Las tres piernas U, V y W con 16 MOSFET cada una; abajo, los postes de CD en pares y las salidas de fase.</span><span class="en">206 × 185 mm, 4 layers, top side. The three legs U, V and W with 16 MOSFETs each; below, the paired DC terminals and the phase outputs.</span></figcaption>
-      </figure>
+      <div class="thumbs" role="group" aria-label="Vistas / Views">
+        <button type="button" aria-pressed="true" data-src="img/gab_01_producto.jpg" data-alt="Gabinete cerrado con conectores, mangueras y tierra"><img src="img/min/gab_01_producto.jpg" width="400" height="250" alt=""><span class="cap"><b><span class="es">Producto terminado.</span><span class="en">Finished product.</span></b> <span class="es">220 × 209.5 × 142.6 mm con conectores, dentro de la ficha de 220 × 210 × 144 mm. Receptáculos sellados de alto voltaje, mangueras del refrigerante y tierra. Conectores genéricos, por definir con Olinia.</span><span class="en">220 × 209.5 × 142.6 mm with connectors, inside the 220 × 210 × 144 mm spec. Sealed high-voltage receptacles, coolant hoses and ground. Generic connectors, to be defined with Olinia.</span></span></button>
+        <button type="button" aria-pressed="false" data-src="img/gab_02_frente.jpg" data-alt="Frente del gabinete con el conector de batería arriba y las tres fases abajo"><img src="img/min/gab_02_frente.jpg" width="400" height="250" alt=""><span class="cap"><b><span class="es">Frente.</span><span class="en">Front.</span></b> <span class="es">Arriba, el receptáculo de batería; abajo, las fases U, V y W hacia el motor y el cable verde de tierra.</span><span class="en">Battery receptacle on top; below, phases U, V and W to the motor and the green ground lead.</span></span></button>
+        <button type="button" aria-pressed="false" data-src="img/gab_03_atras.jpg" data-alt="Parte trasera del gabinete con los conectores de bajo voltaje"><img src="img/min/gab_03_atras.jpg" width="400" height="250" alt=""><span class="cap"><b><span class="es">Atrás.</span><span class="en">Rear.</span></b> <span class="es">Conectores sellados de bajo voltaje para las señales hacia el vehículo y el motor.</span><span class="en">Sealed low-voltage connectors for the signals to the vehicle and the motor.</span></span></button>
+        <button type="button" aria-pressed="false" data-src="img/gab_04_abajo.jpg" data-alt="Vista desde abajo con las mangueras de refrigerante"><img src="img/min/gab_04_abajo.jpg" width="400" height="250" alt=""><span class="cap"><b><span class="es">Abajo.</span><span class="en">Underside.</span></b> <span class="es">Entrada y salida del refrigerante a la placa fría, el borne de tierra y los cables de fase saliendo hacia el motor.</span><span class="en">Coolant inlet and outlet for the cold plate, the ground stud and the phase cables heading to the motor.</span></span></button>
+        <button type="button" aria-pressed="false" data-src="img/gab_05_abierto.jpg" data-alt="Gabinete sin tapa con el banco de capacitores y la placa de control"><img src="img/min/gab_05_abierto.jpg" width="400" height="250" alt=""><span class="cap"><b><span class="es">Sin tapa.</span><span class="en">Lid off.</span></b> <span class="es">La placa de control arriba y, debajo, el banco de 8 capacitores con su barra laminada.</span><span class="en">The control board on top and, below it, the 8-capacitor bank with its laminated busbar.</span></span></button>
+        <button type="button" aria-pressed="false" data-src="img/gab_06_corte.jpg" data-alt="Corte lateral del gabinete mostrando los tres pisos"><img src="img/min/gab_06_corte.jpg" width="400" height="250" alt=""><span class="cap"><b><span class="es">Corte lateral.</span><span class="en">Side section.</span></b> <span class="es">Abajo la placa de potencia sobre la placa fría con su canal de refrigerante, en medio los capacitores y arriba la placa de control.</span><span class="en">Power board on the cold plate with its coolant channel at the bottom, capacitors in the middle and the control board on top.</span></span></button>
+        <button type="button" aria-pressed="false" data-src="img/gab_07_terminales.jpg" data-alt="Terminales de batería con capuchones rojo y negro"><img src="img/min/gab_07_terminales.jpg" width="400" height="250" alt=""><span class="cap"><b><span class="es">Terminales de CD.</span><span class="en">DC terminals.</span></b> <span class="es">La entrada de batería llega a los postes HV+ (rojo) y HV− (negro) con capuchones aislantes.</span><span class="en">The battery input reaches the HV+ (red) and HV− (black) posts under insulating caps.</span></span></button>
+        <button type="button" aria-pressed="false" data-src="img/gab_08_potencia.jpg" data-alt="Placa de potencia con los 48 MOSFET y las barras de cobre"><img src="img/min/gab_08_potencia.jpg" width="400" height="250" alt=""><span class="cap"><b><span class="es">Placa de potencia.</span><span class="en">Power board.</span></b> <span class="es">Los 48 MOSFET en tres piernas y las barras de cobre que llevan la corriente a las fases.</span><span class="en">The 48 MOSFETs in three legs and the copper bars that carry current to the phases.</span></span></button>
+        <button type="button" aria-pressed="false" data-src="img/gab_09_control.jpg" data-alt="Placa de control con el microcontrolador F28P65"><img src="img/min/gab_09_control.jpg" width="400" height="250" alt=""><span class="cap"><b><span class="es">Placa de control.</span><span class="en">Control board.</span></b> <span class="es">206 × 54 mm, con el microcontrolador F28P65, la lectura del resolver, el supervisor y el CAN.</span><span class="en">206 × 54 mm, carrying the F28P65 microcontroller, resolver interface, supervisor and CAN.</span></span></button>
+        <button type="button" aria-pressed="false" data-src="img/gab_10_refrigeracion.jpg" data-alt="Canal de refrigerante en serpentín de la placa fría"><img src="img/min/gab_10_refrigeracion.jpg" width="400" height="250" alt=""><span class="cap"><b><span class="es">Placa fría.</span><span class="en">Cold plate.</span></b> <span class="es">Corte en planta: el canal en serpentín por donde pasa el refrigerante del vehículo, debajo de los MOSFET.</span><span class="en">Plan section: the serpentine channel that carries the vehicle's coolant under the MOSFETs.</span></span></button>
+        <button type="button" aria-pressed="false" data-src="img/pcb_potencia.jpg" data-alt="Cobre de la cara superior de la placa de potencia" data-pcb="1"><img src="img/min/pcb_potencia.jpg" width="400" height="250" alt=""><span class="cap"><b><span class="es">Ruteo de la placa de potencia.</span><span class="en">Power board routing.</span></b> <span class="es">206 × 185 mm, 4 capas, cara superior. Las tres piernas U, V y W con 16 MOSFET cada una; abajo, los postes de CD y las salidas de fase.</span><span class="en">206 × 185 mm, 4 layers, top side. The three legs U, V and W with 16 MOSFETs each; below, the DC posts and phase outputs.</span></span></button>
+      </div>
     </div>
+
     <div class="parts">
-      <div><span class="pn">TMS320F28P659DK-Q1</span><h3><span class="es">Microcontrolador</span><span class="en">Microcontroller</span></h3><p><span class="es">TI C2000 automotriz. Su ePWM con Trip Zone apaga los pulsos por hardware.</span><span class="en">Automotive TI C2000. Its ePWM Trip Zone shuts the pulses off in hardware.</span></p></div>
-      <div><span class="pn">48 × IPT067N20NM6</span><h3>MOSFET 200 V</h3><p><span class="es">Ocho en paralelo por cada una de las seis posiciones del puente, encapsulado TOLL.</span><span class="en">Eight in parallel for each of the six bridge positions, TOLL package.</span></p></div>
-      <div><span class="pn">UCC21750-Q1</span><h3><span class="es">Drivers aislados</span><span class="en">Isolated gate drivers</span></h3><p><span class="es">+15 / −3 V en compuerta, con detección de desaturación.</span><span class="en">+15 / −3 V gate drive with desaturation detection.</span></p></div>
-      <div><span class="pn">3 × TLE4972-AE35D5</span><h3><span class="es">Sensores de corriente</span><span class="en">Current sensors</span></h3><p><span class="es">Sin contacto (efecto Hall), con salida rápida de sobrecorriente.</span><span class="en">Coreless Hall-effect, with a fast overcurrent output.</span></p></div>
-      <div><span class="pn">AD2S1210 + ALM2403-Q1</span><h3><span class="es">Resolver</span><span class="en">Resolver interface</span></h3><p><span class="es">Excita el resolver y convierte seno y coseno en ángulo y velocidad.</span><span class="en">Drives the resolver and turns sine and cosine into angle and speed.</span></p></div>
-      <div><span class="pn">TPS65381A-Q1 · TCAN1044A-Q1</span><h3><span class="es">Supervisor y CAN</span><span class="en">Supervisor and CAN</span></h3><p><span class="es">Watchdog y vigilancia de voltajes; transceptor CAN automotriz.</span><span class="en">Watchdog and voltage monitoring; automotive CAN transceiver.</span></p></div>
+      <div class="card"><span class="pn">TMS320F28P659DK-Q1</span><h3><span class="es">Microcontrolador</span><span class="en">Microcontroller</span></h3><p><span class="es">TI C2000 automotriz. Su ePWM con Trip Zone apaga los pulsos por hardware.</span><span class="en">Automotive TI C2000. Its ePWM Trip Zone shuts the pulses off in hardware.</span></p></div>
+      <div class="card"><span class="pn">48 × IPT067N20NM6</span><h3>MOSFET 200 V</h3><p><span class="es">Ocho en paralelo por cada una de las seis posiciones del puente, encapsulado TOLL.</span><span class="en">Eight in parallel for each of the six bridge positions, TOLL package.</span></p></div>
+      <div class="card"><span class="pn">UCC21750-Q1</span><h3><span class="es">Drivers aislados</span><span class="en">Isolated gate drivers</span></h3><p><span class="es">+15 / −3 V en compuerta, con detección de desaturación.</span><span class="en">+15 / −3 V gate drive with desaturation detection.</span></p></div>
+      <div class="card"><span class="pn">3 × TLE4972-AE35D5</span><h3><span class="es">Sensores de corriente</span><span class="en">Current sensors</span></h3><p><span class="es">Sin contacto (efecto Hall), con salida rápida de sobrecorriente.</span><span class="en">Coreless Hall-effect, with a fast overcurrent output.</span></p></div>
+      <div class="card"><span class="pn">AD2S1210 + ALM2403-Q1</span><h3><span class="es">Resolver</span><span class="en">Resolver interface</span></h3><p><span class="es">Excita el resolver y convierte seno y coseno en ángulo y velocidad.</span><span class="en">Drives the resolver and turns sine and cosine into angle and speed.</span></p></div>
+      <div class="card"><span class="pn">TPS65381A-Q1 · TCAN1044A-Q1</span><h3><span class="es">Supervisor y CAN</span><span class="en">Supervisor and CAN</span></h3><p><span class="es">Watchdog y vigilancia de voltajes; transceptor CAN automotriz.</span><span class="en">Watchdog and voltage monitoring; automotive CAN transceiver.</span></p></div>
+    </div>
+
+    <div class="sub" id="placa">
+      <div class="subhead">
+        <span class="eyebrow"><span class="es">Verificación de la placa de potencia</span><span class="en">Power board verification</span></span>
+        <h3><span class="es">Revisada antes de mandarla a fabricar</span><span class="en">Checked before it goes to the fab</span></h3>
+        <p><span class="es">Revisamos la placa ruteada con sus reglas eléctricas, su calentamiento y su conmutación. Todo es cálculo o simulación sobre el diseño; falta la revisión de fabricación del proveedor.</span><span class="en">We checked the routed board for electrical rules, heating and switching. All of it is calculation or simulation on the design; the supplier's manufacturing review is still pending.</span></p>
+      </div>
+      <div class="verif">
+        <figure class="thermal card" style="margin:0">
+          <div class="lbls"><span><span class="es">Cara superior · máx. 137 °C</span><span class="en">Top copper · max 137 °C</span></span><span><span class="es">Cara inferior · máx. 108 °C</span><span class="en">Bottom copper · max 108 °C</span></span></div>
+          <img src="img/mapa_termico_placa.png" width="1032" height="462" alt="Mapa térmico de la placa de potencia a 13.5 kW con la temperatura de unión de cada MOSFET">
+          <div class="scale"><span>67 °C</span><i></i><span>140 °C</span></div>
+          <p><span class="es">Mapa térmico a 13.5 kW continuos. Los números son la temperatura de unión de cada MOSFET; el más caliente llega a 130 °C. <span class="tag sim">simulado</span></span><span class="en">Thermal map at 13.5 kW continuous. The numbers are each MOSFET's junction temperature; the hottest reaches 130 °C. <span class="tag sim">simulated</span></span></p>
+        </figure>
+        <ul class="checks">
+          <li><span class="k"><span class="es">Reglas de diseño (DRC)</span><span class="en">Design rule check (DRC)</span></span><span class="val">0 <span class="es">errores</span><span class="en">errors</span></span><span class="d"><span class="es">Sin conexiones faltantes ni violaciones en KiCad.</span><span class="en">No unrouted nets or violations in KiCad.</span></span></li>
+          <li><span class="k"><span class="es">Unión a 13.5 kW continuos</span><span class="en">Junction at 13.5 kW continuous</span></span><span class="val">130.2 °C</span><span class="d"><span class="es">Contra 175 °C del MOSFET. Resistencia térmica efectiva 3.57 K/W.</span><span class="en">Against the MOSFET's 175 °C. Effective thermal resistance 3.57 K/W.</span></span></li>
+          <li><span class="k"><span class="es">Unión a 30 kW por 30 s</span><span class="en">Junction at 30 kW for 30 s</span></span><span class="val">147.8 °C</span><span class="d"><span class="es">El pico de la ficha de Olinia, con 27 °C de margen.</span><span class="en">Olinia's peak rating, with 27 °C of margin.</span></span></li>
+          <li><span class="k"><span class="es">Calor en el cobre</span><span class="en">Copper heating</span></span><span class="val">99 W</span><span class="d"><span class="es">Antes 233 W. Se bajó con barras de cobre, cobre de 2 oz y ventanas en la máscara.</span><span class="en">Down from 233 W, using copper bars, 2 oz copper and solder-mask windows.</span></span></li>
+          <li><span class="k"><span class="es">Reparto entre los 8 MOSFET en paralelo</span><span class="en">Sharing across the 8 parallel MOSFETs</span></span><span class="val">1.04–1.07</span><span class="d"><span class="es">Corriente del más cargado entre el promedio: casi parejo.</span><span class="en">Busiest device current over the average: nearly even.</span></span></li>
+          <li><span class="k"><span class="es">Doble pulso en caliente</span><span class="en">Hot double-pulse test</span></span><span class="val">188.6 V</span><span class="d"><span class="es">Pico de voltaje al apagar, contra 200 V del MOSFET.</span><span class="en">Turn-off voltage peak, against the MOSFET's 200 V rating.</span></span></li>
+          <li><span class="k"><span class="es">Separación alto / bajo voltaje</span><span class="en">High / low voltage spacing</span></span><span class="val">≥ 3.7 mm</span><span class="d"><span class="es">Entre redes de alto voltaje hay ≥ 0.69 mm, por eso la placa lleva barniz conformal.</span><span class="en">Between high-voltage nets there is ≥ 0.69 mm, so the board gets conformal coating.</span></span></li>
+          <li><span class="k"><span class="es">Piezas cerca del calor</span><span class="en">Parts near the heat</span></span><span class="val">150 °C</span><span class="d"><span class="es">Cerámicos X8R/X8L, laminado de 150 °C y resistencias de mayor potencia.</span><span class="en">X8R/X8L ceramics, 150 °C laminate and higher-power resistors.</span></span></li>
+        </ul>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- 6. SIMULACIONES -->
-<section id="simulaciones">
+<!-- 05 RESULTADOS -->
+<section id="resultados">
   <div class="wrap">
     <div class="head">
-      <span class="eyebrow"><span class="es">Simulaciones</span><span class="en">Simulations</span></span>
+      <span class="eyebrow"><i>05</i><span class="es">Resultados de simulación</span><span class="en">Simulation results</span></span>
       <h2><span class="es">Probado en la computadora antes que en el banco</span><span class="en">Tested on the computer before the bench</span></h2>
-      <p class="read muted"><span class="es">El modelo del motor se ajustó a la curva de par y potencia que nos dio Olinia; sus parámetros internos (resistencia, inductancias, flujo) son supuestos hasta que Olinia los confirme. Además del modelo en Python, el lazo FOC con el motor y el puente de MOSFET corre en Simulink/Simscape, y el circuito de potencia completo en LTspice.</span><span class="en">The motor model was fitted to the torque and power curve Olinia gave us; its internal parameters (resistance, inductances, flux) are assumptions until Olinia confirms them. Besides the Python model, the FOC loop with the motor and MOSFET bridge runs in Simulink/Simscape, and the full power circuit in LTspice.</span></p>
+      <p class="lede"><span class="es">El modelo del motor se ajustó a la curva de par y potencia que nos dio Olinia. Batería, refrigerante y datos térmicos del motor son supuestos hasta que Olinia los confirme. Todo lo de esta sección es <b>simulado</b>, no medido.</span><span class="en">The motor model was fitted to the torque and power curve Olinia gave us. Battery, coolant and motor thermal data are assumptions until Olinia confirms them. Everything in this section is <b>simulated</b>, not measured.</span></p>
     </div>
-    <div class="sims">
-      <div class="sim">
-        <figure><img src="img/s2_e2_aceleracion.png" width="1600" height="1040" alt="Gráficas de velocidad, par, potencia y corriente de batería al acelerar a fondo"></figure>
-        <div>
-          <h3><span class="es">Aceleración a 50 km/h</span><span class="en">Acceleration to 50 km/h</span></h3>
-          <ul>
-            <li class="mono">0–49 km/h: 5.2 s @ 130 V · 5.4 s @ 100 V · 8.0 s @ 66 V</li>
-            <li><span class="es">Potencia mecánica máxima 30.2 kW con batería de 130 V.</span><span class="en">Maximum mechanical power 30.2 kW with a 130 V battery.</span></li>
-            <li><span class="es">La corriente de fase nunca pasa del límite de 430 A.</span><span class="en">Phase current never exceeds the 430 A limit.</span></li>
+
+    <div class="tiles">
+      <div class="tile card"><b>24 <small>min</small></b><span class="es">sosteniendo 49.7 km/h en una subida de 15 %</span><span class="en">holding 49.7 km/h up a 15 % grade</span><span class="tag sim"><span class="es">simulado</span><span class="en">simulated</span></span></div>
+      <div class="tile card"><b>155 <small>km</small></b><span class="es">de autonomía en ciudad con una carga</span><span class="en">of city range on one charge</span><span class="tag sim"><span class="es">simulado</span><span class="en">simulated</span></span></div>
+      <div class="tile card"><b>70 <small>%</small></b><span class="es">de la energía recuperada al frenar con 300 A</span><span class="en">of braking energy recovered at 300 A</span><span class="tag sim"><span class="es">simulado</span><span class="en">simulated</span></span></div>
+      <div class="tile card"><b>5.2 <small>s</small></b><span class="es">de 0 a 49 km/h con batería de 130 V</span><span class="en">from 0 to 49 km/h on a 130 V battery</span><span class="tag sim"><span class="es">simulado</span><span class="en">simulated</span></span></div>
+    </div>
+
+    <!-- A. subida larga -->
+    <div class="sub">
+      <div class="subhead">
+        <span class="eyebrow">A · <span class="es">Subida larga</span><span class="en">Long climb</span></span>
+        <h3><span class="es">30 minutos subiendo al 15 % sin el límite de 30 s</span><span class="en">30 minutes up a 15 % grade without the 30 s limit</span></h3>
+        <p><span class="es">Subir al 15 % a 50 km/h pide unos 23 kW en el eje, más que los 13.5 kW continuos. Con el límite de la ficha (30 kW por 30 s) el carro solo aguantaba 50 km/h medio minuto y luego bajaba a 28 km/h. Cambiamos ese límite por uno térmico: la MCU da potencia mientras las temperaturas lo permitan.</span><span class="en">Climbing a 15 % grade at 50 km/h takes about 23 kW at the shaft, more than the 13.5 kW continuous rating. With the spec-sheet limit (30 kW for 30 s) the car held 50 km/h for only half a minute and then dropped to 28 km/h. We replaced that limit with a thermal one: the MCU delivers power while temperatures allow.</span></p>
+      </div>
+      <div class="split">
+        <div class="chart card">
+          <div class="key"><span class="it"><i class="sw s1"></i><span class="es">Devanado del motor</span><span class="en">Motor winding</span></span><span class="it"><i class="sw s2"></i><span class="es">Unión del MOSFET (MCU)</span><span class="en">MOSFET junction (MCU)</span></span></div>
+          <div class="scroll"><svg viewBox="0 0 640 340" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="g-s3-t"><title id="g-s3-t">Temperatura de unión del MOSFET y del devanado del motor durante 30 minutos de subida al 15 % / MOSFET junction and motor winding temperature over a 30-minute 15 % climb</title><line x1="58" x2="600" y1="290.0" y2="290.0" class="g-grid"/><text x="50" y="294.0" text-anchor="end" class="g-ax">60</text><line x1="58" x2="600" y1="245.7" y2="245.7" class="g-grid"/><text x="50" y="249.7" text-anchor="end" class="g-ax">80</text><line x1="58" x2="600" y1="201.3" y2="201.3" class="g-grid"/><text x="50" y="205.3" text-anchor="end" class="g-ax">100</text><line x1="58" x2="600" y1="157.0" y2="157.0" class="g-grid"/><text x="50" y="161.0" text-anchor="end" class="g-ax">120</text><line x1="58" x2="600" y1="112.7" y2="112.7" class="g-grid"/><text x="50" y="116.7" text-anchor="end" class="g-ax">140</text><line x1="58" x2="600" y1="68.3" y2="68.3" class="g-grid"/><text x="50" y="72.3" text-anchor="end" class="g-ax">160</text><line x1="58" x2="600" y1="24.0" y2="24.0" class="g-grid"/><text x="50" y="28.0" text-anchor="end" class="g-ax">180</text><text x="58.0" y="310" text-anchor="middle" class="g-ax">0</text><text x="148.3" y="310" text-anchor="middle" class="g-ax">5</text><text x="238.7" y="310" text-anchor="middle" class="g-ax">10</text><text x="329.0" y="310" text-anchor="middle" class="g-ax">15</text><text x="419.3" y="310" text-anchor="middle" class="g-ax">20</text><text x="509.7" y="310" text-anchor="middle" class="g-ax">25</text><text x="600.0" y="310" text-anchor="middle" class="g-ax">30</text><text x="50" y="14" text-anchor="end" class="g-ax">°C</text><text x="600" y="328" text-anchor="end" class="g-ax es">minutos</text><text x="600" y="328" text-anchor="end" class="g-ax en">minutes</text><line x1="58" x2="600" y1="35.1" y2="35.1" class="g-ref"/><text x="64" y="29.1" class="g-ax g-note es">175 °C · límite del MOSFET</text><text x="64" y="29.1" class="g-ax g-note en">175 °C · MOSFET limit</text><line x1="58" x2="600" y1="68.3" y2="68.3" class="g-ref"/><text x="64" y="83.3" class="g-ax g-note es">160 °C · empieza el derrateo del devanado</text><text x="64" y="83.3" class="g-ax g-note en">160 °C · winding derating starts</text><rect x="492.5" y="24" width="107.5" height="266" class="g-zone"/><text x="484.5" y="263.4" text-anchor="end" class="g-ax g-note es">24 min: derrateo, baja a 45.9 km/h →</text><text x="484.5" y="263.4" text-anchor="end" class="g-ax g-note en">24 min: derating, eases to 45.9 km/h →</text><polyline points="61.0,263.0 67.0,246.1 76.1,228.4 94.1,201.6 148.3,154.6 238.7,116.9 329.0,95.4 419.3,79.9 509.7,65.2 600.0,64.6" pathLength="1" class="g-line g-s1"/><polyline points="61.0,180.9 67.0,199.3 76.1,193.6 94.1,189.6 148.3,186.0 238.7,182.7 329.0,180.3 419.3,177.8 509.7,175.8 600.0,182.0" pathLength="1" class="g-line g-s2"/><g class="g-pt"><circle cx="61.0" cy="263.0" r="11" class="g-hit"/><circle cx="61.0" cy="263.0" r="4" class="g-dot g-s1"/><title>10 s: Devanado / Winding 72.2 °C · 41.9 km/h</title></g><g class="g-pt"><circle cx="61.0" cy="180.9" r="11" class="g-hit"/><circle cx="61.0" cy="180.9" r="4" class="g-dot g-s2"/><title>10 s: Unión MOSFET / MOSFET junction 109.2 °C · 41.9 km/h</title></g><g class="g-pt"><circle cx="67.0" cy="246.1" r="11" class="g-hit"/><circle cx="67.0" cy="246.1" r="4" class="g-dot g-s1"/><title>30 s: Devanado / Winding 79.8 °C · 49.7 km/h</title></g><g class="g-pt"><circle cx="67.0" cy="199.3" r="11" class="g-hit"/><circle cx="67.0" cy="199.3" r="4" class="g-dot g-s2"/><title>30 s: Unión MOSFET / MOSFET junction 100.9 °C · 49.7 km/h</title></g><g class="g-pt"><circle cx="76.1" cy="228.4" r="11" class="g-hit"/><circle cx="76.1" cy="228.4" r="4" class="g-dot g-s1"/><title>1 min: Devanado / Winding 87.8 °C · 49.7 km/h</title></g><g class="g-pt"><circle cx="76.1" cy="193.6" r="11" class="g-hit"/><circle cx="76.1" cy="193.6" r="4" class="g-dot g-s2"/><title>1 min: Unión MOSFET / MOSFET junction 103.5 °C · 49.7 km/h</title></g><g class="g-pt"><circle cx="94.1" cy="201.6" r="11" class="g-hit"/><circle cx="94.1" cy="201.6" r="4" class="g-dot g-s1"/><title>2 min: Devanado / Winding 99.9 °C · 49.7 km/h</title></g><g class="g-pt"><circle cx="94.1" cy="189.6" r="11" class="g-hit"/><circle cx="94.1" cy="189.6" r="4" class="g-dot g-s2"/><title>2 min: Unión MOSFET / MOSFET junction 105.3 °C · 49.7 km/h</title></g><g class="g-pt"><circle cx="148.3" cy="154.6" r="11" class="g-hit"/><circle cx="148.3" cy="154.6" r="4" class="g-dot g-s1"/><title>5 min: Devanado / Winding 121.1 °C · 49.7 km/h</title></g><g class="g-pt"><circle cx="148.3" cy="186.0" r="11" class="g-hit"/><circle cx="148.3" cy="186.0" r="4" class="g-dot g-s2"/><title>5 min: Unión MOSFET / MOSFET junction 106.9 °C · 49.7 km/h</title></g><g class="g-pt"><circle cx="238.7" cy="116.9" r="11" class="g-hit"/><circle cx="238.7" cy="116.9" r="4" class="g-dot g-s1"/><title>10 min: Devanado / Winding 138.1 °C · 49.7 km/h</title></g><g class="g-pt"><circle cx="238.7" cy="182.7" r="11" class="g-hit"/><circle cx="238.7" cy="182.7" r="4" class="g-dot g-s2"/><title>10 min: Unión MOSFET / MOSFET junction 108.4 °C · 49.7 km/h</title></g><g class="g-pt"><circle cx="329.0" cy="95.4" r="11" class="g-hit"/><circle cx="329.0" cy="95.4" r="4" class="g-dot g-s1"/><title>15 min: Devanado / Winding 147.8 °C · 49.7 km/h</title></g><g class="g-pt"><circle cx="329.0" cy="180.3" r="11" class="g-hit"/><circle cx="329.0" cy="180.3" r="4" class="g-dot g-s2"/><title>15 min: Unión MOSFET / MOSFET junction 109.5 °C · 49.7 km/h</title></g><g class="g-pt"><circle cx="419.3" cy="79.9" r="11" class="g-hit"/><circle cx="419.3" cy="79.9" r="4" class="g-dot g-s1"/><title>20 min: Devanado / Winding 154.8 °C · 49.7 km/h</title></g><g class="g-pt"><circle cx="419.3" cy="177.8" r="11" class="g-hit"/><circle cx="419.3" cy="177.8" r="4" class="g-dot g-s2"/><title>20 min: Unión MOSFET / MOSFET junction 110.6 °C · 49.7 km/h</title></g><g class="g-pt"><circle cx="509.7" cy="65.2" r="11" class="g-hit"/><circle cx="509.7" cy="65.2" r="4" class="g-dot g-s1"/><title>25 min: Devanado / Winding 161.4 °C · 49.5 km/h</title></g><g class="g-pt"><circle cx="509.7" cy="175.8" r="11" class="g-hit"/><circle cx="509.7" cy="175.8" r="4" class="g-dot g-s2"/><title>25 min: Unión MOSFET / MOSFET junction 111.5 °C · 49.5 km/h</title></g><g class="g-pt"><circle cx="600.0" cy="64.6" r="11" class="g-hit"/><circle cx="600.0" cy="64.6" r="4" class="g-dot g-s1"/><title>30 min: Devanado / Winding 161.7 °C · 45.9 km/h</title></g><g class="g-pt"><circle cx="600.0" cy="182.0" r="11" class="g-hit"/><circle cx="600.0" cy="182.0" r="4" class="g-dot g-s2"/><title>30 min: Unión MOSFET / MOSFET junction 108.7 °C · 45.9 km/h</title></g><text x="274.8" y="141.5" class="g-lab es">Devanado del motor</text><text x="274.8" y="141.5" class="g-lab en">Motor winding</text><text x="242.7" y="206.7" class="g-lab es">Unión del MOSFET (máx. 111.9 °C)</text><text x="242.7" y="206.7" class="g-lab en">MOSFET junction (max 111.9 °C)</text></svg></div>
+          <p class="mnote"><span class="es">Líneas punteadas: 175 °C, límite del MOSFET, y 160 °C, inicio del derrateo del devanado. Zona sombreada: derrateo desde el minuto 24.</span><span class="en">Dashed lines: 175 °C MOSFET limit and 160 °C winding derating start. Shaded zone: derating from minute 24.</span></p>
+          <details class="data"><summary><span class="es">Ver los datos</span><span class="en">Show the data</span></summary><div class="tablebox" style="box-shadow:none"><table><thead><tr><th><span class="es">Tiempo</span><span class="en">Time</span></th><th>km/h</th><th><span class="es">Unión °C</span><span class="en">Junction °C</span></th><th><span class="es">Devanado °C</span><span class="en">Winding °C</span></th></tr></thead><tbody><tr><td class="v">10 s</td><td class="v">41.9</td><td class="v">109.2</td><td class="v">72.2</td></tr><tr><td class="v">30 s</td><td class="v">49.7</td><td class="v">100.9</td><td class="v">79.8</td></tr><tr><td class="v">1 min</td><td class="v">49.7</td><td class="v">103.5</td><td class="v">87.8</td></tr><tr><td class="v">2 min</td><td class="v">49.7</td><td class="v">105.3</td><td class="v">99.9</td></tr><tr><td class="v">5 min</td><td class="v">49.7</td><td class="v">106.9</td><td class="v">121.1</td></tr><tr><td class="v">10 min</td><td class="v">49.7</td><td class="v">108.4</td><td class="v">138.1</td></tr><tr><td class="v">15 min</td><td class="v">49.7</td><td class="v">109.5</td><td class="v">147.8</td></tr><tr><td class="v">20 min</td><td class="v">49.7</td><td class="v">110.6</td><td class="v">154.8</td></tr><tr><td class="v">25 min</td><td class="v">49.5</td><td class="v">111.5</td><td class="v">161.4</td></tr><tr><td class="v">30 min</td><td class="v">45.9</td><td class="v">108.7</td><td class="v">161.7</td></tr></tbody></table></div></details>
+        </div>
+        <div class="facts">
+          <p class="big">49.7 km/h · 22.9 kW · 24 min</p>
+          <p><span class="es">A los 24 minutos el devanado del motor llega a 160 °C y el control baja el par al 92 %: termina en 45.9 km/h a los 30 minutos, con el devanado estable en 161.7 °C.</span><span class="en">At 24 minutes the motor winding reaches 160 °C and the control trims torque to 92 %: it ends at 45.9 km/h after 30 minutes, with the winding steady at 161.7 °C.</span></p>
+          <ul class="ok-list">
+            <li class="y"><span class="es">La MCU tiene margen: su unión no pasa de 111.9 °C. Los capacitores llegan a 76 °C.</span><span class="en">The MCU has margin: its junction stays at or below 111.9 °C. Capacitors reach 76 °C.</span></li>
+            <li class="y"><span class="es">Recorre 24.6 km; la batería baja de 100 % a 7.7 %. Lo que se acaba primero es la batería.</span><span class="en">It covers 24.6 km; the battery drops from 100 % to 7.7 %. The battery runs out first.</span></li>
+            <li class="n"><span class="es">Falta que Olinia confirme que su motor aguanta unos 23 kW continuos y que su BMS deja sacar unos 250 A sostenidos.</span><span class="en">Olinia still needs to confirm its motor can take about 23 kW continuously and that its BMS allows about 250 A sustained.</span></li>
           </ul>
-          <div class="valid">
-            <span class="y"><span class="es">El control sigue la curva de par de Olinia.</span><span class="en">The control follows Olinia's torque curve.</span></span>
-            <span class="n"><span class="es">No incluye pérdidas reales ni temperatura del motor.</span><span class="en">Does not include real losses or motor temperature.</span></span>
-          </div>
+          <p class="callout"><span class="es">La unión de 112 °C es del modelo promedio del vehículo; el mapa térmico de la placa (130 °C a 13.5 kW) mira el MOSFET más caliente de los 48. Son dos modelos distintos y ambos quedan abajo de 175 °C.</span><span class="en">The 112 °C junction comes from the vehicle-level averaged model; the board thermal map (130 °C at 13.5 kW) looks at the hottest of the 48 MOSFETs. They are different models, and both stay below 175 °C.</span></p>
         </div>
       </div>
-      <div class="sim">
-        <figure><img src="img/s2_e3_regeneracion.png" width="1600" height="1067" alt="Gráficas de frenado regenerativo en tres casos"></figure>
-        <div>
-          <h3><span class="es">Frenado regenerativo</span><span class="en">Regenerative braking</span></h3>
-          <ul>
-            <li><span class="es">Frenando suave (0.12 g) se recupera el 41 % de la energía de movimiento.</span><span class="en">Gentle braking (0.12 g) recovers 41 % of the kinetic energy.</span></li>
-            <li><span class="es">Frenando fuerte (0.3 g) se recupera el 18 %; el resto lo pone el freno hidráulico.</span><span class="en">Hard braking (0.3 g) recovers 18 %; the hydraulic brake supplies the rest.</span></li>
-            <li><span class="es">La corriente de carga se queda bajo el límite de la batería.</span><span class="en">Charging current stays below the battery limit.</span></li>
-          </ul>
-          <div class="valid">
-            <span class="y"><span class="es">El reparto entre motor y freno hidráulico.</span><span class="en">The split between motor and hydraulic brake.</span></span>
-            <span class="n"><span class="es">El límite de 50 A es un supuesto: Olinia aún revisa la corriente máxima de carga.</span><span class="en">The 50 A limit is an assumption: Olinia is still reviewing the maximum charge current.</span></span>
+    </div>
+
+    <!-- B. autonomía -->
+    <div class="sub">
+      <div class="subhead">
+        <span class="eyebrow">B · <span class="es">Autonomía</span><span class="en">Range</span></span>
+        <h3><span class="es">¿Cuánto dura la batería?</span><span class="en">How far does a charge go?</span></h3>
+        <p><span class="es">Batería de 14.7 kWh con 90 % usable [supuesto]. Distancia con una carga según el tipo de manejo.</span><span class="en">14.7 kWh battery with 90 % usable [assumed]. Distance on one charge for each driving pattern.</span></p>
+      </div>
+      <div class="split">
+        <div class="bars card">
+          <div class="bar" title="273 km · 49 Wh/km · 9.1 h"><span class="lab"><span class="es">Plano a 30 km/h</span><span class="en">Flat at 30 km/h</span></span><span class="track"><span class="fill" style="--w:100"></span><span class="num">273 km<small>9.1 h</small></span></span></div>
+          <div class="bar" title="203 km · 65 Wh/km · 4.1 h"><span class="lab"><span class="es">Plano a 50 km/h</span><span class="en">Flat at 50 km/h</span></span><span class="track"><span class="fill" style="--w:74.4"></span><span class="num">203 km<small>4.1 h</small></span></span></div>
+          <div class="bar" title="155 km · 85 Wh/km · 6.0 h"><span class="lab"><span class="es">Ciudad</span><span class="en">City</span><small><span class="es">ciclo urbano, 25.9 km/h promedio</span><span class="en">urban cycle, 25.9 km/h average</span></small></span><span class="track"><span class="fill" style="--w:56.8"></span><span class="num">155 km<small>6.0 h</small></span></span></div>
+          <div class="bar" title="27 km · 486 Wh/km · 0.9 h"><span class="lab"><span class="es">Subida de 15 % a 30 km/h</span><span class="en">15 % climb at 30 km/h</span></span><span class="track"><span class="fill alt" style="--w:9.9"></span><span class="num">27 km<small>0.9 h</small></span></span></div>
+          <div class="bar" title="27 km · 496 Wh/km · 1.3 h"><span class="lab"><span class="es">Subida de 15 % a 20 km/h</span><span class="en">15 % climb at 20 km/h</span></span><span class="track"><span class="fill alt" style="--w:9.9"></span><span class="num">27 km<small>1.3 h</small></span></span></div>
+        </div>
+        <div class="facts">
+          <div class="tablebox">
+            <table>
+              <thead><tr><th><span class="es">Manejo</span><span class="en">Driving</span></th><th><span class="es">Consumo</span><span class="en">Use</span></th></tr></thead>
+              <tbody>
+                <tr><td><span class="es">Plano 30 km/h</span><span class="en">Flat 30 km/h</span></td><td class="v">49 Wh/km</td></tr>
+                <tr><td><span class="es">Plano 50 km/h</span><span class="en">Flat 50 km/h</span></td><td class="v">65 Wh/km</td></tr>
+                <tr><td><span class="es">Ciudad</span><span class="en">City</span></td><td class="v">85 Wh/km</td></tr>
+                <tr><td><span class="es">Subida 15 %</span><span class="en">15 % climb</span></td><td class="v">486–496 Wh/km</td></tr>
+              </tbody>
+            </table>
           </div>
+          <p><span class="es">En la subida casi toda la energía se va en levantar el carro: 27 km al 15 % son unos 4 km de altura. Ir más despacio no cambia los kilómetros que se pueden subir; solo reparte la misma energía en más tiempo. La MCU pierde solo alrededor del 3 %.</span><span class="en">On the climb nearly all the energy goes into lifting the car: 27 km at 15 % is about 4 km of elevation. Going slower does not change how far you can climb; it only spreads the same energy over more time. The MCU itself loses only about 3 %.</span></p>
         </div>
       </div>
-      <div class="sim">
-        <figure><img src="img/s2_e7_estado_seguro.png" width="1600" height="608" alt="Corriente de fase y de batería en estado seguro según la velocidad"></figure>
-        <div>
-          <h3><span class="es">Estado seguro ante una falla</span><span class="en">Safe state after a fault</span></h3>
-          <ul>
-            <li><span class="es">Con batería de 100 V, abrir todos los interruptores a 50 km/h deja la corriente en 0 A.</span><span class="en">With a 100 V battery, opening every switch at 50 km/h leaves the current at 0 A.</span></li>
-            <li><span class="es">Con batería baja (60 V) el motor empujaría 347 A por los diodos; por eso el control primero lleva el par a cero de forma controlada.</span><span class="en">With a low battery (60 V) the motor would push 347 A through the diodes; that is why the control first brings torque to zero in a controlled way.</span></li>
+    </div>
+
+    <!-- C. regeneración -->
+    <div class="sub">
+      <div class="subhead">
+        <span class="eyebrow">C · <span class="es">Regeneración</span><span class="en">Regeneration</span></span>
+        <h3><span class="es">Energía recuperada al frenar de 50 km/h a 0</span><span class="en">Energy recovered braking from 50 km/h to 0</span></h3>
+        <p><span class="es">Frenando a 0.3 g con batería de 100 V. Olinia aún revisa cuánta corriente de carga acepta su batería, así que probamos de 50 a 300 A.</span><span class="en">Braking at 0.3 g with a 100 V battery. Olinia is still reviewing how much charge current its battery accepts, so we tested 50 to 300 A.</span></p>
+      </div>
+      <div class="split">
+        <div class="bars card">
+          <div class="bar" title="50 A: 18.2 %"><span class="lab"><span class="es">Límite 50 A</span><span class="en">50 A limit</span><small>0.3C</small></span><span class="track"><span class="fill" style="--w:26"></span><span class="num">18 %</span></span></div>
+          <div class="bar" title="100 A: 33.7 %"><span class="lab"><span class="es">Límite 100 A</span><span class="en">100 A limit</span><small>0.7C</small></span><span class="track"><span class="fill" style="--w:48.3"></span><span class="num">34 %</span></span></div>
+          <div class="bar" title="150 A: 46.7 %"><span class="lab"><span class="es">Límite 150 A</span><span class="en">150 A limit</span><small>1C</small></span><span class="track"><span class="fill" style="--w:66.9"></span><span class="num">47 %</span></span></div>
+          <div class="bar" title="200 A: 57.3 %"><span class="lab"><span class="es">Límite 200 A</span><span class="en">200 A limit</span><small>1.4C</small></span><span class="track"><span class="fill" style="--w:82.1"></span><span class="num">57 %</span></span></div>
+          <div class="bar" title="300 A: 69.8 %"><span class="lab"><span class="es">Límite 300 A</span><span class="en">300 A limit</span><small>2C</small></span><span class="track"><span class="fill" style="--w:100"></span><span class="num">70 %</span></span></div>
+        </div>
+        <div class="facts">
+          <ul class="ok-list">
+            <li class="y"><span class="es">El bus nunca pasa de 136.1 V en ningún caso (batería de 100 y 130 V).</span><span class="en">The bus never exceeds 136.1 V in any case (100 and 130 V battery).</span></li>
+            <li class="y"><span class="es">La corriente de fase no pasa del límite de 430 A.</span><span class="en">Phase current stays within the 430 A limit.</span></li>
+            <li class="n"><span class="es">Cuánto se recupera depende del límite que fije el BMS de Olinia; el resto lo pone el freno hidráulico.</span><span class="en">How much is recovered depends on the limit Olinia's BMS sets; the hydraulic brake supplies the rest.</span></li>
           </ul>
-          <div class="valid">
-            <span class="y"><span class="es">Cuándo es seguro abrir el puente y cuándo no.</span><span class="en">When opening the bridge is safe and when it is not.</span></span>
-            <span class="n"><span class="es">Depende de los parámetros supuestos del motor.</span><span class="en">Depends on the assumed motor parameters.</span></span>
-          </div>
         </div>
       </div>
-      <div class="sim">
-        <figure><img src="img/s2_e1_lazo_corriente.png" width="1600" height="400" alt="Respuesta del lazo de corriente"></figure>
-        <div>
-          <h3><span class="es">Lazo de corriente</span><span class="en">Current loop</span></h3>
-          <ul>
-            <li><span class="es">Subida del 10 al 90 % en 0.19 a 0.50 ms, según la velocidad.</span><span class="en">10–90 % rise time of 0.19 to 0.50 ms, depending on speed.</span></li>
-            <li><span class="es">En Simulink con MOSFET reales a 16 kHz: <i>iq</i> llega a 247.9 A de 250 A pedidos.</span><span class="en">In Simulink with switching MOSFETs at 16 kHz: <i>iq</i> reaches 247.9 A out of 250 A requested.</span></li>
-          </ul>
-          <div class="valid">
-            <span class="y"><span class="es">Las ganancias del control responden rápido y sin sobretiro grande.</span><span class="en">The control gains respond fast without large overshoot.</span></span>
-            <span class="n"><span class="es">Aún no se corre en el microcontrolador real.</span><span class="en">Not yet running on the real microcontroller.</span></span>
-          </div>
-        </div>
+    </div>
+
+    <!-- D. aceleración y lazo -->
+    <div class="sub">
+      <div class="subhead">
+        <span class="eyebrow">D · <span class="es">Control</span><span class="en">Control</span></span>
+        <h3><span class="es">Aceleración y lazo de corriente</span><span class="en">Acceleration and current loop</span></h3>
+        <p><span class="es">Además del modelo en Python, el lazo FOC con el motor y el puente de MOSFET corre en Simulink/Simscape, y el circuito de potencia completo en LTspice.</span><span class="en">Besides the Python model, the FOC loop with the motor and MOSFET bridge runs in Simulink/Simscape, and the full power circuit in LTspice.</span></p>
+      </div>
+      <div class="mini">
+        <figure class="card"><img src="img/s2_e2_aceleracion.png" width="1600" height="1040" alt="Gráficas de velocidad, par, potencia y corriente de batería al acelerar a fondo"><figcaption><b><span class="es">Aceleración a 50 km/h.</span><span class="en">Acceleration to 50 km/h.</span></b> <span class="mono">5.2 s @ 130 V · 5.4 s @ 100 V · 8.0 s @ 66 V.</span> <span class="es">Potencia máxima 30.2 kW; la corriente de fase no pasa de 430 A.</span><span class="en">Peak power 30.2 kW; phase current never exceeds 430 A.</span></figcaption></figure>
+        <figure class="card"><img src="img/s2_e1_lazo_corriente.png" width="1600" height="400" alt="Respuesta del lazo de corriente"><figcaption><b><span class="es">Lazo de corriente.</span><span class="en">Current loop.</span></b> <span class="es">Sube del 10 al 90 % en 0.19 a 0.50 ms. En Simulink con MOSFET conmutando a 16 kHz, <i>iq</i> llega a 247.9 A de 250 A pedidos. Aún no corre en el microcontrolador real.</span><span class="en">10–90 % rise in 0.19 to 0.50 ms. In Simulink with MOSFETs switching at 16 kHz, <i>iq</i> reaches 247.9 A out of 250 A requested. Not yet running on the real microcontroller.</span></figcaption></figure>
       </div>
     </div>
   </div>
 </section>
 
-<!-- 7. SEGURIDAD -->
+<!-- 06 SEGURIDAD -->
 <section id="seguridad">
   <div class="wrap">
     <div class="head">
-      <span class="eyebrow"><span class="es">Seguridad</span><span class="en">Safety</span></span>
+      <span class="eyebrow"><i>06</i><span class="es">Seguridad</span><span class="en">Safety</span></span>
       <h2><span class="es">Protecciones que no dependen del software</span><span class="en">Protections that do not depend on software</span></h2>
-      <p class="read muted"><span class="es">La regla del diseño: si el programa se traba, el hardware igual apaga el inversor y deja el bus sin energía.</span><span class="en">The design rule: if the firmware hangs, the hardware still shuts the inverter down and drains the bus.</span></p>
+      <p class="lede"><span class="es">La regla del diseño: si el programa se traba, el hardware igual apaga el inversor y deja el bus sin energía.</span><span class="en">The design rule: if the firmware hangs, the hardware still shuts the inverter down and drains the bus.</span></p>
     </div>
     <div class="layers">
-      <div class="layer"><span class="k"><span class="es">Sobrecorriente</span><span class="en">Overcurrent</span></span><div><p><span class="es">La salida rápida de cada TLE4972 (0.7 µs típicos según su hoja de datos) activa un flip-flop de falla que corta los pulsos en la Trip Zone del microcontrolador, sin pasar por el programa.</span><span class="en">Each TLE4972's fast output (0.7 µs typical per its datasheet) sets a fault flip-flop that cuts the pulses through the microcontroller's Trip Zone, bypassing the firmware.</span></p></div></div>
-      <div class="layer"><span class="k"><span class="es">Cortocircuito</span><span class="en">Short circuit</span></span><div><p><span class="es">Cada driver UCC21750-Q1 vigila la desaturación del MOSFET y lo apaga solo si detecta un corto franco.</span><span class="en">Each UCC21750-Q1 driver watches for MOSFET desaturation and turns it off on its own if it sees a hard short.</span></p></div></div>
-      <div class="layer"><span class="k"><span class="es">Aislamiento</span><span class="en">Isolation</span></span><div><p><span class="es">Aislamiento reforzado entre el alto voltaje y el control: drivers UCC21750-Q1, medición del bus con AMC1311-Q1 y fuentes aisladas UCC14141-Q1.</span><span class="en">Reinforced isolation between high voltage and control: UCC21750-Q1 drivers, AMC1311-Q1 bus sensing and UCC14141-Q1 isolated supplies.</span></p></div></div>
-      <div class="layer"><span class="k"><span class="es">Descarga del bus</span><span class="en">Bus discharge</span></span><div>
-        <p><span class="es">Descarga activa con una resistencia de 50 Ω y un driver que siempre está habilitado, aun con falla. Con los 8 × 210 µF = 1.68 mF del banco, la constante de tiempo es 50 Ω × 1.68 mF ≈ 84 ms.</span><span class="en">Active discharge through a 50 Ω resistor and a driver that is always enabled, even during a fault. With the bank's 8 × 210 µF = 1.68 mF, the time constant is 50 Ω × 1.68 mF ≈ 84 ms.</span></p>
-        <p><span class="es">Respaldo pasivo de 20.4 kΩ: τ = 20.4 kΩ × 1.68 mF ≈ 34 s.</span><span class="en">Passive backup of 20.4 kΩ: τ = 20.4 kΩ × 1.68 mF ≈ 34 s.</span></p>
-      </div></div>
-      <div class="layer"><span class="k"><span class="es">Sobrevoltaje</span><span class="en">Overvoltage</span></span><div><p><span class="es">Comparador por hardware a 160 V (valor de trabajo, por confirmar con el voltaje máximo real de la batería).</span><span class="en">Hardware comparator at 160 V (working value, to be confirmed against the battery's real maximum voltage).</span></p></div></div>
-      <div class="layer"><span class="k"><span class="es">Estado seguro</span><span class="en">Safe state</span></span><div><p><span class="es">El supervisor TPS65381A-Q1 vigila al microcontrolador con watchdog. Ante una falla, el puente se abre; si la fuerza contraelectromotriz del motor supera la batería, primero se lleva el par a cero de forma controlada. La precarga y los contactores los maneja la VCU de Olinia.</span><span class="en">The TPS65381A-Q1 supervisor watches the microcontroller with a watchdog. On a fault the bridge opens; if the motor's back-EMF exceeds the battery voltage, torque is first brought to zero in a controlled way. Precharge and contactors are handled by Olinia's VCU.</span></p></div></div>
+      <div class="layer card"><span class="k"><span class="es">Sobrecorriente</span><span class="en">Overcurrent</span></span><p><span class="es">La salida rápida de cada TLE4972 (0.7 µs típicos según su hoja de datos) activa un flip-flop de falla que corta los pulsos en la Trip Zone del microcontrolador, sin pasar por el programa.</span><span class="en">Each TLE4972's fast output (0.7 µs typical per its datasheet) sets a fault flip-flop that cuts the pulses through the microcontroller's Trip Zone, bypassing the firmware.</span></p></div>
+      <div class="layer card"><span class="k"><span class="es">Cortocircuito</span><span class="en">Short circuit</span></span><p><span class="es">Cada driver UCC21750-Q1 vigila la desaturación del MOSFET y lo apaga solo si detecta un corto franco.</span><span class="en">Each UCC21750-Q1 driver watches for MOSFET desaturation and turns it off on its own if it sees a hard short.</span></p></div>
+      <div class="layer card"><span class="k"><span class="es">Aislamiento</span><span class="en">Isolation</span></span><p><span class="es">Aislamiento reforzado entre alto voltaje y control: drivers UCC21750-Q1, medición del bus con AMC1311-Q1 y fuentes aisladas UCC14141-Q1.</span><span class="en">Reinforced isolation between high voltage and control: UCC21750-Q1 drivers, AMC1311-Q1 bus sensing and UCC14141-Q1 isolated supplies.</span></p></div>
+      <div class="layer card"><span class="k"><span class="es">Descarga del bus</span><span class="en">Bus discharge</span></span><p><span class="es">Resistencia activa de 50 Ω con un driver siempre habilitado: con el banco de 1.68 mF, τ ≈ 84 ms. Respaldo pasivo de 20.4 kΩ: τ ≈ 34 s.</span><span class="en">Active 50 Ω resistor with an always-enabled driver: with the 1.68 mF bank, τ ≈ 84 ms. Passive 20.4 kΩ backup: τ ≈ 34 s.</span></p></div>
+      <div class="layer card"><span class="k"><span class="es">Sobrevoltaje</span><span class="en">Overvoltage</span></span><p><span class="es">Por software a 145 V y comparador por hardware a 160 V (valores de trabajo, por confirmar con el voltaje máximo real de la batería).</span><span class="en">Software at 145 V and a hardware comparator at 160 V (working values, to be confirmed against the battery's real maximum).</span></p></div>
+      <div class="layer card"><span class="k"><span class="es">Vigilancia</span><span class="en">Supervision</span></span><p><span class="es">El supervisor TPS65381A-Q1 vigila al microcontrolador con watchdog. La precarga y los contactores los maneja la VCU de Olinia.</span><span class="en">The TPS65381A-Q1 supervisor watches the microcontroller with a watchdog. Precharge and contactors are handled by Olinia's VCU.</span></p></div>
+    </div>
+
+    <div class="sub">
+      <div class="subhead">
+        <span class="eyebrow"><span class="es">Simulaciones de falla</span><span class="en">Fault simulations</span></span>
+        <h3><span class="es">Qué pasa cuando algo falla a 50 km/h</span><span class="en">What happens when something fails at 50 km/h</span></h3>
+        <p><span class="es">Simulamos las fallas más peligrosas con el motor ajustado a la curva de Olinia. Encontraron tres errores de diseño, que ya corregimos en los modelos, y dos requisitos nuevos.</span><span class="en">We simulated the most dangerous faults with the motor fitted to Olinia's curve. They found three design errors, now fixed in the models, and two new requirements.</span></p>
+      </div>
+      <div class="tablebox">
+        <table class="faults">
+          <thead><tr><th><span class="es">Falla</span><span class="en">Fault</span></th><th><span class="es">Resultado simulado</span><span class="en">Simulated result</span></th><th><span class="es">Estado</span><span class="en">Status</span></th></tr></thead>
+          <tbody>
+            <tr><td><span class="es">Cortocircuito activo (ASC)</span><span class="en">Active short circuit (ASC)</span></td><td><span class="es">620 A sostenidos y hasta 1324 A al entrar; la unión llega a 175 °C en 6 s. No sirve para este motor.</span><span class="en">620 A sustained and up to 1324 A on entry; the junction reaches 175 °C in 6 s. Not usable with this motor.</span></td><td><span class="st fix"><span class="es">descartado</span><span class="en">ruled out</span></span></td></tr>
+            <tr><td><span class="es">Abrir los 6 transistores</span><span class="en">Open all 6 switches</span></td><td><span class="es">0 A mientras la fuerza contraelectromotriz sea menor que la batería. Con batería de 60 V arriba de ~32 km/h, hasta 318 A a la batería y −61 N·m de frenado.</span><span class="en">0 A while back-EMF is below the battery voltage. With a 60 V battery above ~32 km/h, up to 318 A into the battery and −61 N·m of braking.</span></td><td><span class="st reqd"><span class="es">con condición</span><span class="en">conditional</span></span></td></tr>
+            <tr><td><span class="es">Par cero controlado</span><span class="en">Controlled zero torque</span></td><td><span class="es">Necesita como máximo 344 A (60 V, 60 km/h), abajo del límite de 430 A.</span><span class="en">Needs at most 344 A (60 V, 60 km/h), below the 430 A limit.</span></td><td><span class="st pass"><span class="es">pasa</span><span class="en">passes</span></span></td></tr>
+            <tr><td><span class="es">Pérdida del resolver</span><span class="en">Resolver loss</span></td><td><span class="es">Detectando en 5 ms la corriente sube a 477 A. Con un observador de flujo de respaldo el par residual queda en −1.9 N·m (100 V) o −9.4 N·m (60 V).</span><span class="en">Detected in 5 ms, current climbs to 477 A. With a backup flux observer the residual torque is −1.9 N·m (100 V) or −9.4 N·m (60 V).</span></td><td><span class="st reqd"><span class="es">detectar ≤ 2 ms</span><span class="en">detect ≤ 2 ms</span></span></td></tr>
+            <tr><td><span class="es">Pérdida de CAN</span><span class="en">CAN loss</span></td><td><span class="es">Se detecta en 50 ms y llega a par cero 287 ms después del último mensaje.</span><span class="en">Detected in 50 ms; zero torque 287 ms after the last message.</span></td><td><span class="st pass"><span class="es">pasa</span><span class="en">passes</span></span></td></tr>
+            <tr><td><span class="es">Se abre el contactor regenerando</span><span class="en">Contactor opens while regenerating</span></td><td><span class="es">El bus llega a 145–150 V; el sobrevoltaje por software (145 V) actúa antes que el de hardware (160 V).</span><span class="en">The bus reaches 145–150 V; software overvoltage (145 V) acts before the hardware trip (160 V).</span></td><td><span class="st pass"><span class="es">pasa</span><span class="en">passes</span></span></td></tr>
+            <tr><td><span class="es">Remolque con el control apagado</span><span class="en">Towing with control off</span></td><td><span class="es">La fuerza contraelectromotriz pasa de 160 V a 81 km/h y de 200 V a 101 km/h.</span><span class="en">Back-EMF exceeds 160 V at 81 km/h and 200 V at 101 km/h.</span></td><td><span class="st reqd"><span class="es">no remolcar &gt; 70 km/h</span><span class="en">no towing &gt; 70 km/h</span></span></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="note"><span class="es">Todo simulado con batería, BMS y datos térmicos supuestos. Validar la seguridad de verdad requiere el hardware y los datos de Olinia.</span><span class="en">All simulated with assumed battery, BMS and thermal data. Truly validating safety requires the hardware and Olinia's data.</span></p>
+    </div>
+
+    <div class="sub">
+      <div class="subhead">
+        <span class="eyebrow"><span class="es">Política de estado seguro</span><span class="en">Safe-state policy</span></span>
+        <h3><span class="es">Qué hace la MCU según quién siga vivo</span><span class="en">What the MCU does depending on what still works</span></h3>
+      </div>
+      <div class="policy">
+        <div class="card"><h4><span class="es">Falla con el control vivo</span><span class="en">Fault with control alive</span></h4><p><span class="es">Sobrevoltaje, CAN, temperatura o aviso del BMS: par cero controlado. Nunca cortocircuito activo.</span><span class="en">Overvoltage, CAN, temperature or a BMS warning: controlled zero torque. Never an active short circuit.</span></p></div>
+        <div class="card"><h4><span class="es">Falla del resolver</span><span class="en">Resolver fault</span></h4><p><span class="es">Usa el ángulo del observador de flujo que corre siempre en paralelo y sigue con par cero controlado.</span><span class="en">Switch to the angle from the flux observer that always runs in parallel, then controlled zero torque.</span></p></div>
+        <div class="card"><h4><span class="es">Sin control</span><span class="en">No control</span></h4><p><span class="es">Microcontrolador caído, watchdog o comparador de 160 V: se abren los seis transistores por hardware.</span><span class="en">Microcontroller down, watchdog or the 160 V comparator: the hardware opens all six switches.</span></p></div>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- 8. AVANCE -->
+<!-- 07 AVANCE -->
 <section id="avance" class="band">
   <div class="wrap">
     <div class="head">
-      <span class="eyebrow"><span class="es">Avance</span><span class="en">Progress</span></span>
+      <span class="eyebrow"><i>07</i><span class="es">Avance</span><span class="en">Progress</span></span>
       <h2><span class="es">Dónde estamos, sin adornos</span><span class="en">Where we are, plainly</span></h2>
-      <p class="read muted"><span class="es">Hoy el proyecto está en TRL 2: concepto diseñado y simulado. La meta es TRL 3, una prueba de concepto en laboratorio.</span><span class="en">Today the project is at TRL 2: the concept is designed and simulated. The goal is TRL 3, a proof of concept in the lab.</span></p>
+      <p class="lede"><span class="es">Hoy el proyecto está en TRL 2: concepto diseñado y simulado. La meta es TRL 3, una prueba de concepto en laboratorio.</span><span class="en">Today the project is at TRL 2: the concept is designed and simulated. The goal is TRL 3, a proof of concept in the lab.</span></p>
     </div>
     <div class="trl">
-      <div class="done"><b><span class="es">Diseñado</span><span class="en">Designed</span></b><p><span class="es">Esquemático, dos placas ruteadas y gabinete.</span><span class="en">Schematic, two routed boards and enclosure.</span></p></div>
-      <div class="done"><b><span class="es">Simulado</span><span class="en">Simulated</span></b><p>Python, Simulink/Simscape, LTspice, PSpice.</p></div>
+      <div class="done"><b><span class="es">Diseñado</span><span class="en">Designed</span></b><p><span class="es">Esquemático, dos placas ruteadas y verificadas, gabinete.</span><span class="en">Schematic, two routed and checked boards, enclosure.</span></p></div>
+      <div class="done"><b><span class="es">Simulado</span><span class="en">Simulated</span></b><p><span class="es">Control, térmica, autonomía y fallas en Python, Simulink, LTspice y PSpice.</span><span class="en">Control, thermal, range and faults in Python, Simulink, LTspice and PSpice.</span></p></div>
       <div class="next"><b><span class="es">Laboratorio</span><span class="en">Lab tested</span></b><p><span class="es">Siguiente paso: TRL 3.</span><span class="en">Next step: TRL 3.</span></p></div>
       <div class="later"><b><span class="es">Certificado</span><span class="en">Certified</span></b><p><span class="es">Fuera del alcance actual.</span><span class="en">Outside the current scope.</span></p></div>
     </div>
     <ol class="tl">
-      <li><time><span class="es">Oct 2026</span><span class="en">Oct 2026</span></time><p><span class="es">Propuesta enviada a InnovaTecNM y primeros requisitos.</span><span class="en">Proposal submitted to InnovaTecNM and first requirements.</span></p></li>
-      <li><time>2 nov</time><p><span class="es">Se elige control FOC, el mismo para el prototipo y el diseño final.</span><span class="en">FOC control chosen, the same for the prototype and the final design.</span></p></li>
-      <li><time>13 nov</time><p><span class="es">Primera simulación del control y la regeneración a 13.5 kW.</span><span class="en">First simulation of control and regeneration at 13.5 kW.</span></p></li>
-      <li><time>14 nov</time><p><span class="es">Olinia confirma motor PMSM, 13.5 kW continuos, 30 kW pico, resolver y CAN.</span><span class="en">Olinia confirms PMSM motor, 13.5 kW continuous, 30 kW peak, resolver and CAN.</span></p></li>
-      <li><time>15 nov</time><p><span class="es">Selección de piezas automotrices y análisis de conmutación en PSpice.</span><span class="en">Automotive parts selected and switching analysis in PSpice.</span></p></li>
-      <li><time>16 nov</time><p><span class="es">Llega la ficha de 220 × 210 × 144 mm; arranca el rediseño en tres pisos.</span><span class="en">The 220 × 210 × 144 mm spec arrives; the three-floor redesign begins.</span></p></li>
-      <li><time>17 nov</time><p><span class="es">Simulink nivel 2 pasa en MATLAB, el esquemático se valida en LTspice y se rutean las placas de potencia y control.</span><span class="en">Simulink level 2 passes in MATLAB, the schematic is validated in LTspice, and the power and control boards are routed.</span></p></li>
-      <li class="fut"><time>20 nov</time><p><span class="es">Entrega a InnovaTecNM 2026.</span><span class="en">Submission to InnovaTecNM 2026.</span></p></li>
+      <li><time>Oct 2026</time><p><span class="es">Propuesta enviada a InnovaTecNM y primeros requisitos.</span><span class="en">Proposal submitted to InnovaTecNM and first requirements.</span></p></li>
+      <li><time><span class="es">2 nov</span><span class="en">Nov 2</span></time><p><span class="es">Se elige control FOC, el mismo para el prototipo y el diseño final.</span><span class="en">FOC control chosen, the same for the prototype and the final design.</span></p></li>
+      <li><time><span class="es">13 nov</span><span class="en">Nov 13</span></time><p><span class="es">Primera simulación del control y la regeneración a 13.5 kW.</span><span class="en">First simulation of control and regeneration at 13.5 kW.</span></p></li>
+      <li><time><span class="es">14 nov</span><span class="en">Nov 14</span></time><p><span class="es">Olinia confirma motor PMSM, 13.5 kW continuos, 30 kW pico, resolver y CAN.</span><span class="en">Olinia confirms PMSM motor, 13.5 kW continuous, 30 kW peak, resolver and CAN.</span></p></li>
+      <li><time><span class="es">15 nov</span><span class="en">Nov 15</span></time><p><span class="es">Selección de piezas automotrices y análisis de conmutación en PSpice.</span><span class="en">Automotive parts selected and switching analysis in PSpice.</span></p></li>
+      <li><time><span class="es">16 nov</span><span class="en">Nov 16</span></time><p><span class="es">Llega la ficha de 220 × 210 × 144 mm; arranca el rediseño en tres pisos.</span><span class="en">The 220 × 210 × 144 mm spec arrives; the three-floor redesign begins.</span></p></li>
+      <li><time><span class="es">17 nov</span><span class="en">Nov 17</span></time><p><span class="es">Simulink nivel 2 pasa en MATLAB, el esquemático se valida en LTspice y se rutean las dos placas.</span><span class="en">Simulink level 2 passes in MATLAB, the schematic is validated in LTspice, and both boards are routed.</span></p></li>
+      <li><time><span class="es">18 nov</span><span class="en">Nov 18</span></time><p><span class="es">Verificación térmica y eléctrica de la placa de potencia; simulaciones de fallas, subida larga y autonomía.</span><span class="en">Thermal and electrical check of the power board; fault, long-climb and range simulations.</span></p></li>
+      <li class="fut"><time><span class="es">20 nov</span><span class="en">Nov 20</span></time><p><span class="es">Entrega a InnovaTecNM 2026.</span><span class="en">Submission to InnovaTecNM 2026.</span></p></li>
       <li class="fut"><time><span class="es">Después</span><span class="en">Next</span></time><p><span class="es">Revisión de fabricación con el proveedor de PCB, datos finales de Olinia y prueba de concepto en laboratorio.</span><span class="en">Manufacturing review with the PCB supplier, final data from Olinia, and a lab proof of concept.</span></p></li>
     </ol>
   </div>
 </section>
 
-<!-- 9. EQUIPO -->
+<!-- 08 EQUIPO -->
 <section id="equipo">
   <div class="wrap">
     <div class="head">
-      <span class="eyebrow"><span class="es">Equipo</span><span class="en">Team</span></span>
+      <span class="eyebrow"><i>08</i><span class="es">Equipo</span><span class="en">Team</span></span>
       <h2>Yolotl</h2>
-      <p class="read muted"><span class="es">Yolotl significa "corazón" en náhuatl. Somos estudiantes del Instituto Tecnológico de Hermosillo, del Tecnológico Nacional de México.</span><span class="en">Yolotl means "heart" in Nahuatl. We are students at the Instituto Tecnológico de Hermosillo, part of Mexico's Tecnológico Nacional de México.</span></p>
+      <p class="lede"><span class="es">Yolotl significa "corazón" en náhuatl. Somos estudiantes del Instituto Tecnológico de Hermosillo, del Tecnológico Nacional de México.</span><span class="en">Yolotl means "heart" in Nahuatl. We are students at the Instituto Tecnológico de Hermosillo, part of Mexico's Tecnológico Nacional de México.</span></p>
     </div>
     <div class="team">
-      <div class="person"><h3>Jesús Luis Salazar Miranda</h3><p><span class="es">Electrónica: potencia, control, firmware, simulación y seguridad eléctrica.</span><span class="en">Electronics: power, control, firmware, simulation and electrical safety.</span></p></div>
-      <div class="person"><h3>Miguel Ángel Hernández Sáenz</h3><p><span class="es">Electrónica: potencia, control, firmware, simulación y seguridad eléctrica.</span><span class="en">Electronics: power, control, firmware, simulation and electrical safety.</span></p></div>
-      <div class="person"><h3>Mariana Lugo Pérez</h3><p><span class="es">Industrial: costos, lista de materiales, manufactura, proveedores y normas.</span><span class="en">Industrial: costs, bill of materials, manufacturing, suppliers and standards.</span></p></div>
-      <div class="person"><h3>Vivian Danahé Moroyoqui Juárez</h3><p><span class="es">Industrial: costos, lista de materiales, manufactura, proveedores y normas.</span><span class="en">Industrial: costs, bill of materials, manufacturing, suppliers and standards.</span></p></div>
+      <div class="person card"><span class="ini" aria-hidden="true">JS</span><h3>Jesús Luis Salazar Miranda</h3><p><span class="es">Electrónica: potencia, control, firmware, simulación y seguridad eléctrica.</span><span class="en">Electronics: power, control, firmware, simulation and electrical safety.</span></p></div>
+      <div class="person card"><span class="ini" aria-hidden="true">MH</span><h3>Miguel Ángel Hernández Sáenz</h3><p><span class="es">Electrónica: potencia, control, firmware, simulación y seguridad eléctrica.</span><span class="en">Electronics: power, control, firmware, simulation and electrical safety.</span></p></div>
+      <div class="person card"><span class="ini" aria-hidden="true">ML</span><h3>Mariana Lugo Pérez</h3><p><span class="es">Industrial: costos, lista de materiales, manufactura, proveedores y normas.</span><span class="en">Industrial: costs, bill of materials, manufacturing, suppliers and standards.</span></p></div>
+      <div class="person card"><span class="ini" aria-hidden="true">VM</span><h3>Vivian Danahé Moroyoqui Juárez</h3><p><span class="es">Industrial: costos, lista de materiales, manufactura, proveedores y normas.</span><span class="en">Industrial: costs, bill of materials, manufacturing, suppliers and standards.</span></p></div>
     </div>
     <p class="advisors"><span class="es">Asesores: Maestra Betzaida y Maestro Grijalva (ITH). Con asesoría técnica de Olinia.</span><span class="en">Advisors: Maestra Betzaida and Maestro Grijalva (ITH). With technical guidance from Olinia.</span></p>
   </div>
 </section>
 
-<!-- 10. CONTACTO -->
+<!-- 09 CONTACTO -->
 <section id="contacto">
   <div class="wrap contact">
-    <div class="head">
-      <span class="eyebrow"><span class="es">Contacto</span><span class="en">Contact</span></span>
+    <div class="head" style="margin-bottom:0">
+      <span class="eyebrow"><i>09</i><span class="es">Contacto</span><span class="en">Contact</span></span>
       <h2><span class="es">Hablemos</span><span class="en">Get in touch</span></h2>
-      <p class="muted"><span class="es">Si eres jurado, empresa o estudiante y quieres saber más del diseño, escríbenos.</span><span class="en">If you are a judge, a company or a student and want to know more about the design, write to us.</span></p>
+      <p class="lede"><span class="es">Si eres jurado, empresa o estudiante y quieres saber más del diseño, escríbenos.</span><span class="en">If you are a judge, a company or a student and want to know more about the design, write to us.</span></p>
     </div>
-    <dl>
-      <dt><span class="es">Correo</span><span class="en">Email</span></dt><dd><span class="mono" id="correo">yolotl.ith@gmail.com</span> <button type="button" class="copiar" id="btn-copiar" data-ok-es="Copiado" data-ok-en="Copied"><span class="es">Copiar</span><span class="en">Copy</span></button></dd>
-      <dt><span class="es">Escuela</span><span class="en">School</span></dt><dd>Instituto Tecnológico de Hermosillo, TecNM · Hermosillo, Sonora</dd>
-      <dt><span class="es">Concurso</span><span class="en">Competition</span></dt><dd>InnovaTecNM 2026 · <span class="es">reto Olinia</span><span class="en">Olinia challenge</span></dd>
-    </dl>
+    <div class="card">
+      <dl>
+        <dt><span class="es">Correo</span><span class="en">Email</span></dt><dd><span class="mono" id="correo">yolotl.ith@gmail.com</span> <button type="button" class="copiar" id="btn-copiar" data-ok-es="Copiado" data-ok-en="Copied"><span class="es">Copiar</span><span class="en">Copy</span></button></dd>
+        <dt><span class="es">Escuela</span><span class="en">School</span></dt><dd>Instituto Tecnológico de Hermosillo, TecNM · Hermosillo, Sonora</dd>
+        <dt><span class="es">Concurso</span><span class="en">Competition</span></dt><dd>InnovaTecNM 2026 · <span class="es">reto Olinia</span><span class="en">Olinia challenge</span></dd>
+      </dl>
+    </div>
   </div>
 </section>
 
@@ -643,8 +881,8 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-betw
 
 <footer>
   <div class="wrap">
-    <span><span class="es">Datos al 17 de noviembre de 2026. Todo lo mostrado está diseñado o simulado; nada está probado en laboratorio ni certificado.</span><span class="en">Data as of November 17, 2026. Everything shown is designed or simulated; nothing has been lab tested or certified.</span></span>
-    <span>Equipo Yolotl · ITH · TecNM</span>
+    <span><span class="es">Datos al 18 de noviembre de 2026. Todo lo mostrado está diseñado, calculado o simulado; nada está probado en laboratorio ni certificado.</span><span class="en">Data as of November 18, 2026. Everything shown is designed, calculated or simulated; nothing has been lab tested or certified.</span></span>
+    <span><b>Yolotl</b> · ITH · TecNM</span>
   </div>
 </footer>
 
@@ -666,10 +904,32 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-betw
   document.querySelectorAll('.lang button').forEach(function(b){b.addEventListener('click',function(){set(b.dataset.set);});});
 })();
 
+/* visor de la galería */
+(function(){
+  var bs=[].slice.call(document.querySelectorAll('.thumbs button')); if(!bs.length) return;
+  var img=document.getElementById('v-img'), ph=document.getElementById('v-ph'), cap=document.getElementById('v-cap'), num=document.getElementById('v-num');
+  var cur=0, quieto=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function pad(n){return (n<10?'0':'')+n;}
+  function ir(i){
+    i=(i+bs.length)%bs.length; if(i===cur) return; cur=i; var b=bs[i];
+    bs.forEach(function(x,j){x.setAttribute('aria-pressed',j===i?'true':'false');});
+    function cambia(){img.src=b.dataset.src; img.alt=b.dataset.alt; ph.classList.toggle('pcbbg',!!b.dataset.pcb);
+      cap.innerHTML=b.querySelector('.cap').innerHTML; num.textContent=pad(i+1)+' / '+pad(bs.length);}
+    if(quieto){cambia();return;}
+    img.classList.add('fade');
+    setTimeout(function(){cambia(); var lis=function(){img.classList.remove('fade');}; if(img.complete) lis(); else img.onload=lis;},200);
+  }
+  bs.forEach(function(b,i){b.addEventListener('click',function(){ir(i);});});
+  document.getElementById('v-prev').addEventListener('click',function(){ir(cur-1);});
+  document.getElementById('v-next').addEventListener('click',function(){ir(cur+1);});
+  ph.addEventListener('keydown',function(e){if(e.key==='ArrowLeft')ir(cur-1);if(e.key==='ArrowRight')ir(cur+1);});
+  // precarga las vistas grandes cuando el visor se acerca
+  if('IntersectionObserver' in window){var pre=new IntersectionObserver(function(es){if(es[0].isIntersecting){bs.forEach(function(b){var x=new Image();x.src=b.dataset.src;});pre.disconnect();}},{rootMargin:'400px'});pre.observe(ph);}
+})();
+
 (function(){
   var site=document.getElementById('site');
   var quieto=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
-  // barra de avance y sección activa
   var barra=document.querySelector('.progress i');
   var links=[].slice.call(document.querySelectorAll('.nav a'));
   var secs=links.map(function(a){return document.querySelector(a.getAttribute('href'));});
@@ -680,7 +940,6 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-betw
     links.forEach(function(a,i){a.classList.toggle('on',i===act);});
   }
   addEventListener('scroll',alBajar,{passive:true}); alBajar();
-  // transición al cambiar de idioma
   document.querySelectorAll('.lang button').forEach(function(b){
     b.addEventListener('click',function(e){
       if(b.dataset.go) return;
@@ -690,22 +949,21 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-betw
     },true);
   });
   if(quieto||!('IntersectionObserver' in window)) return;
-  // aparición al bajar: solo se oculta lo que está fuera de la pantalla al cargar
-  var sel='section .head, .two > *, .tablebox, .note, .diagram, .foc > div, .gallery figure, .parts > div, .sim, .layer, .trl > div, .tl li, .person, .advisors, .contact dl';
+  var sel='section .head, .two > *, .legend, .tablebox, .note, .diagram, .steps > div, .viewer, .parts > div, .sub > .subhead, .verif > *, .tiles > div, .chart, .bars, .facts, .mini figure, .layer, .policy > div, .trl > div, .tl li, .person, .advisors, .contact .card';
   var io=new IntersectionObserver(function(es){es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} });},{rootMargin:'0px 0px -8% 0px'});
   document.querySelectorAll(sel).forEach(function(el){
+    if(el.closest('details')) return;
     if(el.getBoundingClientRect().top < innerHeight) return;
     var i=[].indexOf.call(el.parentNode.children,el);
     el.classList.add('rv'); if(el.matches('.tl li')) el.classList.add('izq');
     el.style.transitionDelay=Math.min(i,6)*70+'ms';
     io.observe(el);
   });
-  // los números de la portada cuentan hacia arriba (el texto final ya está en la página)
-  document.querySelectorAll('.strip b').forEach(function(b){
+  document.querySelectorAll('.kpis b').forEach(function(b){
     var fin=b.textContent, nums=fin.match(/\d+(\.\d+)?/g); if(!nums) return;
     var t0=null, dur=1300, espera=1500;
     function paso(t){ if(!t0) t0=t; var k=Math.min(1,Math.max(0,(t-t0-espera)/dur)); k=1-Math.pow(1-k,3);
-      var j=0; b.textContent=fin.replace(/\d+(\.\d+)?/g,function(m){ var d=(m.split('.')[1]||'').length; return (parseFloat(m)*k).toFixed(d); });
+      b.textContent=fin.replace(/\d+(\.\d+)?/g,function(m){ var d=(m.split('.')[1]||'').length; return (parseFloat(m)*k).toFixed(d); });
       if(k<1) requestAnimationFrame(paso); else b.textContent=fin; }
     requestAnimationFrame(paso);
   });
