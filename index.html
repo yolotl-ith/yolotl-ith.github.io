@@ -19,7 +19,7 @@
   --bg:#f4f5f7; --surface:#ffffff; --ink:#131820; --muted:#5a6371; --line:#dde2e9; --line2:#c9d0da;
   --guinda:#7a1f3d; --guinda-soft:#f4e7eb; --cobre:#a8642a; --ok:#1d7a52; --pend:#9a6a00; --no:#8a8f98; --sim:#2b6cb0;
   --s1:#b03a5b; --s2:#2b6cb0;
-  --band:#10141a; --band2:#171c24; --band-ink:#eef0f3; --band-muted:#a3acb9; --band-line:#2a313c; --band-acc:#e58aa7;
+  --band:#10141a; --band2:#171c24; --band-ink:#eef0f3; --band-muted:#a3acb9; --band-line:#2a313c; --band-acc:#bd4f62;
   --shadow:0 1px 2px rgba(19,24,32,.05),0 8px 24px -12px rgba(19,24,32,.18);
   --r:10px;
   --f-display:"Archivo","Helvetica Neue",Arial,sans-serif;
@@ -28,14 +28,14 @@
 }
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
   --bg:#0e1116; --surface:#161a21; --ink:#e9ecf1; --muted:#9aa3b1; --line:#262c36; --line2:#343b47;
-  --guinda:#d9668b; --guinda-soft:#2a1820; --cobre:#e0a15a; --ok:#4cc38a; --pend:#e0b44c; --no:#6c7380; --sim:#6aa8e8;
-  --s1:#d9668b; --s2:#4f8fd6;
+  --guinda:#bd4f62; --guinda-soft:#2a1820; --cobre:#e0a15a; --ok:#4cc38a; --pend:#e0b44c; --no:#6c7380; --sim:#6aa8e8;
+  --s1:#bd4f62; --s2:#4f8fd6;
   --band:#080a0e; --band2:#11151b; --band-line:#232a34;
   --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 30px -14px rgba(0,0,0,.6); color-scheme:dark}}
 :root[data-theme="dark"]{
   --bg:#0e1116; --surface:#161a21; --ink:#e9ecf1; --muted:#9aa3b1; --line:#262c36; --line2:#343b47;
-  --guinda:#d9668b; --guinda-soft:#2a1820; --cobre:#e0a15a; --ok:#4cc38a; --pend:#e0b44c; --no:#6c7380; --sim:#6aa8e8;
-  --s1:#d9668b; --s2:#4f8fd6;
+  --guinda:#bd4f62; --guinda-soft:#2a1820; --cobre:#e0a15a; --ok:#4cc38a; --pend:#e0b44c; --no:#6c7380; --sim:#6aa8e8;
+  --s1:#bd4f62; --s2:#4f8fd6;
   --band:#080a0e; --band2:#11151b; --band-line:#232a34;
   --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 30px -14px rgba(0,0,0,.6); color-scheme:dark}
 *{box-sizing:border-box}
@@ -91,7 +91,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .hero{background:var(--band);color:var(--band-ink);position:relative;overflow:hidden;padding-block:64px 0;
   --ink:var(--band-ink);--guinda:var(--band-acc);--muted:var(--band-muted);--line:var(--band-line)}
 .hero::before{content:"";position:absolute;inset:0;pointer-events:none;
-  background:radial-gradient(60% 70% at 85% 30%,rgba(229,138,167,.16),transparent 70%),
+  background:radial-gradient(60% 70% at 85% 30%,rgba(189,79,98,.16),transparent 70%),
   linear-gradient(var(--band-line) 1px,transparent 1px) 0 0/48px 48px,linear-gradient(90deg,var(--band-line) 1px,transparent 1px) 0 0/48px 48px;
   -webkit-mask-image:linear-gradient(180deg,rgba(0,0,0,.55),rgba(0,0,0,.1));mask-image:linear-gradient(180deg,rgba(0,0,0,.55),rgba(0,0,0,.1))}
 .hero .wrap{position:relative}
@@ -105,9 +105,9 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .hero .lead{font-size:19px;color:var(--band-muted);margin-top:20px;max-width:54ch}
 .btns{display:flex;flex-wrap:wrap;gap:12px;margin-top:32px}
 .btn{display:inline-flex;align-items:center;gap:8px;font:600 15px var(--f-body);text-decoration:none;padding:12px 20px;border-radius:999px;border:1px solid var(--band-line);color:var(--band-ink)}
-.btn.pri{background:var(--band-acc);border-color:var(--band-acc);color:#1a0b11}
+.btn.pri{background:var(--band-acc);border-color:var(--band-acc);color:#fff}
 .btn:hover{border-color:var(--band-ink)}
-.btn.pri:hover{background:#f0a3bb;border-color:#f0a3bb}
+.btn.pri:hover{background:#d06676;border-color:#d06676}
 .btn svg{width:16px;height:16px}
 .shot{margin:0;border-radius:14px;overflow:hidden;background:#dadcdb;box-shadow:0 30px 80px -30px rgba(0,0,0,.8),0 0 0 1px rgba(255,255,255,.06)}
 .shot figcaption{font-size:13px;color:#495260;padding:10px 16px;background:#e6e8ea;border-top:1px solid #d2d6dc}
@@ -163,6 +163,16 @@ tbody tr:hover td{background:color-mix(in srgb,var(--guinda-soft) 55%,transparen
 .steps p{font-size:15px;color:var(--muted)}
 @media (max-width:900px){.steps{grid-template-columns:1fr 1fr}}
 @media (max-width:520px){.steps{grid-template-columns:1fr}}
+
+/* producto: video de armado */
+.armado{margin:0 0 18px;overflow:hidden}
+.armado .vid{background:#0b0c0e;aspect-ratio:16/9;position:relative}
+.armado video{display:block;width:100%;height:100%;object-fit:cover}
+.armado figcaption{display:flex;gap:16px;align-items:flex-start;justify-content:space-between;padding:16px 20px;font-size:15px;color:var(--muted);border-top:1px solid var(--line)}
+.armado figcaption b{color:var(--ink);font-weight:600}
+.armado .nums{font:500 13px var(--f-mono);color:var(--muted);flex:none;white-space:nowrap;padding-top:2px}
+.armado .pausa{position:absolute;right:12px;bottom:12px;width:40px;height:40px;border-radius:50%;border:0;background:rgba(19,24,32,.72);color:#fff;font-size:14px;cursor:pointer;display:grid;place-items:center}
+.armado .pausa:hover{background:rgba(19,24,32,.92)}
 
 /* producto: visor de galería */
 .viewer{display:grid;gap:14px}
@@ -583,6 +593,19 @@ footer b{color:var(--band-ink);font-weight:600}
       <p class="lede"><span class="es">Para caber en la envolvente de Olinia apilamos la electrónica: la placa de potencia va sobre la placa fría, el banco de capacitores encima y la placa de control arriba. Las dos placas están ruteadas en KiCad sin conexiones faltantes ni violaciones; falta la revisión del fabricante.</span><span class="en">To fit Olinia's envelope we stacked the electronics: the power board sits on the cold plate, the capacitor bank above it and the control board on top. Both boards are fully routed in KiCad with no unrouted nets or violations; manufacturer review is still pending.</span></p>
     </div>
 
+    <figure class="armado card" id="armado">
+      <div class="vid">
+        <video class="es" data-v="es" muted loop playsinline controls preload="none" width="1920" height="1080" poster="img/armado_es.jpg" aria-label="Animación: las piezas de la MCU aparecen una por una en orden de armado y entran a su lugar hasta cerrar el gabinete">
+          <source src="img/armado_es.mp4" type="video/mp4">
+        </video>
+        <video class="en" data-v="en" muted loop playsinline controls preload="none" width="1920" height="1080" poster="img/armado_en.jpg" aria-label="Animation: the MCU parts appear one by one in assembly order and drop into place until the housing is closed">
+          <source src="img/armado_en.mp4" type="video/mp4">
+        </video>
+        <button type="button" class="pausa" id="armado-pausa" aria-label="Pausar / Pause" hidden>❚❚</button>
+      </div>
+      <figcaption><span><b><span class="es">Armado pieza por pieza.</span><span class="en">Assembly, part by part.</span></b> <span class="es">Cada pieza aparece en su turno, en el orden real de armado, y entra a su lugar. La cámara recorre despacio la placa de potencia y la de control, y se detiene en los componentes clave: drivers de compuerta, MOSFET, sensores de corriente, microcontrolador y lectura del resolver. Render del modelo CAD; aún no está fabricado.</span><span class="en">Each part appears in turn, in the real assembly order, and drops into place. The camera slowly tours the power and control boards and stops on the key components: gate drivers, MOSFETs, current sensors, microcontroller and resolver interface. Rendered from the CAD model; not yet built.</span></span><span class="nums">81 s</span></figcaption>
+    </figure>
+
     <div class="viewer">
       <figure class="stage card">
         <div class="ph" id="v-ph">
@@ -929,6 +952,21 @@ footer b{color:var(--band-ink);font-weight:600}
 })();
 
 (function(){
+  // video de armado: se reproduce solo cuando se ve, en el idioma activo; sin movimiento si el sistema lo pide
+  var site=document.getElementById('site'), caja=document.getElementById('armado'); if(!caja) return;
+  var vs=[].slice.call(caja.querySelectorAll('video')), btn=document.getElementById('armado-pausa');
+  var quieto=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches, visto=false, pausado=quieto;
+  function actual(){ return vs.filter(function(v){return v.dataset.v===site.dataset.lang;})[0]||vs[0]; }
+  function sync(){ vs.forEach(function(v){ var a=v===actual();
+      if(a && visto && !pausado){ if(v.preload!=='auto'){v.preload='auto';} var p=v.play(); if(p&&p.catch)p.catch(function(){}); }
+      else v.pause(); });
+    if(btn){ btn.textContent=pausado?'▶':'❚❚'; btn.setAttribute('aria-label',pausado?'Reproducir / Play':'Pausar / Pause'); } }
+  if(!quieto){ vs.forEach(function(v){v.removeAttribute('controls');}); if(btn){btn.hidden=false; btn.addEventListener('click',function(){pausado=!pausado;sync();});} }
+  if('IntersectionObserver' in window){ new IntersectionObserver(function(es){ visto=es[0].isIntersecting; sync(); },{threshold:0.25}).observe(caja); } else { visto=true; sync(); }
+  new MutationObserver(sync).observe(site,{attributes:true,attributeFilter:['data-lang']});
+})();
+
+(function(){
   var site=document.getElementById('site');
   var quieto=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
   var barra=document.querySelector('.progress i');
@@ -950,7 +988,7 @@ footer b{color:var(--band-ink);font-weight:600}
     },true);
   });
   if(quieto||!('IntersectionObserver' in window)) return;
-  var sel='section .head, .two > *, .legend, .tablebox, .note, .diagram, .steps > div, .viewer, .parts > div, .sub > .subhead, .verif > *, .tiles > div, .chart, .bars, .facts, .mini figure, .layer, .policy > div, .trl > div, .tl li, .person, .advisors, .contact .card';
+  var sel='section .head, .two > *, .legend, .tablebox, .note, .diagram, .steps > div, .armado, .viewer, .parts > div, .sub > .subhead, .verif > *, .tiles > div, .chart, .bars, .facts, .mini figure, .layer, .policy > div, .trl > div, .tl li, .person, .advisors, .contact .card';
   var io=new IntersectionObserver(function(es){es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} });},{rootMargin:'0px 0px -8% 0px'});
   document.querySelectorAll(sel).forEach(function(el){
     if(el.closest('details')) return;
