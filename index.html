@@ -333,6 +333,10 @@ section.band{border-top:0}
 .person h3{font-size:17px}
 .person p{font-size:14px;color:var(--muted);margin-top:6px}
 .advisors{margin-top:28px;font-size:15px;color:var(--muted)}
+.vid{margin:0 0 20px;overflow:hidden}
+.vid video{display:block;width:100%;height:auto;aspect-ratio:16/9;background:#000}
+.vid figcaption{padding:14px 20px;font-size:14.5px;color:var(--muted)}
+.vid figcaption b{color:var(--ink);font-weight:600}
 @media (max-width:900px){.team{grid-template-columns:1fr 1fr}}
 @media (max-width:460px){.team{grid-template-columns:1fr}}
 
@@ -873,6 +877,12 @@ footer b{color:var(--band-ink);font-weight:600}
       <h2>Yolotl</h2>
       <p class="lede"><span class="es">Yolotl significa "corazón" en náhuatl. Somos estudiantes del Instituto Tecnológico de Hermosillo, del Tecnológico Nacional de México.</span><span class="en">Yolotl means "heart" in Nahuatl. We are students at the Instituto Tecnológico de Hermosillo, part of Mexico's Tecnológico Nacional de México.</span></p>
     </div>
+    <figure class="vid card">
+      <video controls playsinline preload="none" poster="img/video_equipo_poster.jpg" width="1280" height="720">
+        <source src="img/video_equipo.mp4" type="video/mp4">
+      </video>
+      <figcaption><b><span class="es">Conoce al equipo.</span><span class="en">Meet the team.</span></b> <span class="es">Presentación de Yolotl para Retos de Transformación Nacional, InnovaTecNM 2026 (39 s).</span><span class="en">Yolotl's introduction for the Retos de Transformación Nacional, InnovaTecNM 2026 (39 s, in Spanish with Spanish subtitles).</span></figcaption>
+    </figure>
     <div class="team">
       <div class="person card"><span class="ini" aria-hidden="true">JS</span><h3>Jesús Luis Salazar Miranda</h3><p><span class="es">Electrónica: potencia, control, firmware, simulación y seguridad eléctrica.</span><span class="en">Electronics: power, control, firmware, simulation and electrical safety.</span></p></div>
       <div class="person card"><span class="ini" aria-hidden="true">MH</span><h3>Miguel Ángel Hernández Sáenz</h3><p><span class="es">Electrónica: potencia, control, firmware, simulación y seguridad eléctrica.</span><span class="en">Electronics: power, control, firmware, simulation and electrical safety.</span></p></div>
@@ -988,7 +998,7 @@ footer b{color:var(--band-ink);font-weight:600}
     },true);
   });
   if(quieto||!('IntersectionObserver' in window)) return;
-  var sel='section .head, .two > *, .legend, .tablebox, .note, .diagram, .steps > div, .armado, .viewer, .parts > div, .sub > .subhead, .verif > *, .tiles > div, .chart, .bars, .facts, .mini figure, .layer, .policy > div, .trl > div, .tl li, .person, .advisors, .contact .card';
+  var sel='section .head, .two > *, .legend, .tablebox, .note, .diagram, .steps > div, .armado, .viewer, .parts > div, .sub > .subhead, .verif > *, .tiles > div, .chart, .bars, .facts, .mini figure, .layer, .policy > div, .trl > div, .tl li, .vid, .person, .advisors, .contact .card';
   var io=new IntersectionObserver(function(es){es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} });},{rootMargin:'0px 0px -8% 0px'});
   document.querySelectorAll(sel).forEach(function(el){
     if(el.closest('details')) return;
