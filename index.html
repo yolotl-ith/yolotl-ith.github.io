@@ -712,6 +712,31 @@ footer b{color:var(--band-ink);font-weight:600}
       </div>
       <div class="scale heat-scale"><span>65 °C</span><i></i><span>≥ 185 °C</span></div>
     </div>
+
+    <div class="sub" id="banco-control">
+      <div class="subhead">
+        <span class="eyebrow"><span class="es">Capacitores y control</span><span class="en">Capacitors and control</span></span>
+        <h3><span class="es">Los pisos de arriba también se calientan</span><span class="en">The upper floors heat up too</span></h3>
+        <p><span class="es">El gabinete está sellado (IP67), así que la placa de capacitores y la de control solo se enfrían por aire quieto y quedaban casi a la temperatura de la placa de potencia. Con tres cambios bajan de su límite: costillas en la pared que tocan los 4 capacitores de las esquinas, pedestales en la tapa sobre los 4 circuitos que más calientan y barras de cobre de la entrada de la batería al poste. Caso: 13.5 kW con bus de 60 V, refrigerante a 65 °C y 8 L/min. <span class="tag sim">simulado</span> <span class="tag sup">aire interior supuesto</span></span><span class="en">The enclosure is sealed (IP67), so the capacitor and control boards cool only through still air and sat almost at the power board's temperature. Three changes bring them under their limits: wall ribs touching the 4 corner capacitors, lid pedestals over the 4 hottest chips, and copper bars from the battery input to the post. Case: 13.5 kW on a 60 V bus, coolant at 65 °C and 8 L/min. <span class="tag sim">simulated</span> <span class="tag sup">assumed inside air</span></span></p>
+      </div>
+      <div class="heat">
+        <figure class="card"><a href="img/termica/07_banco.jpg" target="_blank" rel="noopener"><img src="img/termica/07_banco.jpg" width="973" height="654" loading="lazy" alt="Mapa de calor de la placa del banco de capacitores"></a>
+          <div class="hd"><b><span class="es">Banco de capacitores</span><span class="en">Capacitor bank</span></b><span class="t ok">92.5 °C</span></div>
+          <figcaption><span class="es">Capacitor más caliente, contra 105 °C de su hoja de datos. Antes 110.7 °C.</span><span class="en">Hottest capacitor, against its 105 °C datasheet rating. Was 110.7 °C.</span></figcaption></figure>
+        <figure class="card"><a href="img/termica/07_control.jpg" target="_blank" rel="noopener"><img src="img/termica/07_control.jpg" width="973" height="255" loading="lazy" alt="Mapa de calor de la placa de control"></a>
+          <div class="hd"><b><span class="es">Placa de control</span><span class="en">Control board</span></b><span class="t ok">94 °C</span></div>
+          <figcaption><span class="es">Pieza más caliente, contra 125 °C de los circuitos. Antes 136 °C (fuente U402).</span><span class="en">Hottest part, against the chips' 125 °C. Was 136 °C (U402 supply).</span></figcaption></figure>
+        <figure class="card heat-list">
+          <b><span class="es">Capacitor más caliente (límite 105 °C)</span><span class="en">Hottest capacitor (105 °C limit)</span></b>
+          <ul class="checks">
+            <li><span class="k"><span class="es">13.5 kW, bus de 140 V</span><span class="en">13.5 kW, 140 V bus</span></span><span class="val">92 °C</span></li>
+            <li><span class="k"><span class="es">Pico de 30 kW sin fin, 60 V</span><span class="en">Endless 30 kW peak, 60 V</span></span><span class="val">104 °C</span></li>
+            <li><span class="k"><span class="es">Todo en contra, 60 V</span><span class="en">Everything wrong, 60 V</span></span><span class="val">110 °C</span></li>
+          </ul>
+          <figcaption><span class="es">En "todo en contra" el capacitor queda 5 °C arriba de su límite; proponemos una NTC en el banco para que el firmware recorte el par. <span class="tag sim">simulado</span></span><span class="en">In "everything wrong" the capacitor ends 5 °C over its limit; we propose an NTC on the bank so the firmware cuts torque. <span class="tag sim">simulated</span></span></figcaption>
+        </figure>
+      </div>
+    </div>
   </div>
 </section>
 
