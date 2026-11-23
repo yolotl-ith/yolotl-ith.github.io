@@ -221,6 +221,17 @@ tbody tr:hover td{background:color-mix(in srgb,var(--guinda-soft) 55%,transparen
 .checks .val{font:500 15px var(--f-mono);font-variant-numeric:tabular-nums;text-align:right;white-space:nowrap}
 .checks .d{grid-column:1 / -1;font-size:14px;color:var(--muted)}
 @media (max-width:900px){.verif{grid-template-columns:1fr}}
+.heat{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+.heat figure{margin:0;padding:14px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.heat img{width:100%;height:auto;border-radius:6px;display:block}
+.heat .hd{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+.heat .hd b{font-size:15.5px;line-height:1.3}
+.heat .t{font:600 15px var(--f-mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+.heat .t.ok{color:var(--ok)} .heat .t.pend{color:var(--pend)} .heat .t.no{color:var(--guinda)}
+.heat figcaption{font-size:13.5px;color:var(--muted)}
+.heat-scale{max-width:520px;margin:18px 0 0}
+@media (max-width:1000px){.heat{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:620px){.heat{grid-template-columns:1fr}}
 
 /* resultados */
 .tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
@@ -657,12 +668,12 @@ footer b{color:var(--band-ink);font-weight:600}
           <div class="lbls"><span><span class="es">Cara superior · máx. 137 °C</span><span class="en">Top copper · max 137 °C</span></span><span><span class="es">Cara inferior · máx. 108 °C</span><span class="en">Bottom copper · max 108 °C</span></span></div>
           <img src="img/mapa_termico_placa.png" width="1032" height="462" alt="Mapa térmico de la placa de potencia a 13.5 kW con la temperatura de unión de cada MOSFET">
           <div class="scale"><span>67 °C</span><i></i><span>140 °C</span></div>
-          <p><span class="es">Mapa térmico a 13.5 kW continuos. Los números son la temperatura de unión de cada MOSFET; el más caliente llega a 130 °C. <span class="tag sim">simulado</span></span><span class="en">Thermal map at 13.5 kW continuous. The numbers are each MOSFET's junction temperature; the hottest reaches 130 °C. <span class="tag sim">simulated</span></span></p>
+          <p><span class="es">Mapa térmico a 13.5 kW continuos con el canal anterior (rev. C). Los números son la temperatura de unión de cada MOSFET; el más caliente llegaba a 130 °C. Con el canal rev. D baja a 123 °C (ver abajo). <span class="tag sim">simulado</span></span><span class="en">Thermal map at 13.5 kW continuous with the previous channel (rev. C). The numbers are each MOSFET's junction temperature; the hottest reached 130 °C. With the rev. D channel it drops to 123 °C (see below). <span class="tag sim">simulated</span></span></p>
         </figure>
         <ul class="checks">
           <li><span class="k"><span class="es">Reglas de diseño (DRC)</span><span class="en">Design rule check (DRC)</span></span><span class="val">0 <span class="es">errores</span><span class="en">errors</span></span><span class="d"><span class="es">Sin conexiones faltantes ni violaciones en KiCad.</span><span class="en">No unrouted nets or violations in KiCad.</span></span></li>
-          <li><span class="k"><span class="es">Unión a 13.5 kW continuos</span><span class="en">Junction at 13.5 kW continuous</span></span><span class="val">130.2 °C</span><span class="d"><span class="es">Contra 175 °C del MOSFET. Resistencia térmica efectiva 3.57 K/W.</span><span class="en">Against the MOSFET's 175 °C. Effective thermal resistance 3.57 K/W.</span></span></li>
-          <li><span class="k"><span class="es">Unión a 30 kW por 30 s</span><span class="en">Junction at 30 kW for 30 s</span></span><span class="val">147.8 °C</span><span class="d"><span class="es">El pico de la ficha de Olinia, con 27 °C de margen.</span><span class="en">Olinia's peak rating, with 27 °C of margin.</span></span></li>
+          <li><span class="k"><span class="es">Unión a 13.5 kW continuos</span><span class="en">Junction at 13.5 kW continuous</span></span><span class="val">123.4 °C</span><span class="d"><span class="es">Contra 175 °C del MOSFET, con el canal rev. D (con el canal anterior eran 130.2 °C).</span><span class="en">Against the MOSFET's 175 °C, with the rev. D channel (130.2 °C with the previous channel).</span></span></li>
+          <li><span class="k"><span class="es">Unión a 30 kW por 30 s</span><span class="en">Junction at 30 kW for 30 s</span></span><span class="val">143.3 °C</span><span class="d"><span class="es">El pico de la ficha de Olinia, con 32 °C de margen. Repetido 10 veces llega a 143.5 °C.</span><span class="en">Olinia's peak rating, with 32 °C of margin. Repeated 10 times it reaches 143.5 °C.</span></span></li>
           <li><span class="k"><span class="es">Calor en el cobre</span><span class="en">Copper heating</span></span><span class="val">99 W</span><span class="d"><span class="es">Antes 233 W. Se bajó con barras de cobre, cobre de 2 oz y ventanas en la máscara.</span><span class="en">Down from 233 W, using copper bars, 2 oz copper and solder-mask windows.</span></span></li>
           <li><span class="k"><span class="es">Reparto entre los 8 MOSFET en paralelo</span><span class="en">Sharing across the 8 parallel MOSFETs</span></span><span class="val">1.04–1.07</span><span class="d"><span class="es">Corriente del más cargado entre el promedio: casi parejo.</span><span class="en">Busiest device current over the average: nearly even.</span></span></li>
           <li><span class="k"><span class="es">Doble pulso en caliente</span><span class="en">Hot double-pulse test</span></span><span class="val">188.6 V</span><span class="d"><span class="es">Pico de voltaje al apagar, contra 200 V del MOSFET.</span><span class="en">Turn-off voltage peak, against the MOSFET's 200 V rating.</span></span></li>
@@ -670,6 +681,36 @@ footer b{color:var(--band-ink);font-weight:600}
           <li><span class="k"><span class="es">Piezas cerca del calor</span><span class="en">Parts near the heat</span></span><span class="val">150 °C</span><span class="d"><span class="es">Cerámicos X8R/X8L, laminado de 150 °C y resistencias de mayor potencia.</span><span class="en">X8R/X8L ceramics, 150 °C laminate and higher-power resistors.</span></span></li>
         </ul>
       </div>
+    </div>
+
+    <div class="sub" id="peores">
+      <div class="subhead">
+        <span class="eyebrow"><span class="es">Peores casos térmicos</span><span class="en">Thermal worst cases</span></span>
+        <h3><span class="es">Dónde se calienta la placa cuando todo sale mal</span><span class="en">Where the board heats up when things go wrong</span></h3>
+        <p><span class="es">Seis de los 17 casos que simulamos, todos con la misma escala de color (toca un mapa para verlo grande). El número sobre cada MOSFET es su temperatura de unión; el límite es 175 °C. Son casos permanentes, como si la condición durara para siempre. Placa final con el canal de refrigeración rev. D. <span class="tag sim">simulado</span> <span class="tag sup">refrigerante supuesto</span></span><span class="en">Six of the 17 cases we simulated, all on the same color scale (tap a map to enlarge it). The number on each MOSFET is its junction temperature; the limit is 175 °C. These are steady-state cases, as if the condition lasted forever. Final board with the rev. D cooling channel. <span class="tag sim">simulated</span> <span class="tag sup">assumed coolant</span></span></p>
+      </div>
+      <div class="heat">
+        <figure class="card"><a href="img/termica/01_referencia.jpg" target="_blank" rel="noopener"><img src="img/termica/01_referencia.jpg" width="973" height="874" loading="lazy" alt="Mapa de calor de la placa a 13.5 kW"></a>
+          <div class="hd"><b><span class="es">Referencia: 13.5 kW</span><span class="en">Baseline: 13.5 kW</span></b><span class="t ok">123 °C</span></div>
+          <figcaption><span class="es">Refrigerante 65 °C y 8 L/min. Margen de 52 °C.</span><span class="en">Coolant 65 °C at 8 L/min. 52 °C of margin.</span></figcaption></figure>
+        <figure class="card"><a href="img/termica/02_pico.jpg" target="_blank" rel="noopener"><img src="img/termica/02_pico.jpg" width="973" height="874" loading="lazy" alt="Mapa de calor con el pico de 30 kW sostenido"></a>
+          <div class="hd"><b><span class="es">Pico de 30 kW sin fin</span><span class="en">30 kW peak, never ending</span></b><span class="t ok">145 °C</span></div>
+          <figcaption><span class="es">Cota del pico: si los 30 kW nunca terminaran. El pico real de 30 s llega a 143 °C.</span><span class="en">Upper bound: as if the 30 kW never ended. The real 30 s peak reaches 143 °C.</span></figcaption></figure>
+        <figure class="card"><a href="img/termica/03_refrigerante.jpg" target="_blank" rel="noopener"><img src="img/termica/03_refrigerante.jpg" width="973" height="874" loading="lazy" alt="Mapa de calor con refrigerante a 75 °C y 6 L/min"></a>
+          <div class="hd"><b><span class="es">Refrigerante caliente</span><span class="en">Hot coolant</span></b><span class="t ok">139 °C</span></div>
+          <figcaption><span class="es">75 °C de entrada y solo 6 L/min.</span><span class="en">75 °C inlet and only 6 L/min.</span></figcaption></figure>
+        <figure class="card"><a href="img/termica/04_gap.jpg" target="_blank" rel="noopener"><img src="img/termica/04_gap.jpg" width="973" height="874" loading="lazy" alt="Mapa de calor con el gap pad degradado"></a>
+          <div class="hd"><b><span class="es">Gap pad degradado</span><span class="en">Degraded gap pad</span></b><span class="t ok">147 °C</span></div>
+          <figcaption><span class="es">El material entre la placa y el aluminio conduce la mitad: 3 W/mK y 0.8 mm en vez de 6 W/mK y 0.5 mm.</span><span class="en">3 W/mK, 0.8 mm gap pad instead of 6 W/mK, 0.5 mm.</span></figcaption></figure>
+        <figure class="card"><a href="img/termica/06_todo.jpg" target="_blank" rel="noopener"><img src="img/termica/06_todo.jpg" width="973" height="874" loading="lazy" alt="Mapa de calor con todas las condiciones malas juntas"></a>
+          <div class="hd"><b><span class="es">Todo en contra a la vez</span><span class="en">Everything wrong at once</span></b><span class="t no">181 °C</span></div>
+          <figcaption><span class="es">Tolerancias, 75 °C y 6 L/min y gap pad degradado, a 13.5 kW. El firmware debe recortar el par.</span><span class="en">Tolerances, 75 °C at 6 L/min and degraded gap pad, at 13.5 kW. Firmware must cut torque.</span></figcaption></figure>
+        <figure class="card"><a href="img/termica/05_rotor_bloqueado.jpg" target="_blank" rel="noopener"><img src="img/termica/05_rotor_bloqueado.jpg" width="973" height="874" loading="lazy" alt="Mapa de calor con el rotor bloqueado: una pierna muy caliente"></a>
+          <div class="hd"><b><span class="es">Rotor bloqueado</span><span class="en">Locked rotor</span></b><span class="t no">239 °C</span></div>
+          <figcaption><span class="es">430 A fijos en una sola pierna (W). Pasa de 175 °C en 2 s si nada lo detiene.</span><span class="en">430 A DC in a single leg (W). Exceeds 175 °C in 2 s if nothing stops it.</span></figcaption></figure>
+      </div>
+      <div class="scale heat-scale"><span>65 °C</span><i></i><span>≥ 185 °C</span></div>
+      <p class="callout"><span class="es">Los dos casos en rojo los resuelve el firmware, no el hardware. Proponemos recortar el par según la NTC de cada pierna (empieza a 120 °C, par cero a 135 °C) y limitar el rotor bloqueado a 430 A por 1 s y luego 284 A. Con eso ningún caso simulado pasa de 175 °C. Es una <b>propuesta</b>: aún no está en el firmware ni probada.</span><span class="en">The two red cases are solved in firmware, not hardware. We propose cutting torque from each leg's NTC (starting at 120 °C, zero torque at 135 °C) and limiting a locked rotor to 430 A for 1 s, then 284 A. With that, no simulated case exceeds 175 °C. It is a <b>proposal</b>: not yet in the firmware or tested.</span></p>
     </div>
   </div>
 </section>
@@ -712,7 +753,7 @@ footer b{color:var(--band-ink);font-weight:600}
             <li class="y"><span class="es">Recorre 24.6 km; la batería baja de 100 % a 7.7 %. Lo que se acaba primero es la batería.</span><span class="en">It covers 24.6 km; the battery drops from 100 % to 7.7 %. The battery runs out first.</span></li>
             <li class="n"><span class="es">Falta que Olinia confirme que su motor aguanta unos 23 kW continuos y que su BMS deja sacar unos 250 A sostenidos.</span><span class="en">Olinia still needs to confirm its motor can take about 23 kW continuously and that its BMS allows about 250 A sustained.</span></li>
           </ul>
-          <p class="callout"><span class="es">La unión de 112 °C es del modelo promedio del vehículo; el mapa térmico de la placa (130 °C a 13.5 kW) mira el MOSFET más caliente de los 48. Son dos modelos distintos y ambos quedan abajo de 175 °C.</span><span class="en">The 112 °C junction comes from the vehicle-level averaged model; the board thermal map (130 °C at 13.5 kW) looks at the hottest of the 48 MOSFETs. They are different models, and both stay below 175 °C.</span></p>
+          <p class="callout"><span class="es">La unión de 112 °C es del modelo promedio del vehículo; el mapa térmico de la placa (123 °C a 13.5 kW con el canal rev. D) mira el MOSFET más caliente de los 48. Son dos modelos distintos y ambos quedan abajo de 175 °C.</span><span class="en">The 112 °C junction comes from the vehicle-level averaged model; the board thermal map (123 °C at 13.5 kW with the rev. D channel) looks at the hottest of the 48 MOSFETs. They are different models, and both stay below 175 °C.</span></p>
         </div>
       </div>
     </div>
