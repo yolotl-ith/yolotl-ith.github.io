@@ -230,6 +230,10 @@ tbody tr:hover td{background:color-mix(in srgb,var(--guinda-soft) 55%,transparen
 .heat .t.ok{color:var(--ok)} .heat .t.pend{color:var(--pend)} .heat .t.no{color:var(--guinda)}
 .heat figcaption{font-size:13.5px;color:var(--muted)}
 .heat-scale{max-width:520px;margin:18px 0 0}
+.heat-h{font-size:19px;font-weight:800;margin:40px 0 16px}
+.heat-list{gap:14px}
+.heat-list .checks li{grid-template-columns:1fr auto;padding:10px 0}
+.heat-list .checks .k{font-size:14.5px;font-weight:500}
 @media (max-width:1000px){.heat{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (max-width:620px){.heat{grid-template-columns:1fr}}
 
@@ -710,7 +714,26 @@ footer b{color:var(--band-ink);font-weight:600}
           <figcaption><span class="es">430 A fijos en una sola pierna (W). Pasa de 175 °C en 2 s si nada lo detiene.</span><span class="en">430 A DC in a single leg (W). Exceeds 175 °C in 2 s if nothing stops it.</span></figcaption></figure>
       </div>
       <div class="scale heat-scale"><span>65 °C</span><i></i><span>≥ 185 °C</span></div>
-      <p class="callout"><span class="es">Los dos casos en rojo los resuelve el firmware, no el hardware. Proponemos recortar el par según la NTC de cada pierna (empieza a 120 °C, par cero a 135 °C) y limitar el rotor bloqueado a 430 A por 1 s y luego 284 A. Con eso ningún caso simulado pasa de 175 °C. Es una <b>propuesta</b>: aún no está en el firmware ni probada.</span><span class="en">The two red cases are solved in firmware, not hardware. We propose cutting torque from each leg's NTC (starting at 120 °C, zero torque at 135 °C) and limiting a locked rotor to 430 A for 1 s, then 284 A. With that, no simulated case exceeds 175 °C. It is a <b>proposal</b>: not yet in the firmware or tested.</span></p>
+      <h4 class="heat-h"><span class="es">Con los cambios de firmware del 23 nov: nada pasa de 170 °C</span><span class="en">With the Nov 23 firmware changes: nothing exceeds 170 °C</span></h4>
+      <div class="heat">
+        <figure class="card"><a href="img/termica/05_rotor_bloqueado_fw.jpg" target="_blank" rel="noopener"><img src="img/termica/05_rotor_bloqueado_fw.jpg" width="973" height="874" loading="lazy" alt="Mapa de calor del rotor bloqueado con la protección del firmware"></a>
+          <div class="hd"><b><span class="es">Rotor bloqueado + firmware</span><span class="en">Locked rotor + firmware</span></b><span class="t ok">139 °C</span></div>
+          <figcaption><span class="es">Antes 239 °C. 430 A solo durante 1 s y luego 284 A mientras el motor siga quieto.</span><span class="en">Was 239 °C. 430 A for only 1 s, then 284 A while the motor stays still.</span></figcaption></figure>
+        <figure class="card"><a href="img/termica/06_todo_fw.jpg" target="_blank" rel="noopener"><img src="img/termica/06_todo_fw.jpg" width="973" height="874" loading="lazy" alt="Mapa de calor con todo en contra y la reducción de par del firmware"></a>
+          <div class="hd"><b><span class="es">Todo en contra + firmware</span><span class="en">Everything wrong + firmware</span></b><span class="t ok">153 °C</span></div>
+          <figcaption><span class="es">Antes 181 °C. El firmware lee la NTC de cada pierna y deja 67 % del par.</span><span class="en">Was 181 °C. Firmware reads each leg's NTC and allows 67 % of the torque.</span></figcaption></figure>
+        <figure class="card heat-list">
+          <b><span class="es">Peor temperatura de unión con el firmware</span><span class="en">Worst junction temperature with the firmware</span></b>
+          <ul class="checks">
+            <li><span class="k"><span class="es">Rotor bloqueado + todo en contra</span><span class="en">Locked rotor + everything wrong</span></span><span class="val">169 °C</span></li>
+            <li><span class="k"><span class="es">Todo en contra + pico pedido sin fin</span><span class="en">Everything wrong + endless peak request</span></span><span class="val">164 °C</span></li>
+            <li><span class="k"><span class="es">Rotor bloqueado, pisando y soltando</span><span class="en">Locked rotor, pedal pumped</span></span><span class="val">156 °C</span></li>
+            <li><span class="k"><span class="es">Bomba de refrigerante parada</span><span class="en">Coolant pump stopped</span></span><span class="val">149 °C</span></li>
+            <li><span class="k"><span class="es">Refrigerante 80 °C y 4 L/min</span><span class="en">Coolant 80 °C at 4 L/min</span></span><span class="val">143 °C</span></li>
+          </ul>
+          <figcaption><span class="es">Umbrales en la NTC: empieza a bajar el par a 120 °C, par cero a 135 °C y falla a 140 °C (antes 90/110/115 °C, que recortaban el par en manejo normal). Firmware probado en PC, aún no en la placa. <span class="tag sim">simulado</span></span><span class="en">NTC thresholds: torque starts dropping at 120 °C, zero torque at 135 °C, fault at 140 °C (previously 90/110/115 °C, which cut torque in normal driving). Firmware tested on PC, not yet on the board. <span class="tag sim">simulated</span></span></figcaption>
+        </figure>
+      </div>
     </div>
   </div>
 </section>
