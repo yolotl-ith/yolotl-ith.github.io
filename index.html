@@ -689,30 +689,8 @@ footer b{color:var(--band-ink);font-weight:600}
       <div class="subhead">
         <span class="eyebrow"><span class="es">Peores casos térmicos</span><span class="en">Thermal worst cases</span></span>
         <h3><span class="es">Dónde se calienta la placa cuando todo sale mal</span><span class="en">Where the board heats up when things go wrong</span></h3>
-        <p><span class="es">Seis de los 17 casos que simulamos, todos con la misma escala de color (toca un mapa para verlo grande). El número sobre cada MOSFET es su temperatura de unión; el límite es 175 °C. Son casos permanentes, como si la condición durara para siempre. Placa final con el canal de refrigeración rev. D. <span class="tag sim">simulado</span> <span class="tag sup">refrigerante supuesto</span></span><span class="en">Six of the 17 cases we simulated, all on the same color scale (tap a map to enlarge it). The number on each MOSFET is its junction temperature; the limit is 175 °C. These are steady-state cases, as if the condition lasted forever. Final board with the rev. D cooling channel. <span class="tag sim">simulated</span> <span class="tag sup">assumed coolant</span></span></p>
+        <p><span class="es">Los peores casos que simulamos, ya con las protecciones del firmware: nada pasa de 170 °C (toca un mapa para verlo grande). El número sobre cada MOSFET es su temperatura de unión; el límite es 175 °C. Son casos permanentes, como si la condición durara para siempre. Placa final con el canal de refrigeración rev. D. <span class="tag sim">simulado</span> <span class="tag sup">refrigerante supuesto</span></span><span class="en">The worst cases we simulated, with the firmware protections: nothing exceeds 170 °C (tap a map to enlarge it). The number on each MOSFET is its junction temperature; the limit is 175 °C. These are steady-state cases, as if the condition lasted forever. Final board with the rev. D cooling channel. <span class="tag sim">simulated</span> <span class="tag sup">assumed coolant</span></span></p>
       </div>
-      <div class="heat">
-        <figure class="card"><a href="img/termica/01_referencia.jpg" target="_blank" rel="noopener"><img src="img/termica/01_referencia.jpg" width="973" height="874" loading="lazy" alt="Mapa de calor de la placa a 13.5 kW"></a>
-          <div class="hd"><b><span class="es">Referencia: 13.5 kW</span><span class="en">Baseline: 13.5 kW</span></b><span class="t ok">123 °C</span></div>
-          <figcaption><span class="es">Refrigerante 65 °C y 8 L/min. Margen de 52 °C.</span><span class="en">Coolant 65 °C at 8 L/min. 52 °C of margin.</span></figcaption></figure>
-        <figure class="card"><a href="img/termica/02_pico.jpg" target="_blank" rel="noopener"><img src="img/termica/02_pico.jpg" width="973" height="874" loading="lazy" alt="Mapa de calor con el pico de 30 kW sostenido"></a>
-          <div class="hd"><b><span class="es">Pico de 30 kW sin fin</span><span class="en">30 kW peak, never ending</span></b><span class="t ok">145 °C</span></div>
-          <figcaption><span class="es">Cota del pico: si los 30 kW nunca terminaran. El pico real de 30 s llega a 143 °C.</span><span class="en">Upper bound: as if the 30 kW never ended. The real 30 s peak reaches 143 °C.</span></figcaption></figure>
-        <figure class="card"><a href="img/termica/03_refrigerante.jpg" target="_blank" rel="noopener"><img src="img/termica/03_refrigerante.jpg" width="973" height="874" loading="lazy" alt="Mapa de calor con refrigerante a 75 °C y 6 L/min"></a>
-          <div class="hd"><b><span class="es">Refrigerante caliente</span><span class="en">Hot coolant</span></b><span class="t ok">139 °C</span></div>
-          <figcaption><span class="es">75 °C de entrada y solo 6 L/min.</span><span class="en">75 °C inlet and only 6 L/min.</span></figcaption></figure>
-        <figure class="card"><a href="img/termica/04_gap.jpg" target="_blank" rel="noopener"><img src="img/termica/04_gap.jpg" width="973" height="874" loading="lazy" alt="Mapa de calor con el gap pad degradado"></a>
-          <div class="hd"><b><span class="es">Gap pad degradado</span><span class="en">Degraded gap pad</span></b><span class="t ok">147 °C</span></div>
-          <figcaption><span class="es">El material entre la placa y el aluminio conduce la mitad: 3 W/mK y 0.8 mm en vez de 6 W/mK y 0.5 mm.</span><span class="en">3 W/mK, 0.8 mm gap pad instead of 6 W/mK, 0.5 mm.</span></figcaption></figure>
-        <figure class="card"><a href="img/termica/06_todo.jpg" target="_blank" rel="noopener"><img src="img/termica/06_todo.jpg" width="973" height="874" loading="lazy" alt="Mapa de calor con todas las condiciones malas juntas"></a>
-          <div class="hd"><b><span class="es">Todo en contra a la vez</span><span class="en">Everything wrong at once</span></b><span class="t no">181 °C</span></div>
-          <figcaption><span class="es">Tolerancias, 75 °C y 6 L/min y gap pad degradado, a 13.5 kW. El firmware debe recortar el par.</span><span class="en">Tolerances, 75 °C at 6 L/min and degraded gap pad, at 13.5 kW. Firmware must cut torque.</span></figcaption></figure>
-        <figure class="card"><a href="img/termica/05_rotor_bloqueado.jpg" target="_blank" rel="noopener"><img src="img/termica/05_rotor_bloqueado.jpg" width="973" height="874" loading="lazy" alt="Mapa de calor con el rotor bloqueado: una pierna muy caliente"></a>
-          <div class="hd"><b><span class="es">Rotor bloqueado</span><span class="en">Locked rotor</span></b><span class="t no">239 °C</span></div>
-          <figcaption><span class="es">430 A fijos en una sola pierna (W). Pasa de 175 °C en 2 s si nada lo detiene.</span><span class="en">430 A DC in a single leg (W). Exceeds 175 °C in 2 s if nothing stops it.</span></figcaption></figure>
-      </div>
-      <div class="scale heat-scale"><span>65 °C</span><i></i><span>≥ 185 °C</span></div>
-      <h4 class="heat-h"><span class="es">Con los cambios de firmware: nada pasa de 170 °C</span><span class="en">With the firmware changes: nothing exceeds 170 °C</span></h4>
       <div class="heat">
         <figure class="card"><a href="img/termica/05_rotor_bloqueado_fw.jpg" target="_blank" rel="noopener"><img src="img/termica/05_rotor_bloqueado_fw.jpg" width="973" height="874" loading="lazy" alt="Mapa de calor del rotor bloqueado con la protección del firmware"></a>
           <div class="hd"><b><span class="es">Rotor bloqueado + firmware</span><span class="en">Locked rotor + firmware</span></b><span class="t ok">139 °C</span></div>
@@ -732,6 +710,7 @@ footer b{color:var(--band-ink);font-weight:600}
           <figcaption><span class="es">Umbrales en la NTC: empieza a bajar el par a 120 °C, par cero a 135 °C y falla a 140 °C (antes 90/110/115 °C, que recortaban el par en manejo normal). Firmware probado en PC, aún no en la placa. <span class="tag sim">simulado</span></span><span class="en">NTC thresholds: torque starts dropping at 120 °C, zero torque at 135 °C, fault at 140 °C (previously 90/110/115 °C, which cut torque in normal driving). Firmware tested on PC, not yet on the board. <span class="tag sim">simulated</span></span></figcaption>
         </figure>
       </div>
+      <div class="scale heat-scale"><span>65 °C</span><i></i><span>≥ 185 °C</span></div>
     </div>
   </div>
 </section>
