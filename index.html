@@ -685,6 +685,43 @@ footer b{color:var(--band-ink);font-weight:600}
       </div>
     </div>
 
+    <div class="sub" id="manejo">
+      <div class="subhead">
+        <span class="eyebrow"><span class="es">Térmica en manejo real</span><span class="en">Thermal in real driving</span></span>
+        <h3><span class="es">Qué tan caliente va la MCU en el día a día</span><span class="en">How hot the MCU runs day to day</span></h3>
+        <p><span class="es">Tres formas normales de manejar el Olinia 1: crucero a 50 km/h, 50 km/h subiendo una rampa del 6 % y ciudad con arranques y frenadas. De la curva de Olinia y del carro sacamos el par y la corriente; luego simulamos las tres placas. Refrigerante a 65 °C y 8 L/min, como un día caluroso. El número sobre cada MOSFET es su temperatura de unión (límite 175 °C). <span class="tag sim">simulado</span> <span class="tag sup">masa, llanta y pendiente supuestas</span></span><span class="en">Three normal ways to drive the Olinia 1: cruising at 50 km/h, 50 km/h up a 6 % grade, and city driving with starts and stops. From Olinia's curve and the vehicle we get torque and current, then simulate all three boards. Coolant at 65 °C and 8 L/min, like a hot day. The number on each MOSFET is its junction temperature (175 °C limit). <span class="tag sim">simulated</span> <span class="tag sup">assumed mass, tire and grade</span></span></p>
+      </div>
+      <div class="heat">
+        <figure class="card"><a href="img/termica/08_crucero_potencia.jpg" target="_blank" rel="noopener"><img src="img/termica/08_crucero_potencia.jpg" width="973" height="874" loading="lazy" alt="Mapa de calor de la placa de potencia en crucero a 50 km/h"></a>
+          <div class="hd"><b><span class="es">Crucero a 50 km/h</span><span class="en">Cruising at 50 km/h</span></b><span class="t ok">71 °C</span></div>
+          <figcaption><span class="es">En plano: 2.9 kW en las ruedas y 31 A por fase. La placa casi no se calienta arriba del agua.</span><span class="en">On flat road: 2.9 kW at the wheels and 31 A per phase. The board barely rises above the coolant.</span></figcaption></figure>
+        <figure class="card"><a href="img/termica/08_rampa_potencia.jpg" target="_blank" rel="noopener"><img src="img/termica/08_rampa_potencia.jpg" width="973" height="874" loading="lazy" alt="Mapa de calor de la placa de potencia subiendo una rampa del 6 % a 50 km/h"></a>
+          <div class="hd"><b><span class="es">Rampa del 6 % a 50 km/h</span><span class="en">6 % grade at 50 km/h</span></b><span class="t ok">80 °C</span></div>
+          <figcaption><span class="es">Subida sin fin: 11.5 kW en las ruedas y 102 A por fase, cerca de los 13.5 kW continuos. Una del 10 % por 2 min (17 kW) llega a 91 °C.</span><span class="en">Endless climb: 11.5 kW at the wheels and 102 A per phase, close to the 13.5 kW continuous rating. A 10 % grade for 2 min (17 kW) reaches 91 °C.</span></figcaption></figure>
+        <figure class="card"><a href="img/termica/08_ciudad_potencia.jpg" target="_blank" rel="noopener"><img src="img/termica/08_ciudad_potencia.jpg" width="973" height="874" loading="lazy" alt="Mapa de calor de la placa de potencia en ciudad al terminar un arranque"></a>
+          <div class="hd"><b><span class="es">Ciudad, al terminar un arranque</span><span class="en">City, at the end of a start</span></b><span class="t ok">88 °C</span></div>
+          <figcaption><span class="es">Ciclo de 60 s repetido 20 min: alto, arranque a 40 km/h, crucero y frenado con regeneración. El arranque es el momento más caliente.</span><span class="en">60 s cycle repeated for 20 min: stop, start to 40 km/h, cruise and regenerative braking. The start is the hottest moment.</span></figcaption></figure>
+        <figure class="card"><a href="img/termica/08_ciclo_ciudad.jpg" target="_blank" rel="noopener"><img src="img/termica/08_ciclo_ciudad.jpg" width="973" height="389" loading="lazy" alt="Temperatura del MOSFET más caliente durante un ciclo de ciudad"></a>
+          <div class="hd"><b><span class="es">Un ciclo de ciudad</span><span class="en">One city cycle</span></b><span class="t ok">70–88 °C</span></div>
+          <figcaption><span class="es">La unión sube unos 18 °C en cada arranque y baja en el crucero. La línea gris es la velocidad. Al frenar, la batería recibe como máximo 50 A; el resto lo hacen los frenos.</span><span class="en">The junction rises about 18 °C on each start and cools while cruising. The grey line is speed. When braking the battery takes at most 50 A; the brakes do the rest.</span></figcaption></figure>
+        <figure class="card"><a href="img/termica/08_ciudad_banco.jpg" target="_blank" rel="noopener"><img src="img/termica/08_ciudad_banco.jpg" width="973" height="654" loading="lazy" alt="Mapa de calor del banco de capacitores en ciudad"></a>
+          <a href="img/termica/08_ciudad_control.jpg" target="_blank" rel="noopener"><img src="img/termica/08_ciudad_control.jpg" width="973" height="255" loading="lazy" alt="Mapa de calor de la placa de control en ciudad"></a>
+          <div class="hd"><b><span class="es">Capacitores y control en ciudad</span><span class="en">Capacitors and control in the city</span></b><span class="t ok">71 °C</span></div>
+          <figcaption><span class="es">Con las costillas, los pedestales y las barras del diseño nuevo. Los capacitores quedan lejos de sus 105 °C.</span><span class="en">With the ribs, pedestals and bars of the new design. The capacitors stay far from their 105 °C.</span></figcaption></figure>
+        <figure class="card heat-list">
+          <b><span class="es">Lo más caliente de cada placa</span><span class="en">Hottest point on each board</span></b>
+          <ul class="checks">
+            <li><span class="k"><span class="es">Crucero: MOSFET / capacitor / control</span><span class="en">Cruise: MOSFET / capacitor / control</span></span><span class="val">71 / 69 / 87</span></li>
+            <li><span class="k"><span class="es">Rampa 6 %: MOSFET / capacitor / control</span><span class="en">6 % grade: MOSFET / capacitor / control</span></span><span class="val">80 / 73 / 88</span></li>
+            <li><span class="k"><span class="es">Ciudad: MOSFET / capacitor / control</span><span class="en">City: MOSFET / capacitor / control</span></span><span class="val">88 / 71 / 88</span></li>
+            <li><span class="k"><span class="es">Límites</span><span class="en">Limits</span></span><span class="val">175 / 105 / 125</span></li>
+          </ul>
+          <figcaption><span class="es">En °C. Supuestos: carro de 1000 kg, llanta de 0.28 m, reducción 8:1 y batería a 100 V; Olinia aún no nos da esos datos. <span class="tag sim">simulado</span></span><span class="en">In °C. Assumptions: 1000 kg car, 0.28 m tire, 8:1 reduction and a 100 V battery; Olinia has not given us these figures yet. <span class="tag sim">simulated</span></span></figcaption>
+        </figure>
+      </div>
+      <div class="scale heat-scale"><span>60 °C</span><i></i><span>≥ 100 °C</span></div>
+    </div>
+
     <div class="sub" id="peores">
       <div class="subhead">
         <span class="eyebrow"><span class="es">Peores casos térmicos</span><span class="en">Thermal worst cases</span></span>
